@@ -1,0 +1,16 @@
+[package]
+name = "freerdp2-sys"
+version = "0.1.0"
+edition = "2021"
+links = "freerdp-client2"
+license = "Apache-2.0"
+
+build = "build.rs"
+
+[package.metadata.system-deps]
+freerdp2 = "2.4"
+freerdp-client2 = "2.4"
+winpr2 = "2.4"
+
+[build-dependencies]
+system-deps = "2.0"
