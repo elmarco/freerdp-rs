@@ -580,6 +580,7 @@ pub type BOOL = __int32;
 pub type PBOOL = *mut BOOL;
 pub type LPBOOL = *mut BOOL;
 pub type BYTE = __uint8;
+pub type LPBYTE = *mut BYTE;
 pub type BOOLEAN = BYTE;
 pub type CHAR = ::std::os::raw::c_char;
 pub type UCHAR = ::std::os::raw::c_uchar;
@@ -617,7 +618,9 @@ pub type SSIZE_T = LONG_PTR;
 pub type FLOAT = f32;
 pub type HANDLE = *mut ::std::os::raw::c_void;
 pub type PHANDLE = *mut ::std::os::raw::c_void;
+pub type HINSTANCE = HANDLE;
 pub type HWND = HANDLE;
+pub type HMENU = HANDLE;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _POINTL {
@@ -1172,6 +1175,129 @@ fn bindgen_test_layout__SECURITY_DESCRIPTOR() {
 pub type PSECURITY_DESCRIPTOR = *mut _SECURITY_DESCRIPTOR;
 pub type PSECURITY_DESCRIPTOR_CONTROL = *mut WORD;
 #[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _SECURITY_ATTRIBUTES {
+    pub nLength: DWORD,
+    pub lpSecurityDescriptor: LPVOID,
+    pub bInheritHandle: BOOL,
+}
+#[test]
+fn bindgen_test_layout__SECURITY_ATTRIBUTES() {
+    assert_eq!(
+        ::std::mem::size_of::<_SECURITY_ATTRIBUTES>(),
+        24usize,
+        concat!("Size of: ", stringify!(_SECURITY_ATTRIBUTES))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_SECURITY_ATTRIBUTES>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_SECURITY_ATTRIBUTES))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_SECURITY_ATTRIBUTES>())).nLength as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_SECURITY_ATTRIBUTES),
+            "::",
+            stringify!(nLength)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_SECURITY_ATTRIBUTES>())).lpSecurityDescriptor as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_SECURITY_ATTRIBUTES),
+            "::",
+            stringify!(lpSecurityDescriptor)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_SECURITY_ATTRIBUTES>())).bInheritHandle as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_SECURITY_ATTRIBUTES),
+            "::",
+            stringify!(bInheritHandle)
+        )
+    );
+}
+pub type LPSECURITY_ATTRIBUTES = *mut _SECURITY_ATTRIBUTES;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _PROCESS_INFORMATION {
+    pub hProcess: HANDLE,
+    pub hThread: HANDLE,
+    pub dwProcessId: DWORD,
+    pub dwThreadId: DWORD,
+}
+#[test]
+fn bindgen_test_layout__PROCESS_INFORMATION() {
+    assert_eq!(
+        ::std::mem::size_of::<_PROCESS_INFORMATION>(),
+        24usize,
+        concat!("Size of: ", stringify!(_PROCESS_INFORMATION))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_PROCESS_INFORMATION>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_PROCESS_INFORMATION))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_PROCESS_INFORMATION>())).hProcess as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_PROCESS_INFORMATION),
+            "::",
+            stringify!(hProcess)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_PROCESS_INFORMATION>())).hThread as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_PROCESS_INFORMATION),
+            "::",
+            stringify!(hThread)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_PROCESS_INFORMATION>())).dwProcessId as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_PROCESS_INFORMATION),
+            "::",
+            stringify!(dwProcessId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_PROCESS_INFORMATION>())).dwThreadId as *const _ as usize },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_PROCESS_INFORMATION),
+            "::",
+            stringify!(dwThreadId)
+        )
+    );
+}
+pub type LPPROCESS_INFORMATION = *mut _PROCESS_INFORMATION;
+pub type PTHREAD_START_ROUTINE =
+    ::std::option::Option<unsafe extern "C" fn(lpThreadParameter: LPVOID) -> DWORD>;
+pub type LPTHREAD_START_ROUTINE = PTHREAD_START_ROUTINE;
+#[repr(C)]
 #[derive(Copy, Clone)]
 pub struct _OVERLAPPED {
     pub Internal: ULONG_PTR,
@@ -1390,6 +1516,14 @@ extern "C" {
     ) -> BOOL;
 }
 extern "C" {
+    pub fn CreateIoCompletionPort(
+        FileHandle: HANDLE,
+        ExistingCompletionPort: HANDLE,
+        CompletionKey: ULONG_PTR,
+        NumberOfConcurrentThreads: DWORD,
+    ) -> HANDLE;
+}
+extern "C" {
     pub fn GetQueuedCompletionStatus(
         CompletionPort: HANDLE,
         lpNumberOfBytesTransferred: LPDWORD,
@@ -1413,6 +1547,28 @@ extern "C" {
 }
 extern "C" {
     pub fn GetLastError() -> DWORD;
+}
+extern "C" {
+    pub fn CreateFileA(
+        lpFileName: LPCSTR,
+        dwDesiredAccess: DWORD,
+        dwShareMode: DWORD,
+        lpSecurityAttributes: LPSECURITY_ATTRIBUTES,
+        dwCreationDisposition: DWORD,
+        dwFlagsAndAttributes: DWORD,
+        hTemplateFile: HANDLE,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateFileW(
+        lpFileName: LPCWSTR,
+        dwDesiredAccess: DWORD,
+        dwShareMode: DWORD,
+        lpSecurityAttributes: LPSECURITY_ATTRIBUTES,
+        dwCreationDisposition: DWORD,
+        dwFlagsAndAttributes: DWORD,
+        hTemplateFile: HANDLE,
+    ) -> HANDLE;
 }
 pub const _GET_FILEEX_INFO_LEVELS_GetFileExInfoStandard: _GET_FILEEX_INFO_LEVELS = 0;
 pub const _GET_FILEEX_INFO_LEVELS_GetFileExMaxInfoLevel: _GET_FILEEX_INFO_LEVELS = 1;
@@ -1440,6 +1596,18 @@ extern "C" {
 }
 extern "C" {
     pub fn GetFileSize(hFile: HANDLE, lpFileSizeHigh: LPDWORD) -> DWORD;
+}
+extern "C" {
+    pub fn CreateDirectoryA(
+        lpPathName: LPCSTR,
+        lpSecurityAttributes: LPSECURITY_ATTRIBUTES,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateDirectoryW(
+        lpPathName: LPCWSTR,
+        lpSecurityAttributes: LPSECURITY_ATTRIBUTES,
+    ) -> BOOL;
 }
 extern "C" {
     pub fn GetStdHandle(nStdHandle: DWORD) -> HANDLE;
@@ -12197,6 +12365,84 @@ extern "C" {
 extern "C" {
     pub fn GetHandleInformation(hObject: HANDLE, lpdwFlags: LPDWORD) -> BOOL;
 }
+extern "C" {
+    pub fn CreateMutexA(
+        lpMutexAttributes: LPSECURITY_ATTRIBUTES,
+        bInitialOwner: BOOL,
+        lpName: LPCSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateMutexW(
+        lpMutexAttributes: LPSECURITY_ATTRIBUTES,
+        bInitialOwner: BOOL,
+        lpName: LPCWSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateMutexExA(
+        lpMutexAttributes: LPSECURITY_ATTRIBUTES,
+        lpName: LPCSTR,
+        dwFlags: DWORD,
+        dwDesiredAccess: DWORD,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateMutexExW(
+        lpMutexAttributes: LPSECURITY_ATTRIBUTES,
+        lpName: LPCWSTR,
+        dwFlags: DWORD,
+        dwDesiredAccess: DWORD,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateSemaphoreA(
+        lpSemaphoreAttributes: LPSECURITY_ATTRIBUTES,
+        lInitialCount: LONG,
+        lMaximumCount: LONG,
+        lpName: LPCSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateSemaphoreW(
+        lpSemaphoreAttributes: LPSECURITY_ATTRIBUTES,
+        lInitialCount: LONG,
+        lMaximumCount: LONG,
+        lpName: LPCWSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateEventA(
+        lpEventAttributes: LPSECURITY_ATTRIBUTES,
+        bManualReset: BOOL,
+        bInitialState: BOOL,
+        lpName: LPCSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateEventW(
+        lpEventAttributes: LPSECURITY_ATTRIBUTES,
+        bManualReset: BOOL,
+        bInitialState: BOOL,
+        lpName: LPCWSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateEventExA(
+        lpEventAttributes: LPSECURITY_ATTRIBUTES,
+        lpName: LPCSTR,
+        dwFlags: DWORD,
+        dwDesiredAccess: DWORD,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateEventExW(
+        lpEventAttributes: LPSECURITY_ATTRIBUTES,
+        lpName: LPCWSTR,
+        dwFlags: DWORD,
+        dwDesiredAccess: DWORD,
+    ) -> HANDLE;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _RTL_CRITICAL_SECTION {
@@ -12319,6 +12565,78 @@ extern "C" {
         dwMilliseconds: DWORD,
         bAlertable: BOOL,
     ) -> DWORD;
+}
+extern "C" {
+    pub fn CreateWaitableTimerA(
+        lpTimerAttributes: LPSECURITY_ATTRIBUTES,
+        bManualReset: BOOL,
+        lpTimerName: LPCSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateWaitableTimerW(
+        lpTimerAttributes: LPSECURITY_ATTRIBUTES,
+        bManualReset: BOOL,
+        lpTimerName: LPCWSTR,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateWaitableTimerExA(
+        lpTimerAttributes: LPSECURITY_ATTRIBUTES,
+        lpTimerName: LPCSTR,
+        dwFlags: DWORD,
+        dwDesiredAccess: DWORD,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateWaitableTimerExW(
+        lpTimerAttributes: LPSECURITY_ATTRIBUTES,
+        lpTimerName: LPCWSTR,
+        dwFlags: DWORD,
+        dwDesiredAccess: DWORD,
+    ) -> HANDLE;
+}
+pub type WAITORTIMERCALLBACK =
+    ::std::option::Option<unsafe extern "C" fn(lpParameter: PVOID, TimerOrWaitFired: BOOLEAN)>;
+extern "C" {
+    pub fn CreateTimerQueue() -> HANDLE;
+}
+extern "C" {
+    pub fn CreateTimerQueueTimer(
+        phNewTimer: PHANDLE,
+        TimerQueue: HANDLE,
+        Callback: WAITORTIMERCALLBACK,
+        Parameter: PVOID,
+        DueTime: DWORD,
+        Period: DWORD,
+        Flags: ULONG,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateFileDescriptorEventW(
+        lpEventAttributes: LPSECURITY_ATTRIBUTES,
+        bManualReset: BOOL,
+        bInitialState: BOOL,
+        FileDescriptor: ::std::os::raw::c_int,
+        mode: ULONG,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateFileDescriptorEventA(
+        lpEventAttributes: LPSECURITY_ATTRIBUTES,
+        bManualReset: BOOL,
+        bInitialState: BOOL,
+        FileDescriptor: ::std::os::raw::c_int,
+        mode: ULONG,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateWaitObjectEvent(
+        lpEventAttributes: LPSECURITY_ATTRIBUTES,
+        bManualReset: BOOL,
+        bInitialState: BOOL,
+        pObject: *mut ::std::os::raw::c_void,
+    ) -> HANDLE;
 }
 extern "C" {
     pub fn GetEventFileDescriptor(hEvent: HANDLE) -> ::std::os::raw::c_int;
@@ -13472,11 +13790,578 @@ extern "C" {
 extern "C" {
     pub fn freerdp_get_error_connect_category(code: UINT32) -> *const ::std::os::raw::c_char;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _STARTUPINFOA {
+    pub cb: DWORD,
+    pub lpReserved: LPSTR,
+    pub lpDesktop: LPSTR,
+    pub lpTitle: LPSTR,
+    pub dwX: DWORD,
+    pub dwY: DWORD,
+    pub dwXSize: DWORD,
+    pub dwYSize: DWORD,
+    pub dwXCountChars: DWORD,
+    pub dwYCountChars: DWORD,
+    pub dwFillAttribute: DWORD,
+    pub dwFlags: DWORD,
+    pub wShowWindow: WORD,
+    pub cbReserved2: WORD,
+    pub lpReserved2: LPBYTE,
+    pub hStdInput: HANDLE,
+    pub hStdOutput: HANDLE,
+    pub hStdError: HANDLE,
+}
+#[test]
+fn bindgen_test_layout__STARTUPINFOA() {
+    assert_eq!(
+        ::std::mem::size_of::<_STARTUPINFOA>(),
+        104usize,
+        concat!("Size of: ", stringify!(_STARTUPINFOA))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_STARTUPINFOA>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_STARTUPINFOA))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).cb as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(cb)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).lpReserved as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(lpReserved)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).lpDesktop as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(lpDesktop)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).lpTitle as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(lpTitle)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwX as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwX)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwY as *const _ as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwY)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwXSize as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwXSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwYSize as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwYSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwXCountChars as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwXCountChars)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwYCountChars as *const _ as usize },
+        52usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwYCountChars)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwFillAttribute as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwFillAttribute)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).dwFlags as *const _ as usize },
+        60usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(dwFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).wShowWindow as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(wShowWindow)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).cbReserved2 as *const _ as usize },
+        66usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(cbReserved2)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).lpReserved2 as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(lpReserved2)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).hStdInput as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(hStdInput)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).hStdOutput as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(hStdOutput)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOA>())).hStdError as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOA),
+            "::",
+            stringify!(hStdError)
+        )
+    );
+}
+pub type LPSTARTUPINFOA = *mut _STARTUPINFOA;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _STARTUPINFOW {
+    pub cb: DWORD,
+    pub lpReserved: LPWSTR,
+    pub lpDesktop: LPWSTR,
+    pub lpTitle: LPWSTR,
+    pub dwX: DWORD,
+    pub dwY: DWORD,
+    pub dwXSize: DWORD,
+    pub dwYSize: DWORD,
+    pub dwXCountChars: DWORD,
+    pub dwYCountChars: DWORD,
+    pub dwFillAttribute: DWORD,
+    pub dwFlags: DWORD,
+    pub wShowWindow: WORD,
+    pub cbReserved2: WORD,
+    pub lpReserved2: LPBYTE,
+    pub hStdInput: HANDLE,
+    pub hStdOutput: HANDLE,
+    pub hStdError: HANDLE,
+}
+#[test]
+fn bindgen_test_layout__STARTUPINFOW() {
+    assert_eq!(
+        ::std::mem::size_of::<_STARTUPINFOW>(),
+        104usize,
+        concat!("Size of: ", stringify!(_STARTUPINFOW))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_STARTUPINFOW>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_STARTUPINFOW))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).cb as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(cb)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).lpReserved as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(lpReserved)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).lpDesktop as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(lpDesktop)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).lpTitle as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(lpTitle)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwX as *const _ as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwX)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwY as *const _ as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwY)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwXSize as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwXSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwYSize as *const _ as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwYSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwXCountChars as *const _ as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwXCountChars)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwYCountChars as *const _ as usize },
+        52usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwYCountChars)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwFillAttribute as *const _ as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwFillAttribute)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).dwFlags as *const _ as usize },
+        60usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(dwFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).wShowWindow as *const _ as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(wShowWindow)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).cbReserved2 as *const _ as usize },
+        66usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(cbReserved2)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).lpReserved2 as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(lpReserved2)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).hStdInput as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(hStdInput)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).hStdOutput as *const _ as usize },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(hStdOutput)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_STARTUPINFOW>())).hStdError as *const _ as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_STARTUPINFOW),
+            "::",
+            stringify!(hStdError)
+        )
+    );
+}
+pub type LPSTARTUPINFOW = *mut _STARTUPINFOW;
+extern "C" {
+    pub fn CreateProcessA(
+        lpApplicationName: LPCSTR,
+        lpCommandLine: LPSTR,
+        lpProcessAttributes: LPSECURITY_ATTRIBUTES,
+        lpThreadAttributes: LPSECURITY_ATTRIBUTES,
+        bInheritHandles: BOOL,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCSTR,
+        lpStartupInfo: LPSTARTUPINFOA,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateProcessW(
+        lpApplicationName: LPCWSTR,
+        lpCommandLine: LPWSTR,
+        lpProcessAttributes: LPSECURITY_ATTRIBUTES,
+        lpThreadAttributes: LPSECURITY_ATTRIBUTES,
+        bInheritHandles: BOOL,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCWSTR,
+        lpStartupInfo: LPSTARTUPINFOW,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateProcessAsUserA(
+        hToken: HANDLE,
+        lpApplicationName: LPCSTR,
+        lpCommandLine: LPSTR,
+        lpProcessAttributes: LPSECURITY_ATTRIBUTES,
+        lpThreadAttributes: LPSECURITY_ATTRIBUTES,
+        bInheritHandles: BOOL,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCSTR,
+        lpStartupInfo: LPSTARTUPINFOA,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateProcessAsUserW(
+        hToken: HANDLE,
+        lpApplicationName: LPCWSTR,
+        lpCommandLine: LPWSTR,
+        lpProcessAttributes: LPSECURITY_ATTRIBUTES,
+        lpThreadAttributes: LPSECURITY_ATTRIBUTES,
+        bInheritHandles: BOOL,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCWSTR,
+        lpStartupInfo: LPSTARTUPINFOW,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateProcessWithLogonA(
+        lpUsername: LPCSTR,
+        lpDomain: LPCSTR,
+        lpPassword: LPCSTR,
+        dwLogonFlags: DWORD,
+        lpApplicationName: LPCSTR,
+        lpCommandLine: LPSTR,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCSTR,
+        lpStartupInfo: LPSTARTUPINFOA,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateProcessWithLogonW(
+        lpUsername: LPCWSTR,
+        lpDomain: LPCWSTR,
+        lpPassword: LPCWSTR,
+        dwLogonFlags: DWORD,
+        lpApplicationName: LPCWSTR,
+        lpCommandLine: LPWSTR,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCWSTR,
+        lpStartupInfo: LPSTARTUPINFOW,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateProcessWithTokenA(
+        hToken: HANDLE,
+        dwLogonFlags: DWORD,
+        lpApplicationName: LPCSTR,
+        lpCommandLine: LPSTR,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCSTR,
+        lpStartupInfo: LPSTARTUPINFOA,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
+extern "C" {
+    pub fn CreateProcessWithTokenW(
+        hToken: HANDLE,
+        dwLogonFlags: DWORD,
+        lpApplicationName: LPCWSTR,
+        lpCommandLine: LPWSTR,
+        dwCreationFlags: DWORD,
+        lpEnvironment: LPVOID,
+        lpCurrentDirectory: LPCWSTR,
+        lpStartupInfo: LPSTARTUPINFOW,
+        lpProcessInformation: LPPROCESS_INFORMATION,
+    ) -> BOOL;
+}
 extern "C" {
     pub fn GetExitCodeProcess(hProcess: HANDLE, lpExitCode: LPDWORD) -> BOOL;
 }
 extern "C" {
     pub fn GetCurrentProcessId() -> DWORD;
+}
+extern "C" {
+    pub fn CreateThread(
+        lpThreadAttributes: LPSECURITY_ATTRIBUTES,
+        dwStackSize: SIZE_T,
+        lpStartAddress: LPTHREAD_START_ROUTINE,
+        lpParameter: LPVOID,
+        dwCreationFlags: DWORD,
+        lpThreadId: LPDWORD,
+    ) -> HANDLE;
+}
+extern "C" {
+    pub fn CreateRemoteThread(
+        hProcess: HANDLE,
+        lpThreadAttributes: LPSECURITY_ATTRIBUTES,
+        dwStackSize: SIZE_T,
+        lpStartAddress: LPTHREAD_START_ROUTINE,
+        lpParameter: LPVOID,
+        dwCreationFlags: DWORD,
+        lpThreadId: LPDWORD,
+    ) -> HANDLE;
 }
 extern "C" {
     pub fn GetExitCodeThread(hThread: HANDLE, lpExitCode: LPDWORD) -> BOOL;
@@ -17666,6 +18551,38 @@ extern "C" {
 }
 extern "C" {
     pub fn GetWindowLongPtrW(hWnd: HWND, nIndex: ::std::os::raw::c_int) -> LONG_PTR;
+}
+extern "C" {
+    pub fn CreateWindowExA(
+        dwExStyle: DWORD,
+        lpClassName: LPCSTR,
+        lpWindowName: LPCSTR,
+        dwStyle: DWORD,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        nWidth: ::std::os::raw::c_int,
+        nHeight: ::std::os::raw::c_int,
+        hWndParent: HWND,
+        hMenu: HMENU,
+        hInstance: HINSTANCE,
+        lpParam: LPVOID,
+    ) -> HWND;
+}
+extern "C" {
+    pub fn CreateWindowExW(
+        dwExStyle: DWORD,
+        lpClassName: LPCWSTR,
+        lpWindowName: LPCWSTR,
+        dwStyle: DWORD,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        nWidth: ::std::os::raw::c_int,
+        nHeight: ::std::os::raw::c_int,
+        hWndParent: HWND,
+        hMenu: HMENU,
+        hInstance: HINSTANCE,
+        lpParam: LPVOID,
+    ) -> HWND;
 }
 extern "C" {
     pub fn GetMessageA(lpMsg: LPMSG, hWnd: HWND, wMsgFilterMin: UINT, wMsgFilterMax: UINT) -> BOOL;

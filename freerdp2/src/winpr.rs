@@ -1,4 +1,9 @@
-use std::{io, time::Duration};
+use bitflags::bitflags;
+use std::{
+    io,
+    os::unix::prelude::{IntoRawFd, RawFd},
+    time::Duration,
+};
 
 use crate::{sys, RdpError, Result};
 
@@ -51,6 +56,42 @@ pub fn wait_for_multiple_objects(
             "Unhandled WaitForMultipleObjects() return: {:x}",
             res
         ))),
+    }
+}
+
+bitflags! {
+    pub struct FdMode: u32 {
+        const READ = 0b00000001;
+        const WRITE = 0b00000010;
+    }
+}
+
+#[repr(transparent)]
+#[derive(Clone, Copy, Debug)]
+pub struct SecurityAttributes(sys::_SECURITY_ATTRIBUTES);
+
+impl Handle {
+    pub fn new_fd_event(
+        event_attributes: &[SecurityAttributes],
+        manual_reset: bool,
+        initial_state: bool,
+        fd: RawFd,
+        mode: FdMode,
+    ) -> Self {
+        let file_descriptor = fd.into_raw_fd();
+        if !event_attributes.is_empty() {
+            unimplemented!();
+        }
+        let event_attributes = std::ptr::null_mut();
+        unsafe {
+            Self(sys::CreateFileDescriptorEventA(
+                event_attributes,
+                manual_reset as _,
+                initial_state as _,
+                file_descriptor,
+                mode.bits(),
+            ))
+        }
     }
 }
 
