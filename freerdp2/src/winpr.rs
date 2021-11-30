@@ -13,6 +13,9 @@ pub struct Handle {
     owned: bool,
 }
 
+unsafe impl Send for Handle {}
+unsafe impl Sync for Handle {}
+
 impl Default for Handle {
     fn default() -> Self {
         Self {
