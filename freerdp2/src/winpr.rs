@@ -61,7 +61,7 @@ pub fn wait_for_multiple_objects(
         )
     };
     match res {
-        res if res >= sys::WAIT_OBJECT_0 && res < (sys::WAIT_OBJECT_0 + len) => {
+        res if res < (sys::WAIT_OBJECT_0 + len) => {
             Ok(WaitResult::Object(res - sys::WAIT_OBJECT_0 + 1))
         }
         res if res >= sys::WAIT_ABANDONED && res < (sys::WAIT_ABANDONED + len) => {
