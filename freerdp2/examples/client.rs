@@ -131,6 +131,7 @@ fn main() {
 
     while !ctxt.instance.shall_disconnect() {
         let handles = ctxt.event_handles().unwrap();
+        let handles: Vec<_> = handles.iter().collect();
         wait_for_multiple_objects(&handles, false, None).unwrap();
 
         if !ctxt.check_event_handles() {

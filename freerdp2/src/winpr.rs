@@ -46,7 +46,7 @@ pub enum WaitResult {
 }
 
 pub fn wait_for_multiple_objects(
-    handles: &[Handle],
+    handles: &[&Handle],
     wait_all: bool,
     timeout: Option<&Duration>,
 ) -> Result<WaitResult> {
