@@ -7,6 +7,9 @@ pub struct RdpeiClientContext {
     pub(crate) inner: ptr::NonNull<sys::RdpeiClientContext>,
 }
 
+unsafe impl Send for RdpeiClientContext {}
+unsafe impl Sync for RdpeiClientContext {}
+
 impl RdpeiClientContext {
     pub unsafe fn from_ptr(ctxt: *mut sys::RdpeiClientContext) -> Self {
         Self {
@@ -28,6 +31,7 @@ impl RdpeiClientContext {
         }
     }
 
+    // FIXME: make &mut for Sync ?!
     pub fn add_contact(&self, contact: &Contact) -> Result<()> {
         let res = unsafe {
             let f = self.inner.as_ref().AddContact.unwrap();

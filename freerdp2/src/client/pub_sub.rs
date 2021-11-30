@@ -19,6 +19,9 @@ pub struct PubSub<'a, C: Handler> {
     _lifetime: PhantomData<&'a ()>,
 }
 
+unsafe impl<C> Send for PubSub<'_, C> where C: Handler + Send {}
+unsafe impl<C> Sync for PubSub<'_, C> where C: Handler + Sync {}
+
 pub trait PubSubEvent<'a>: From<&'a sys::wEventArgs> + std::fmt::Debug {
     const NAME: &'static str;
     type CType;
@@ -90,6 +93,9 @@ pub struct PubSubHandle {
     name: CString,
     handler: sys::pEventHandler,
 }
+
+unsafe impl Send for PubSubHandle {}
+unsafe impl Sync for PubSubHandle {}
 
 impl PubSubHandle {
     fn new(pub_sub: *mut sys::wPubSub, name: CString, handler: sys::pEventHandler) -> Self {

@@ -9,6 +9,9 @@ pub struct Settings {
     pub(crate) inner: ptr::NonNull<sys::rdpSettings>,
 }
 
+unsafe impl Send for Settings {}
+unsafe impl Sync for Settings {}
+
 impl Settings {
     pub(crate) fn new(settings: *mut sys::rdpSettings) -> Self {
         Self {

@@ -5,6 +5,9 @@ pub struct FreeRdp {
     pub(crate) inner: std::ptr::NonNull<sys::freerdp>,
 }
 
+unsafe impl Send for FreeRdp {}
+unsafe impl Sync for FreeRdp {}
+
 impl FreeRdp {
     pub(crate) fn new(instance: *mut sys::freerdp) -> Self {
         Self {

@@ -30,6 +30,9 @@ pub(crate) struct RdpContext<H> {
     default_channel_disconnected: Option<PubSubHandle>,
 }
 
+unsafe impl<H> Send for RdpContext<H> where H: Send {}
+unsafe impl<H> Sync for RdpContext<H> where H: Sync {}
+
 #[derive(Debug)]
 pub struct Context<H> {
     // we create aliases on the same underlying pointer... hmm...
@@ -41,6 +44,9 @@ pub struct Context<H> {
     pub rdpei: Option<RdpeiClientContext>,
     pub disp: Option<DispClientContext>,
 }
+
+unsafe impl<H> Send for Context<H> where H: Send {}
+unsafe impl<H> Sync for Context<H> where H: Sync {}
 
 impl<H> Drop for Context<H> {
     fn drop(&mut self) {

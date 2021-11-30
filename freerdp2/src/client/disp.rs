@@ -7,6 +7,9 @@ pub struct DispClientContext {
     pub(crate) inner: ptr::NonNull<sys::DispClientContext>,
 }
 
+unsafe impl Send for DispClientContext {}
+unsafe impl Sync for DispClientContext {}
+
 impl DispClientContext {
     pub unsafe fn from_ptr(ctxt: *mut sys::DispClientContext) -> Self {
         Self {
