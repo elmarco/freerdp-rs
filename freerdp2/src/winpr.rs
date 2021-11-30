@@ -7,13 +7,28 @@ use std::{
 
 use crate::{sys, RdpError, Result};
 
-#[repr(transparent)]
-#[derive(Clone, Copy, Debug)]
-pub struct Handle(sys::HANDLE);
+#[derive(Clone, Debug)]
+pub struct Handle {
+    handle: sys::HANDLE,
+    owned: bool,
+}
 
 impl Default for Handle {
     fn default() -> Self {
-        Self(std::ptr::null_mut())
+        Self {
+            handle: std::ptr::null_mut(),
+            owned: false,
+        }
+    }
+}
+
+impl Drop for Handle {
+    fn drop(&mut self) {
+        unsafe {
+            if self.owned {
+                sys::CloseHandle(self.handle);
+            }
+        }
     }
 }
 
@@ -33,6 +48,7 @@ pub fn wait_for_multiple_objects(
     timeout: Option<&Duration>,
 ) -> Result<WaitResult> {
     let len = handles.len() as _;
+    let handles: Vec<sys::HANDLE> = handles.iter().map(|h| h.handle).collect();
     let res = unsafe {
         sys::WaitForMultipleObjects(
             len,
@@ -71,6 +87,10 @@ bitflags! {
 pub struct SecurityAttributes(sys::_SECURITY_ATTRIBUTES);
 
 impl Handle {
+    pub(crate) fn new(handle: sys::HANDLE, owned: bool) -> Self {
+        Self { handle, owned }
+    }
+
     pub fn new_fd_event(
         event_attributes: &[SecurityAttributes],
         manual_reset: bool,
@@ -83,15 +103,18 @@ impl Handle {
             unimplemented!();
         }
         let event_attributes = std::ptr::null_mut();
-        unsafe {
-            Self(sys::CreateFileDescriptorEventA(
-                event_attributes,
-                manual_reset as _,
-                initial_state as _,
-                file_descriptor,
-                mode.bits(),
-            ))
-        }
+        Self::new(
+            unsafe {
+                sys::CreateFileDescriptorEventA(
+                    event_attributes,
+                    manual_reset as _,
+                    initial_state as _,
+                    file_descriptor,
+                    mode.bits(),
+                )
+            },
+            true,
+        )
     }
 }
 

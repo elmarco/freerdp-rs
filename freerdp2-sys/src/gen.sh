@@ -2,6 +2,7 @@
 
 bindgen -o bindgen.rs freerdp.h  \
 	--allowlist-function '.*Channel.*' \
+	--allowlist-function 'Close.*' \
 	--allowlist-function 'Create.*' \
 	--allowlist-function 'Get.*' \
 	--allowlist-function 'PubSub.*' \

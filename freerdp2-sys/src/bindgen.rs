@@ -12363,6 +12363,9 @@ extern "C" {
     ) -> BOOL;
 }
 extern "C" {
+    pub fn CloseHandle(hObject: HANDLE) -> BOOL;
+}
+extern "C" {
     pub fn GetHandleInformation(hObject: HANDLE, lpdwFlags: LPDWORD) -> BOOL;
 }
 extern "C" {

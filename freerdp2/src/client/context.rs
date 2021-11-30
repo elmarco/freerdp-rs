@@ -1,7 +1,6 @@
 use std::{
     ffi::CStr,
-    marker::PhantomData,
-    mem::size_of,
+    mem::{size_of, MaybeUninit},
     os::raw::{c_char, c_int},
     ptr,
 };
@@ -250,7 +249,8 @@ impl<H> Context<H> {
     }
 
     pub fn event_handles(&self) -> Result<Vec<Handle>> {
-        let mut handles = [Handle::default(); winpr::MAX_WAIT_OBJECTS];
+        let mut handles: [MaybeUninit<sys::HANDLE>; winpr::MAX_WAIT_OBJECTS] =
+            [MaybeUninit::uninit(); winpr::MAX_WAIT_OBJECTS];
         let res = unsafe {
             sys::freerdp_get_event_handles(
                 self.inner.as_ptr().cast(),
@@ -262,7 +262,10 @@ impl<H> Context<H> {
             0 => Err(RdpError::Failed(
                 "freerdp_get_event_handles() failed".into(),
             )),
-            _ => Ok(handles[0..(res as _)].to_vec()),
+            _ => Ok(handles[0..(res as _)]
+                .iter()
+                .map(|h| Handle::new(unsafe { h.assume_init() }, false))
+                .collect()),
         }
     }
 
