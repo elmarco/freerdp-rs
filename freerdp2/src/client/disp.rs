@@ -19,7 +19,7 @@ impl DispClientContext {
 
     // register_display_control_caps()?
 
-    pub fn send_monitor_layout(&self, monitors: &[MonitorLayout]) -> Result<()> {
+    pub fn send_monitor_layout(&mut self, monitors: &[MonitorLayout]) -> Result<()> {
         let res = unsafe {
             let f = self.inner.as_ref().SendMonitorLayout.unwrap();
             f(

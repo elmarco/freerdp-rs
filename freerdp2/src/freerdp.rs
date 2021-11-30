@@ -15,7 +15,7 @@ impl FreeRdp {
         }
     }
 
-    pub fn connect(&self) -> Result<()> {
+    pub fn connect(&mut self) -> Result<()> {
         let success = unsafe { sys::freerdp_connect(self.inner.as_ptr()) };
         if success > 0 {
             Ok(())
@@ -24,7 +24,7 @@ impl FreeRdp {
         }
     }
 
-    pub fn abort_connect(&self) -> Result<()> {
+    pub fn abort_connect(&mut self) -> Result<()> {
         let success = unsafe { sys::freerdp_abort_connect(self.inner.as_ptr()) };
         if success > 0 {
             Ok(())
@@ -33,11 +33,11 @@ impl FreeRdp {
         }
     }
 
-    pub fn shall_disconnect(&self) -> bool {
+    pub fn shall_disconnect(&mut self) -> bool {
         unsafe { sys::freerdp_shall_disconnect(self.inner.as_ptr()) > 0 }
     }
 
-    pub fn disconnect(&self) -> Result<()> {
+    pub fn disconnect(&mut self) -> Result<()> {
         let success = unsafe { sys::freerdp_disconnect(self.inner.as_ptr()) };
         if success > 0 {
             Ok(())
@@ -46,7 +46,7 @@ impl FreeRdp {
         }
     }
 
-    pub fn reconnect(&self) -> Result<()> {
+    pub fn reconnect(&mut self) -> Result<()> {
         let success = unsafe { sys::freerdp_reconnect(self.inner.as_ptr()) };
         if success > 0 {
             Ok(())
@@ -55,7 +55,7 @@ impl FreeRdp {
         }
     }
 
-    pub fn gdi_init(&self, format: &PixelFormat) -> Result<()> {
+    pub fn gdi_init(&mut self, format: &PixelFormat) -> Result<()> {
         if unsafe { sys::gdi_init(self.inner.as_ptr(), format.into()) > 0 } {
             Ok(())
         } else {
@@ -63,7 +63,7 @@ impl FreeRdp {
         }
     }
 
-    pub fn gdi_uninit(&self) {
+    pub fn gdi_uninit(&mut self) {
         unsafe { sys::gdi_free(self.inner.as_ptr()) }
     }
 }

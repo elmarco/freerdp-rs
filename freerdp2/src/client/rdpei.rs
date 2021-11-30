@@ -17,22 +17,21 @@ impl RdpeiClientContext {
         }
     }
 
-    pub fn version(&self) -> u32 {
+    pub fn version(&mut self) -> u32 {
         unsafe {
             let f = self.inner.as_ref().GetVersion.unwrap();
             f(self.inner.as_ptr())
         }
     }
 
-    pub fn features(&self) -> u32 {
+    pub fn features(&mut self) -> u32 {
         unsafe {
             let f = self.inner.as_ref().GetFeatures.unwrap();
             f(self.inner.as_ptr())
         }
     }
 
-    // FIXME: make &mut for Sync ?!
-    pub fn add_contact(&self, contact: &Contact) -> Result<()> {
+    pub fn add_contact(&mut self, contact: &Contact) -> Result<()> {
         let res = unsafe {
             let f = self.inner.as_ref().AddContact.unwrap();
             f(self.inner.as_ptr(), &contact.inner)
@@ -46,7 +45,7 @@ impl RdpeiClientContext {
         }
     }
 
-    pub fn touch_begin(&self, external_id: i32, x: i32, y: i32) -> Result<i32> {
+    pub fn touch_begin(&mut self, external_id: i32, x: i32, y: i32) -> Result<i32> {
         let mut id = 0;
         let res = unsafe {
             let f = self.inner.as_ref().TouchBegin.unwrap();
@@ -61,7 +60,7 @@ impl RdpeiClientContext {
         }
     }
 
-    pub fn touch_update(&self, external_id: i32, x: i32, y: i32) -> Result<i32> {
+    pub fn touch_update(&mut self, external_id: i32, x: i32, y: i32) -> Result<i32> {
         let mut id = 0;
         let res = unsafe {
             let f = self.inner.as_ref().TouchUpdate.unwrap();
@@ -76,7 +75,7 @@ impl RdpeiClientContext {
         }
     }
 
-    pub fn touch_end(&self, external_id: i32, x: i32, y: i32) -> Result<i32> {
+    pub fn touch_end(&mut self, external_id: i32, x: i32, y: i32) -> Result<i32> {
         let mut id = 0;
         let res = unsafe {
             let f = self.inner.as_ref().TouchEnd.unwrap();
@@ -91,7 +90,7 @@ impl RdpeiClientContext {
         }
     }
 
-    pub fn suspend_touch(&self) -> Result<()> {
+    pub fn suspend_touch(&mut self) -> Result<()> {
         let res = unsafe {
             let f = self.inner.as_ref().SuspendTouch.unwrap();
             f(self.inner.as_ptr())
@@ -105,7 +104,7 @@ impl RdpeiClientContext {
         }
     }
 
-    pub fn resume_touch(&self) -> Result<()> {
+    pub fn resume_touch(&mut self) -> Result<()> {
         let res = unsafe {
             let f = self.inner.as_ref().ResumeTouch.unwrap();
             f(self.inner.as_ptr())
