@@ -175,6 +175,13 @@ pub trait Handler {
         Ok(())
     }
 
+    fn authenticate(&mut self, _context: &mut Context<Self>) -> Result<()>
+    where
+        Self: Sized,
+    {
+        Err(RdpError::Unsupported)
+    }
+
     fn post_connect(&mut self, context: &mut Context<Self>) -> Result<()>
     where
         Self: Sized;
@@ -412,12 +419,16 @@ extern "C" fn rdp_instance_post_disconnect<H: Handler>(instance: *mut sys::freer
 }
 
 extern "C" fn rdp_instance_authenticate<H: Handler>(
-    _instance: *mut sys::freerdp,
+    instance: *mut sys::freerdp,
     _username: *mut *mut c_char,
     _password: *mut *mut c_char,
     _domain: *mut *mut c_char,
 ) -> sys::BOOL {
-    todo!()
+    let mut ctxt = unsafe { ptr::NonNull::new((*instance).context as *mut RdpContext<H>).unwrap() };
+    let handler = unsafe { ctxt.as_mut() }.handler.as_mut().unwrap();
+
+    let res = handler.authenticate(&mut Context::from_context(false, ctxt));
+    res.is_ok() as _
 }
 
 extern "C" fn rdp_instance_verify_certificate<H: Handler>(
