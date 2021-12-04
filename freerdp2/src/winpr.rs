@@ -61,9 +61,7 @@ pub fn wait_for_multiple_objects(
         )
     };
     match res {
-        res if res < (sys::WAIT_OBJECT_0 + len) => {
-            Ok(WaitResult::Object(res - sys::WAIT_OBJECT_0))
-        }
+        res if res < (sys::WAIT_OBJECT_0 + len) => Ok(WaitResult::Object(res - sys::WAIT_OBJECT_0)),
         res if res >= sys::WAIT_ABANDONED && res < (sys::WAIT_ABANDONED + len) => {
             Ok(WaitResult::Abandoned(res - sys::WAIT_ABANDONED))
         }
@@ -78,18 +76,16 @@ pub fn wait_for_multiple_objects(
     }
 }
 
-pub fn wait_for_single_object(handle: &Handle, timeout: Option<&Duration>) -> Result<WaitResult>
-{
+pub fn wait_for_single_object(handle: &Handle, timeout: Option<&Duration>) -> Result<WaitResult> {
     let res = unsafe {
-        sys::WaitForSingleObject(handle.handle, timeout.map_or(INFINITE, |t| t.as_millis() as _))
+        sys::WaitForSingleObject(
+            handle.handle,
+            timeout.map_or(INFINITE, |t| t.as_millis() as _),
+        )
     };
     match res {
-        sys::WAIT_OBJECT_0 => {
-            Ok(WaitResult::Object(sys::WAIT_OBJECT_0))
-        }
-        sys::WAIT_ABANDONED => {
-            Ok(WaitResult::Abandoned(0))
-        }
+        sys::WAIT_OBJECT_0 => Ok(WaitResult::Object(sys::WAIT_OBJECT_0)),
+        sys::WAIT_ABANDONED => Ok(WaitResult::Abandoned(0)),
         sys::WAIT_TIMEOUT => Ok(WaitResult::Timeout),
         u32::MAX => Err(RdpError::IOError(
             io::Error::from_raw_os_error(last_error()),

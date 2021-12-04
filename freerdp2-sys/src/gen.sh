@@ -18,6 +18,8 @@ bindgen -o bindgen.rs freerdp.h  \
 	--allowlist-function 'Wait.*' \
 	--allowlist-type 'Rdp.*' \
 	--allowlist-type 'Disp.*' \
+	--allowlist-type 'CLIP.*' \
+	--allowlist-type '.*ClientContext' \
 	--allowlist-var 'AUDIN_.*' \
 	--allowlist-var 'CB_.*' \
 	--allowlist-var 'CLIPRDR_.*' \

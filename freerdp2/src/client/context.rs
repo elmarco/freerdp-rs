@@ -8,9 +8,9 @@ use std::{
 use crate::{
     channels,
     client::{
-        DispClientContext, EventChannelConnected, EventChannelDisconnected, GeometryClientContext,
-        PubSub, PubSubHandle, PubSubHandler, RdpeiClientContext, RdpgfxClientContext,
-        VideoClientContext,
+        CliprdrClientContext, DispClientContext, EventChannelConnected, EventChannelDisconnected,
+        GeometryClientContext, PubSub, PubSubHandle, PubSubHandler, RdpeiClientContext,
+        RdpgfxClientContext, VideoClientContext,
     },
     gdi::{self, Gdi},
     graphics::Graphics,
@@ -126,6 +126,8 @@ pub trait Handler {
                     }
                     channels::rail::SVC_CHANNEL_NAME => {}
                     channels::cliprdr::SVC_CHANNEL_NAME => {
+                        let iface =
+                            unsafe { CliprdrClientContext::from_ptr(event.interface as *mut _) };
                         dbg!();
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {

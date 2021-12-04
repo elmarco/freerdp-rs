@@ -553,6 +553,7 @@ pub struct rdp_freerdp_peer {
     _unused: [u8; 0],
 }
 pub type freerdp_peer = rdp_freerdp_peer;
+pub type rdpClientContext = rdp_client_context;
 pub type RDP_CLIENT_ENTRY_POINTS_V1 = rdp_client_entry_points_v1;
 pub type RDP_CLIENT_ENTRY_POINTS = RDP_CLIENT_ENTRY_POINTS_V1;
 pub type size_t = ::std::os::raw::c_ulong;
@@ -18645,6 +18646,1624 @@ fn bindgen_test_layout__RAIL_UNICODE_STRING() {
     );
 }
 pub type RAIL_UNICODE_STRING = _RAIL_UNICODE_STRING;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_HIGH_CONTRAST {
+    pub flags: UINT32,
+    pub colorSchemeLength: UINT32,
+    pub colorScheme: RAIL_UNICODE_STRING,
+}
+#[test]
+fn bindgen_test_layout__RAIL_HIGH_CONTRAST() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_HIGH_CONTRAST>(),
+        24usize,
+        concat!("Size of: ", stringify!(_RAIL_HIGH_CONTRAST))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_HIGH_CONTRAST>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_RAIL_HIGH_CONTRAST))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_HIGH_CONTRAST>())).flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_HIGH_CONTRAST),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_HIGH_CONTRAST>())).colorSchemeLength as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_HIGH_CONTRAST),
+            "::",
+            stringify!(colorSchemeLength)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_HIGH_CONTRAST>())).colorScheme as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_HIGH_CONTRAST),
+            "::",
+            stringify!(colorScheme)
+        )
+    );
+}
+pub type RAIL_HIGH_CONTRAST = _RAIL_HIGH_CONTRAST;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_HANDSHAKE_ORDER {
+    pub buildNumber: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_HANDSHAKE_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_HANDSHAKE_ORDER>(),
+        4usize,
+        concat!("Size of: ", stringify!(_RAIL_HANDSHAKE_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_HANDSHAKE_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_HANDSHAKE_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_HANDSHAKE_ORDER>())).buildNumber as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_HANDSHAKE_ORDER),
+            "::",
+            stringify!(buildNumber)
+        )
+    );
+}
+pub type RAIL_HANDSHAKE_ORDER = _RAIL_HANDSHAKE_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_HANDSHAKE_EX_ORDER {
+    pub buildNumber: UINT32,
+    pub railHandshakeFlags: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_HANDSHAKE_EX_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_HANDSHAKE_EX_ORDER>(),
+        8usize,
+        concat!("Size of: ", stringify!(_RAIL_HANDSHAKE_EX_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_HANDSHAKE_EX_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_HANDSHAKE_EX_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_HANDSHAKE_EX_ORDER>())).buildNumber as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_HANDSHAKE_EX_ORDER),
+            "::",
+            stringify!(buildNumber)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_HANDSHAKE_EX_ORDER>())).railHandshakeFlags as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_HANDSHAKE_EX_ORDER),
+            "::",
+            stringify!(railHandshakeFlags)
+        )
+    );
+}
+pub type RAIL_HANDSHAKE_EX_ORDER = _RAIL_HANDSHAKE_EX_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_CLIENT_STATUS_ORDER {
+    pub flags: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_CLIENT_STATUS_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_CLIENT_STATUS_ORDER>(),
+        4usize,
+        concat!("Size of: ", stringify!(_RAIL_CLIENT_STATUS_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_CLIENT_STATUS_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_CLIENT_STATUS_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_CLIENT_STATUS_ORDER>())).flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_CLIENT_STATUS_ORDER),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+pub type RAIL_CLIENT_STATUS_ORDER = _RAIL_CLIENT_STATUS_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_EXEC_ORDER {
+    pub flags: UINT16,
+    pub RemoteApplicationProgram: *mut ::std::os::raw::c_char,
+    pub RemoteApplicationWorkingDir: *mut ::std::os::raw::c_char,
+    pub RemoteApplicationArguments: *mut ::std::os::raw::c_char,
+}
+#[test]
+fn bindgen_test_layout__RAIL_EXEC_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_EXEC_ORDER>(),
+        32usize,
+        concat!("Size of: ", stringify!(_RAIL_EXEC_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_EXEC_ORDER>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_RAIL_EXEC_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_EXEC_ORDER>())).flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_ORDER),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_EXEC_ORDER>())).RemoteApplicationProgram as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_ORDER),
+            "::",
+            stringify!(RemoteApplicationProgram)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_EXEC_ORDER>())).RemoteApplicationWorkingDir as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_ORDER),
+            "::",
+            stringify!(RemoteApplicationWorkingDir)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_EXEC_ORDER>())).RemoteApplicationArguments as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_ORDER),
+            "::",
+            stringify!(RemoteApplicationArguments)
+        )
+    );
+}
+pub type RAIL_EXEC_ORDER = _RAIL_EXEC_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_EXEC_RESULT_ORDER {
+    pub flags: UINT16,
+    pub execResult: UINT16,
+    pub rawResult: UINT32,
+    pub exeOrFile: RAIL_UNICODE_STRING,
+}
+#[test]
+fn bindgen_test_layout__RAIL_EXEC_RESULT_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_EXEC_RESULT_ORDER>(),
+        24usize,
+        concat!("Size of: ", stringify!(_RAIL_EXEC_RESULT_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_EXEC_RESULT_ORDER>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_RAIL_EXEC_RESULT_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_EXEC_RESULT_ORDER>())).flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_RESULT_ORDER),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_EXEC_RESULT_ORDER>())).execResult as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_RESULT_ORDER),
+            "::",
+            stringify!(execResult)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_EXEC_RESULT_ORDER>())).rawResult as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_RESULT_ORDER),
+            "::",
+            stringify!(rawResult)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_EXEC_RESULT_ORDER>())).exeOrFile as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_EXEC_RESULT_ORDER),
+            "::",
+            stringify!(exeOrFile)
+        )
+    );
+}
+pub type RAIL_EXEC_RESULT_ORDER = _RAIL_EXEC_RESULT_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _TS_FILTERKEYS {
+    pub Flags: UINT32,
+    pub WaitTime: UINT32,
+    pub DelayTime: UINT32,
+    pub RepeatTime: UINT32,
+    pub BounceTime: UINT32,
+}
+#[test]
+fn bindgen_test_layout__TS_FILTERKEYS() {
+    assert_eq!(
+        ::std::mem::size_of::<_TS_FILTERKEYS>(),
+        20usize,
+        concat!("Size of: ", stringify!(_TS_FILTERKEYS))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_TS_FILTERKEYS>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_TS_FILTERKEYS))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_TS_FILTERKEYS>())).Flags as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_TS_FILTERKEYS),
+            "::",
+            stringify!(Flags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_TS_FILTERKEYS>())).WaitTime as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_TS_FILTERKEYS),
+            "::",
+            stringify!(WaitTime)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_TS_FILTERKEYS>())).DelayTime as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_TS_FILTERKEYS),
+            "::",
+            stringify!(DelayTime)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_TS_FILTERKEYS>())).RepeatTime as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_TS_FILTERKEYS),
+            "::",
+            stringify!(RepeatTime)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_TS_FILTERKEYS>())).BounceTime as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_TS_FILTERKEYS),
+            "::",
+            stringify!(BounceTime)
+        )
+    );
+}
+pub type TS_FILTERKEYS = _TS_FILTERKEYS;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_SYSPARAM_ORDER {
+    pub param: UINT32,
+    pub params: UINT32,
+    pub dragFullWindows: BOOL,
+    pub keyboardCues: BOOL,
+    pub keyboardPref: BOOL,
+    pub mouseButtonSwap: BOOL,
+    pub workArea: RECTANGLE_16,
+    pub displayChange: RECTANGLE_16,
+    pub taskbarPos: RECTANGLE_16,
+    pub highContrast: RAIL_HIGH_CONTRAST,
+    pub caretWidth: UINT32,
+    pub stickyKeys: UINT32,
+    pub toggleKeys: UINT32,
+    pub filterKeys: TS_FILTERKEYS,
+    pub setScreenSaveActive: BOOL,
+    pub setScreenSaveSecure: BOOL,
+}
+#[test]
+fn bindgen_test_layout__RAIL_SYSPARAM_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_SYSPARAM_ORDER>(),
+        112usize,
+        concat!("Size of: ", stringify!(_RAIL_SYSPARAM_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_SYSPARAM_ORDER>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_RAIL_SYSPARAM_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).param as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(param)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).params as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(params)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).dragFullWindows as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(dragFullWindows)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).keyboardCues as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(keyboardCues)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).keyboardPref as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(keyboardPref)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).mouseButtonSwap as *const _ as usize
+        },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(mouseButtonSwap)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).workArea as *const _ as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(workArea)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).displayChange as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(displayChange)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).taskbarPos as *const _ as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(taskbarPos)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).highContrast as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(highContrast)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).caretWidth as *const _ as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(caretWidth)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).stickyKeys as *const _ as usize },
+        76usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(stickyKeys)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).toggleKeys as *const _ as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(toggleKeys)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).filterKeys as *const _ as usize },
+        84usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(filterKeys)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).setScreenSaveActive as *const _
+                as usize
+        },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(setScreenSaveActive)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_SYSPARAM_ORDER>())).setScreenSaveSecure as *const _
+                as usize
+        },
+        108usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSPARAM_ORDER),
+            "::",
+            stringify!(setScreenSaveSecure)
+        )
+    );
+}
+pub type RAIL_SYSPARAM_ORDER = _RAIL_SYSPARAM_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_ACTIVATE_ORDER {
+    pub windowId: UINT32,
+    pub enabled: BOOL,
+}
+#[test]
+fn bindgen_test_layout__RAIL_ACTIVATE_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_ACTIVATE_ORDER>(),
+        8usize,
+        concat!("Size of: ", stringify!(_RAIL_ACTIVATE_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_ACTIVATE_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_ACTIVATE_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_ACTIVATE_ORDER>())).windowId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_ACTIVATE_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_ACTIVATE_ORDER>())).enabled as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_ACTIVATE_ORDER),
+            "::",
+            stringify!(enabled)
+        )
+    );
+}
+pub type RAIL_ACTIVATE_ORDER = _RAIL_ACTIVATE_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_SYSMENU_ORDER {
+    pub windowId: UINT32,
+    pub left: INT16,
+    pub top: INT16,
+}
+#[test]
+fn bindgen_test_layout__RAIL_SYSMENU_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_SYSMENU_ORDER>(),
+        8usize,
+        concat!("Size of: ", stringify!(_RAIL_SYSMENU_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_SYSMENU_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_SYSMENU_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSMENU_ORDER>())).windowId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSMENU_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSMENU_ORDER>())).left as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSMENU_ORDER),
+            "::",
+            stringify!(left)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSMENU_ORDER>())).top as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSMENU_ORDER),
+            "::",
+            stringify!(top)
+        )
+    );
+}
+pub type RAIL_SYSMENU_ORDER = _RAIL_SYSMENU_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_SYSCOMMAND_ORDER {
+    pub windowId: UINT32,
+    pub command: UINT16,
+}
+#[test]
+fn bindgen_test_layout__RAIL_SYSCOMMAND_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_SYSCOMMAND_ORDER>(),
+        8usize,
+        concat!("Size of: ", stringify!(_RAIL_SYSCOMMAND_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_SYSCOMMAND_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_SYSCOMMAND_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSCOMMAND_ORDER>())).windowId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSCOMMAND_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SYSCOMMAND_ORDER>())).command as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SYSCOMMAND_ORDER),
+            "::",
+            stringify!(command)
+        )
+    );
+}
+pub type RAIL_SYSCOMMAND_ORDER = _RAIL_SYSCOMMAND_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_NOTIFY_EVENT_ORDER {
+    pub windowId: UINT32,
+    pub notifyIconId: UINT32,
+    pub message: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_NOTIFY_EVENT_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_NOTIFY_EVENT_ORDER>(),
+        12usize,
+        concat!("Size of: ", stringify!(_RAIL_NOTIFY_EVENT_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_NOTIFY_EVENT_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_NOTIFY_EVENT_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_NOTIFY_EVENT_ORDER>())).windowId as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_NOTIFY_EVENT_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_NOTIFY_EVENT_ORDER>())).notifyIconId as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_NOTIFY_EVENT_ORDER),
+            "::",
+            stringify!(notifyIconId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_NOTIFY_EVENT_ORDER>())).message as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_NOTIFY_EVENT_ORDER),
+            "::",
+            stringify!(message)
+        )
+    );
+}
+pub type RAIL_NOTIFY_EVENT_ORDER = _RAIL_NOTIFY_EVENT_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_MINMAXINFO_ORDER {
+    pub windowId: UINT32,
+    pub maxWidth: INT16,
+    pub maxHeight: INT16,
+    pub maxPosX: INT16,
+    pub maxPosY: INT16,
+    pub minTrackWidth: INT16,
+    pub minTrackHeight: INT16,
+    pub maxTrackWidth: INT16,
+    pub maxTrackHeight: INT16,
+}
+#[test]
+fn bindgen_test_layout__RAIL_MINMAXINFO_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_MINMAXINFO_ORDER>(),
+        20usize,
+        concat!("Size of: ", stringify!(_RAIL_MINMAXINFO_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_MINMAXINFO_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_MINMAXINFO_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).windowId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).maxWidth as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(maxWidth)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).maxHeight as *const _ as usize
+        },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(maxHeight)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).maxPosX as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(maxPosX)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).maxPosY as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(maxPosY)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).minTrackWidth as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(minTrackWidth)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).minTrackHeight as *const _ as usize
+        },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(minTrackHeight)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).maxTrackWidth as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(maxTrackWidth)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_MINMAXINFO_ORDER>())).maxTrackHeight as *const _ as usize
+        },
+        18usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_MINMAXINFO_ORDER),
+            "::",
+            stringify!(maxTrackHeight)
+        )
+    );
+}
+pub type RAIL_MINMAXINFO_ORDER = _RAIL_MINMAXINFO_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_LOCALMOVESIZE_ORDER {
+    pub windowId: UINT32,
+    pub isMoveSizeStart: BOOL,
+    pub moveSizeType: UINT16,
+    pub posX: INT16,
+    pub posY: INT16,
+}
+#[test]
+fn bindgen_test_layout__RAIL_LOCALMOVESIZE_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_LOCALMOVESIZE_ORDER>(),
+        16usize,
+        concat!("Size of: ", stringify!(_RAIL_LOCALMOVESIZE_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_LOCALMOVESIZE_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_LOCALMOVESIZE_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LOCALMOVESIZE_ORDER>())).windowId as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LOCALMOVESIZE_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LOCALMOVESIZE_ORDER>())).isMoveSizeStart as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LOCALMOVESIZE_ORDER),
+            "::",
+            stringify!(isMoveSizeStart)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LOCALMOVESIZE_ORDER>())).moveSizeType as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LOCALMOVESIZE_ORDER),
+            "::",
+            stringify!(moveSizeType)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_LOCALMOVESIZE_ORDER>())).posX as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LOCALMOVESIZE_ORDER),
+            "::",
+            stringify!(posX)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_LOCALMOVESIZE_ORDER>())).posY as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LOCALMOVESIZE_ORDER),
+            "::",
+            stringify!(posY)
+        )
+    );
+}
+pub type RAIL_LOCALMOVESIZE_ORDER = _RAIL_LOCALMOVESIZE_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_WINDOWMOVE_ORDER {
+    pub windowId: UINT32,
+    pub left: INT16,
+    pub top: INT16,
+    pub right: INT16,
+    pub bottom: INT16,
+}
+#[test]
+fn bindgen_test_layout__RAIL_WINDOWMOVE_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_WINDOWMOVE_ORDER>(),
+        12usize,
+        concat!("Size of: ", stringify!(_RAIL_WINDOWMOVE_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_WINDOWMOVE_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_WINDOWMOVE_ORDER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_WINDOWMOVE_ORDER>())).windowId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_WINDOWMOVE_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_WINDOWMOVE_ORDER>())).left as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_WINDOWMOVE_ORDER),
+            "::",
+            stringify!(left)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_WINDOWMOVE_ORDER>())).top as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_WINDOWMOVE_ORDER),
+            "::",
+            stringify!(top)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_WINDOWMOVE_ORDER>())).right as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_WINDOWMOVE_ORDER),
+            "::",
+            stringify!(right)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_WINDOWMOVE_ORDER>())).bottom as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_WINDOWMOVE_ORDER),
+            "::",
+            stringify!(bottom)
+        )
+    );
+}
+pub type RAIL_WINDOW_MOVE_ORDER = _RAIL_WINDOWMOVE_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_GET_APPID_REQ_ORDER {
+    pub windowId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_GET_APPID_REQ_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_GET_APPID_REQ_ORDER>(),
+        4usize,
+        concat!("Size of: ", stringify!(_RAIL_GET_APPID_REQ_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_GET_APPID_REQ_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_GET_APPID_REQ_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_GET_APPID_REQ_ORDER>())).windowId as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_GET_APPID_REQ_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+}
+pub type RAIL_GET_APPID_REQ_ORDER = _RAIL_GET_APPID_REQ_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_GET_APPID_RESP_ORDER {
+    pub windowId: UINT32,
+    pub applicationId: [WCHAR; 260usize],
+}
+#[test]
+fn bindgen_test_layout__RAIL_GET_APPID_RESP_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_GET_APPID_RESP_ORDER>(),
+        524usize,
+        concat!("Size of: ", stringify!(_RAIL_GET_APPID_RESP_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_GET_APPID_RESP_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_GET_APPID_RESP_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_GET_APPID_RESP_ORDER>())).windowId as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_GET_APPID_RESP_ORDER),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_GET_APPID_RESP_ORDER>())).applicationId as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_GET_APPID_RESP_ORDER),
+            "::",
+            stringify!(applicationId)
+        )
+    );
+}
+pub type RAIL_GET_APPID_RESP_ORDER = _RAIL_GET_APPID_RESP_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_LANGBAR_INFO_ORDER {
+    pub languageBarStatus: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_LANGBAR_INFO_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_LANGBAR_INFO_ORDER>(),
+        4usize,
+        concat!("Size of: ", stringify!(_RAIL_LANGBAR_INFO_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_LANGBAR_INFO_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_LANGBAR_INFO_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LANGBAR_INFO_ORDER>())).languageBarStatus as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LANGBAR_INFO_ORDER),
+            "::",
+            stringify!(languageBarStatus)
+        )
+    );
+}
+pub type RAIL_LANGBAR_INFO_ORDER = _RAIL_LANGBAR_INFO_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_COMPARTMENT_INFO_ORDER {
+    pub ImeState: UINT32,
+    pub ImeConvMode: UINT32,
+    pub ImeSentenceMode: UINT32,
+    pub KanaMode: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_COMPARTMENT_INFO_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_COMPARTMENT_INFO_ORDER>(),
+        16usize,
+        concat!("Size of: ", stringify!(_RAIL_COMPARTMENT_INFO_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_COMPARTMENT_INFO_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_COMPARTMENT_INFO_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_COMPARTMENT_INFO_ORDER>())).ImeState as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_COMPARTMENT_INFO_ORDER),
+            "::",
+            stringify!(ImeState)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_COMPARTMENT_INFO_ORDER>())).ImeConvMode as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_COMPARTMENT_INFO_ORDER),
+            "::",
+            stringify!(ImeConvMode)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_COMPARTMENT_INFO_ORDER>())).ImeSentenceMode as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_COMPARTMENT_INFO_ORDER),
+            "::",
+            stringify!(ImeSentenceMode)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_COMPARTMENT_INFO_ORDER>())).KanaMode as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_COMPARTMENT_INFO_ORDER),
+            "::",
+            stringify!(KanaMode)
+        )
+    );
+}
+pub type RAIL_COMPARTMENT_INFO_ORDER = _RAIL_COMPARTMENT_INFO_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_ZORDER_SYNC {
+    pub windowIdMarker: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_ZORDER_SYNC() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_ZORDER_SYNC>(),
+        4usize,
+        concat!("Size of: ", stringify!(_RAIL_ZORDER_SYNC))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_ZORDER_SYNC>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_ZORDER_SYNC))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_ZORDER_SYNC>())).windowIdMarker as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_ZORDER_SYNC),
+            "::",
+            stringify!(windowIdMarker)
+        )
+    );
+}
+pub type RAIL_ZORDER_SYNC = _RAIL_ZORDER_SYNC;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_CLOAK {
+    pub windowId: UINT32,
+    pub cloak: BOOL,
+}
+#[test]
+fn bindgen_test_layout__RAIL_CLOAK() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_CLOAK>(),
+        8usize,
+        concat!("Size of: ", stringify!(_RAIL_CLOAK))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_CLOAK>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_CLOAK))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_CLOAK>())).windowId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_CLOAK),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_CLOAK>())).cloak as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_CLOAK),
+            "::",
+            stringify!(cloak)
+        )
+    );
+}
+pub type RAIL_CLOAK = _RAIL_CLOAK;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_POWER_DISPLAY_REQUEST {
+    pub active: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_POWER_DISPLAY_REQUEST() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_POWER_DISPLAY_REQUEST>(),
+        4usize,
+        concat!("Size of: ", stringify!(_RAIL_POWER_DISPLAY_REQUEST))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_POWER_DISPLAY_REQUEST>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_POWER_DISPLAY_REQUEST))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_POWER_DISPLAY_REQUEST>())).active as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_POWER_DISPLAY_REQUEST),
+            "::",
+            stringify!(active)
+        )
+    );
+}
+pub type RAIL_POWER_DISPLAY_REQUEST = _RAIL_POWER_DISPLAY_REQUEST;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_TASKBAR_INFO_ORDER {
+    pub TaskbarMessage: UINT32,
+    pub WindowIdTab: UINT32,
+    pub Body: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_TASKBAR_INFO_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_TASKBAR_INFO_ORDER>(),
+        12usize,
+        concat!("Size of: ", stringify!(_RAIL_TASKBAR_INFO_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_TASKBAR_INFO_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_TASKBAR_INFO_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_TASKBAR_INFO_ORDER>())).TaskbarMessage as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_TASKBAR_INFO_ORDER),
+            "::",
+            stringify!(TaskbarMessage)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_TASKBAR_INFO_ORDER>())).WindowIdTab as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_TASKBAR_INFO_ORDER),
+            "::",
+            stringify!(WindowIdTab)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_TASKBAR_INFO_ORDER>())).Body as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_TASKBAR_INFO_ORDER),
+            "::",
+            stringify!(Body)
+        )
+    );
+}
+pub type RAIL_TASKBAR_INFO_ORDER = _RAIL_TASKBAR_INFO_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_LANGUAGEIME_INFO_ORDER {
+    pub ProfileType: UINT32,
+    pub LanguageID: UINT32,
+    pub LanguageProfileCLSID: GUID,
+    pub ProfileGUID: GUID,
+    pub KeyboardLayout: UINT32,
+}
+#[test]
+fn bindgen_test_layout__RAIL_LANGUAGEIME_INFO_ORDER() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_LANGUAGEIME_INFO_ORDER>(),
+        44usize,
+        concat!("Size of: ", stringify!(_RAIL_LANGUAGEIME_INFO_ORDER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_LANGUAGEIME_INFO_ORDER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_LANGUAGEIME_INFO_ORDER))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LANGUAGEIME_INFO_ORDER>())).ProfileType as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LANGUAGEIME_INFO_ORDER),
+            "::",
+            stringify!(ProfileType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LANGUAGEIME_INFO_ORDER>())).LanguageID as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LANGUAGEIME_INFO_ORDER),
+            "::",
+            stringify!(LanguageID)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LANGUAGEIME_INFO_ORDER>())).LanguageProfileCLSID
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LANGUAGEIME_INFO_ORDER),
+            "::",
+            stringify!(LanguageProfileCLSID)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LANGUAGEIME_INFO_ORDER>())).ProfileGUID as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LANGUAGEIME_INFO_ORDER),
+            "::",
+            stringify!(ProfileGUID)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_LANGUAGEIME_INFO_ORDER>())).KeyboardLayout as *const _
+                as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_LANGUAGEIME_INFO_ORDER),
+            "::",
+            stringify!(KeyboardLayout)
+        )
+    );
+}
+pub type RAIL_LANGUAGEIME_INFO_ORDER = _RAIL_LANGUAGEIME_INFO_ORDER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_SNAP_ARRANGE {
+    pub windowId: UINT32,
+    pub left: INT16,
+    pub top: INT16,
+    pub right: INT16,
+    pub bottom: INT16,
+}
+#[test]
+fn bindgen_test_layout__RAIL_SNAP_ARRANGE() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_SNAP_ARRANGE>(),
+        12usize,
+        concat!("Size of: ", stringify!(_RAIL_SNAP_ARRANGE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_SNAP_ARRANGE>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_SNAP_ARRANGE))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SNAP_ARRANGE>())).windowId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SNAP_ARRANGE),
+            "::",
+            stringify!(windowId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SNAP_ARRANGE>())).left as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SNAP_ARRANGE),
+            "::",
+            stringify!(left)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SNAP_ARRANGE>())).top as *const _ as usize },
+        6usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SNAP_ARRANGE),
+            "::",
+            stringify!(top)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SNAP_ARRANGE>())).right as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SNAP_ARRANGE),
+            "::",
+            stringify!(right)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_RAIL_SNAP_ARRANGE>())).bottom as *const _ as usize },
+        10usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_SNAP_ARRANGE),
+            "::",
+            stringify!(bottom)
+        )
+    );
+}
+pub type RAIL_SNAP_ARRANGE = _RAIL_SNAP_ARRANGE;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _RAIL_GET_APPID_RESP_EX {
+    pub windowID: UINT32,
+    pub applicationID: [WCHAR; 260usize],
+    pub processId: UINT32,
+    pub processImageName: [WCHAR; 260usize],
+}
+#[test]
+fn bindgen_test_layout__RAIL_GET_APPID_RESP_EX() {
+    assert_eq!(
+        ::std::mem::size_of::<_RAIL_GET_APPID_RESP_EX>(),
+        1048usize,
+        concat!("Size of: ", stringify!(_RAIL_GET_APPID_RESP_EX))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_RAIL_GET_APPID_RESP_EX>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_RAIL_GET_APPID_RESP_EX))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_GET_APPID_RESP_EX>())).windowID as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_GET_APPID_RESP_EX),
+            "::",
+            stringify!(windowID)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_GET_APPID_RESP_EX>())).applicationID as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_GET_APPID_RESP_EX),
+            "::",
+            stringify!(applicationID)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_GET_APPID_RESP_EX>())).processId as *const _ as usize
+        },
+        524usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_GET_APPID_RESP_EX),
+            "::",
+            stringify!(processId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_RAIL_GET_APPID_RESP_EX>())).processImageName as *const _
+                as usize
+        },
+        528usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_RAIL_GET_APPID_RESP_EX),
+            "::",
+            stringify!(processImageName)
+        )
+    );
+}
+pub type RAIL_GET_APPID_RESP_EX = _RAIL_GET_APPID_RESP_EX;
 pub type rdpBitmap = rdp_bitmap;
 pub type rdpPointer = rdp_pointer;
 pub type rdpGlyph = rdp_glyph;
@@ -30281,6 +31900,45 @@ fn bindgen_test_layout_rdp_client_entry_points_v1() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct rdp_client_context {
+    pub context: rdpContext,
+    pub thread: HANDLE,
+}
+#[test]
+fn bindgen_test_layout_rdp_client_context() {
+    assert_eq!(
+        ::std::mem::size_of::<rdp_client_context>(),
+        1032usize,
+        concat!("Size of: ", stringify!(rdp_client_context))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<rdp_client_context>(),
+        8usize,
+        concat!("Alignment of ", stringify!(rdp_client_context))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<rdp_client_context>())).context as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(rdp_client_context),
+            "::",
+            stringify!(context)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<rdp_client_context>())).thread as *const _ as usize },
+        1024usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(rdp_client_context),
+            "::",
+            stringify!(thread)
+        )
+    );
+}
 extern "C" {
     pub fn freerdp_client_context_new(
         pEntryPoints: *mut RDP_CLIENT_ENTRY_POINTS,
@@ -31979,6 +33637,589 @@ fn bindgen_test_layout__rdpei_client_context() {
         )
     );
 }
+#[doc = " Client Interface"]
+pub type RailClientContext = _rail_client_context;
+pub type pcRailOnOpen = ::std::option::Option<
+    unsafe extern "C" fn(context: *mut RailClientContext, sendHandshake: *mut BOOL) -> UINT,
+>;
+pub type pcRailClientExecute = ::std::option::Option<
+    unsafe extern "C" fn(context: *mut RailClientContext, exec: *const RAIL_EXEC_ORDER) -> UINT,
+>;
+pub type pcRailClientActivate = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        activate: *const RAIL_ACTIVATE_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientSystemParam = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        sysparam: *const RAIL_SYSPARAM_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerSystemParam = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        sysparam: *const RAIL_SYSPARAM_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientSystemCommand = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        syscommand: *const RAIL_SYSCOMMAND_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientHandshake = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        handshake: *const RAIL_HANDSHAKE_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerHandshake = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        handshake: *const RAIL_HANDSHAKE_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerHandshakeEx = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        handshakeEx: *const RAIL_HANDSHAKE_EX_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientNotifyEvent = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        notifyEvent: *const RAIL_NOTIFY_EVENT_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientWindowMove = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        windowMove: *const RAIL_WINDOW_MOVE_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerLocalMoveSize = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        localMoveSize: *const RAIL_LOCALMOVESIZE_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerMinMaxInfo = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        minMaxInfo: *const RAIL_MINMAXINFO_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientInformation = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        clientStatus: *const RAIL_CLIENT_STATUS_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientSystemMenu = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        sysmenu: *const RAIL_SYSMENU_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerTaskBarInfo = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        taskBarInfo: *const RAIL_TASKBAR_INFO_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientLanguageBarInfo = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        langBarInfo: *const RAIL_LANGBAR_INFO_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerLanguageBarInfo = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        langBarInfo: *const RAIL_LANGBAR_INFO_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientLanguageIMEInfo = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        langImeInfo: *const RAIL_LANGUAGEIME_INFO_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerExecuteResult = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        execResult: *const RAIL_EXEC_RESULT_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailClientGetAppIdRequest = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        getAppIdReq: *const RAIL_GET_APPID_REQ_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerGetAppIdResponse = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        getAppIdResp: *const RAIL_GET_APPID_RESP_ORDER,
+    ) -> UINT,
+>;
+pub type pcRailServerZOrderSync = ::std::option::Option<
+    unsafe extern "C" fn(context: *mut RailClientContext, zorder: *const RAIL_ZORDER_SYNC) -> UINT,
+>;
+pub type pcRailServerCloak = ::std::option::Option<
+    unsafe extern "C" fn(context: *mut RailClientContext, cloak: *const RAIL_CLOAK) -> UINT,
+>;
+pub type pcRailClientCloak = ::std::option::Option<
+    unsafe extern "C" fn(context: *mut RailClientContext, cloak: *const RAIL_CLOAK) -> UINT,
+>;
+pub type pcRailServerPowerDisplayRequest = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        power: *const RAIL_POWER_DISPLAY_REQUEST,
+    ) -> UINT,
+>;
+pub type pcRailClientSnapArrange = ::std::option::Option<
+    unsafe extern "C" fn(context: *mut RailClientContext, snap: *const RAIL_SNAP_ARRANGE) -> UINT,
+>;
+pub type pcRailServerGetAppidResponseExtended = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        id: *const RAIL_GET_APPID_RESP_EX,
+    ) -> UINT,
+>;
+pub type pcRailClientCompartmentInfo = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut RailClientContext,
+        compartmentInfo: *const RAIL_COMPARTMENT_INFO_ORDER,
+    ) -> UINT,
+>;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _rail_client_context {
+    pub handle: *mut ::std::os::raw::c_void,
+    pub custom: *mut ::std::os::raw::c_void,
+    pub ClientExecute: pcRailClientExecute,
+    pub ClientActivate: pcRailClientActivate,
+    pub ClientSystemParam: pcRailClientSystemParam,
+    pub ServerSystemParam: pcRailServerSystemParam,
+    pub ClientSystemCommand: pcRailClientSystemCommand,
+    pub ClientHandshake: pcRailClientHandshake,
+    pub ServerHandshake: pcRailServerHandshake,
+    pub ServerHandshakeEx: pcRailServerHandshakeEx,
+    pub ClientNotifyEvent: pcRailClientNotifyEvent,
+    pub ClientWindowMove: pcRailClientWindowMove,
+    pub ServerLocalMoveSize: pcRailServerLocalMoveSize,
+    pub ServerMinMaxInfo: pcRailServerMinMaxInfo,
+    pub ClientInformation: pcRailClientInformation,
+    pub ClientSystemMenu: pcRailClientSystemMenu,
+    pub ServerTaskBarInfo: pcRailServerTaskBarInfo,
+    pub ClientLanguageBarInfo: pcRailClientLanguageBarInfo,
+    pub ServerLanguageBarInfo: pcRailServerLanguageBarInfo,
+    pub ClientLanguageIMEInfo: pcRailClientLanguageIMEInfo,
+    pub ServerExecuteResult: pcRailServerExecuteResult,
+    pub ClientGetAppIdRequest: pcRailClientGetAppIdRequest,
+    pub ServerGetAppIdResponse: pcRailServerGetAppIdResponse,
+    pub ServerZOrderSync: pcRailServerZOrderSync,
+    pub ClientCloak: pcRailClientCloak,
+    pub ServerCloak: pcRailServerCloak,
+    pub ServerPowerDisplayRequest: pcRailServerPowerDisplayRequest,
+    pub ClientSnapArrange: pcRailClientSnapArrange,
+    pub ServerGetAppidResponseExtended: pcRailServerGetAppidResponseExtended,
+    pub ClientCompartmentInfo: pcRailClientCompartmentInfo,
+    pub OnOpen: pcRailOnOpen,
+}
+#[test]
+fn bindgen_test_layout__rail_client_context() {
+    assert_eq!(
+        ::std::mem::size_of::<_rail_client_context>(),
+        248usize,
+        concat!("Size of: ", stringify!(_rail_client_context))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_rail_client_context>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_rail_client_context))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_rail_client_context>())).handle as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_rail_client_context>())).custom as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(custom)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientExecute as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientExecute)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientActivate as *const _ as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientActivate)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientSystemParam as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientSystemParam)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerSystemParam as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerSystemParam)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientSystemCommand as *const _
+                as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientSystemCommand)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientHandshake as *const _ as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientHandshake)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerHandshake as *const _ as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerHandshake)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerHandshakeEx as *const _ as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerHandshakeEx)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientNotifyEvent as *const _ as usize
+        },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientNotifyEvent)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientWindowMove as *const _ as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientWindowMove)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerLocalMoveSize as *const _
+                as usize
+        },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerLocalMoveSize)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerMinMaxInfo as *const _ as usize
+        },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerMinMaxInfo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientInformation as *const _ as usize
+        },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientInformation)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientSystemMenu as *const _ as usize
+        },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientSystemMenu)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerTaskBarInfo as *const _ as usize
+        },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerTaskBarInfo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientLanguageBarInfo as *const _
+                as usize
+        },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientLanguageBarInfo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerLanguageBarInfo as *const _
+                as usize
+        },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerLanguageBarInfo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientLanguageIMEInfo as *const _
+                as usize
+        },
+        152usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientLanguageIMEInfo)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerExecuteResult as *const _
+                as usize
+        },
+        160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerExecuteResult)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientGetAppIdRequest as *const _
+                as usize
+        },
+        168usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientGetAppIdRequest)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerGetAppIdResponse as *const _
+                as usize
+        },
+        176usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerGetAppIdResponse)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerZOrderSync as *const _ as usize
+        },
+        184usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerZOrderSync)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientCloak as *const _ as usize
+        },
+        192usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientCloak)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerCloak as *const _ as usize
+        },
+        200usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerCloak)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerPowerDisplayRequest as *const _
+                as usize
+        },
+        208usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerPowerDisplayRequest)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientSnapArrange as *const _ as usize
+        },
+        216usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientSnapArrange)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ServerGetAppidResponseExtended
+                as *const _ as usize
+        },
+        224usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ServerGetAppidResponseExtended)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_rail_client_context>())).ClientCompartmentInfo as *const _
+                as usize
+        },
+        232usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(ClientCompartmentInfo)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_rail_client_context>())).OnOpen as *const _ as usize },
+        240usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_rail_client_context),
+            "::",
+            stringify!(OnOpen)
+        )
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _FILEDESCRIPTORW {
@@ -32138,6 +34379,79 @@ extern "C" {
         lpcchSize: LPDWORD,
     ) -> BOOL;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_MFPICT {
+    pub mappingMode: UINT32,
+    pub xExt: UINT32,
+    pub yExt: UINT32,
+    pub metaFileSize: UINT32,
+    pub metaFileData: *mut BYTE,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_MFPICT() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_MFPICT>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_MFPICT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_MFPICT>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_MFPICT))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MFPICT>())).mappingMode as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MFPICT),
+            "::",
+            stringify!(mappingMode)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MFPICT>())).xExt as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MFPICT),
+            "::",
+            stringify!(xExt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MFPICT>())).yExt as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MFPICT),
+            "::",
+            stringify!(yExt)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MFPICT>())).metaFileSize as *const _ as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MFPICT),
+            "::",
+            stringify!(metaFileSize)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MFPICT>())).metaFileData as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MFPICT),
+            "::",
+            stringify!(metaFileData)
+        )
+    );
+}
+pub type CLIPRDR_MFPICT = _CLIPRDR_MFPICT;
 extern "C" {
     pub fn cliprdr_parse_file_list(
         format_data: *const BYTE,
@@ -32163,6 +34477,1607 @@ extern "C" {
         format_data_length: *mut UINT32,
     ) -> UINT;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_HEADER {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_HEADER() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_HEADER>(),
+        8usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_HEADER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_HEADER>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_HEADER))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_HEADER>())).msgType as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_HEADER),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_HEADER>())).msgFlags as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_HEADER),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_HEADER>())).dataLen as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_HEADER),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+}
+pub type CLIPRDR_HEADER = _CLIPRDR_HEADER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_CAPABILITY_SET {
+    pub capabilitySetType: UINT16,
+    pub capabilitySetLength: UINT16,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_CAPABILITY_SET() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_CAPABILITY_SET>(),
+        4usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_CAPABILITY_SET))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_CAPABILITY_SET>(),
+        2usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_CAPABILITY_SET))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_CAPABILITY_SET>())).capabilitySetType as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_CAPABILITY_SET),
+            "::",
+            stringify!(capabilitySetType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_CAPABILITY_SET>())).capabilitySetLength as *const _
+                as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_CAPABILITY_SET),
+            "::",
+            stringify!(capabilitySetLength)
+        )
+    );
+}
+pub type CLIPRDR_CAPABILITY_SET = _CLIPRDR_CAPABILITY_SET;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_GENERAL_CAPABILITY_SET {
+    pub capabilitySetType: UINT16,
+    pub capabilitySetLength: UINT16,
+    pub version: UINT32,
+    pub generalFlags: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_GENERAL_CAPABILITY_SET() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_GENERAL_CAPABILITY_SET>(),
+        12usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_GENERAL_CAPABILITY_SET))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_GENERAL_CAPABILITY_SET>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_GENERAL_CAPABILITY_SET))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_GENERAL_CAPABILITY_SET>())).capabilitySetType
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_GENERAL_CAPABILITY_SET),
+            "::",
+            stringify!(capabilitySetType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_GENERAL_CAPABILITY_SET>())).capabilitySetLength
+                as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_GENERAL_CAPABILITY_SET),
+            "::",
+            stringify!(capabilitySetLength)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_GENERAL_CAPABILITY_SET>())).version as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_GENERAL_CAPABILITY_SET),
+            "::",
+            stringify!(version)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_GENERAL_CAPABILITY_SET>())).generalFlags as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_GENERAL_CAPABILITY_SET),
+            "::",
+            stringify!(generalFlags)
+        )
+    );
+}
+pub type CLIPRDR_GENERAL_CAPABILITY_SET = _CLIPRDR_GENERAL_CAPABILITY_SET;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_CAPABILITIES {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub cCapabilitiesSets: UINT32,
+    pub capabilitySets: *mut CLIPRDR_CAPABILITY_SET,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_CAPABILITIES() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_CAPABILITIES>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_CAPABILITIES))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_CAPABILITIES>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_CAPABILITIES))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_CAPABILITIES>())).msgType as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_CAPABILITIES),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_CAPABILITIES>())).msgFlags as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_CAPABILITIES),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_CAPABILITIES>())).dataLen as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_CAPABILITIES),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_CAPABILITIES>())).cCapabilitiesSets as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_CAPABILITIES),
+            "::",
+            stringify!(cCapabilitiesSets)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_CAPABILITIES>())).capabilitySets as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_CAPABILITIES),
+            "::",
+            stringify!(capabilitySets)
+        )
+    );
+}
+pub type CLIPRDR_CAPABILITIES = _CLIPRDR_CAPABILITIES;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_MONITOR_READY {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_MONITOR_READY() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_MONITOR_READY>(),
+        8usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_MONITOR_READY))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_MONITOR_READY>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_MONITOR_READY))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MONITOR_READY>())).msgType as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MONITOR_READY),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MONITOR_READY>())).msgFlags as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MONITOR_READY),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_MONITOR_READY>())).dataLen as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_MONITOR_READY),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+}
+pub type CLIPRDR_MONITOR_READY = _CLIPRDR_MONITOR_READY;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_TEMP_DIRECTORY {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub szTempDir: [::std::os::raw::c_char; 520usize],
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_TEMP_DIRECTORY() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_TEMP_DIRECTORY>(),
+        528usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_TEMP_DIRECTORY))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_TEMP_DIRECTORY>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_TEMP_DIRECTORY))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_TEMP_DIRECTORY>())).msgType as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_TEMP_DIRECTORY),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_TEMP_DIRECTORY>())).msgFlags as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_TEMP_DIRECTORY),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_TEMP_DIRECTORY>())).dataLen as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_TEMP_DIRECTORY),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_TEMP_DIRECTORY>())).szTempDir as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_TEMP_DIRECTORY),
+            "::",
+            stringify!(szTempDir)
+        )
+    );
+}
+pub type CLIPRDR_TEMP_DIRECTORY = _CLIPRDR_TEMP_DIRECTORY;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FORMAT {
+    pub formatId: UINT32,
+    pub formatName: *mut ::std::os::raw::c_char,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FORMAT() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FORMAT>(),
+        16usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FORMAT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FORMAT>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FORMAT))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT>())).formatId as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT),
+            "::",
+            stringify!(formatId)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT>())).formatName as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT),
+            "::",
+            stringify!(formatName)
+        )
+    );
+}
+pub type CLIPRDR_FORMAT = _CLIPRDR_FORMAT;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FORMAT_LIST {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub numFormats: UINT32,
+    pub formats: *mut CLIPRDR_FORMAT,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FORMAT_LIST() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FORMAT_LIST>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FORMAT_LIST))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FORMAT_LIST>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FORMAT_LIST))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST>())).msgType as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST>())).msgFlags as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST>())).dataLen as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST>())).numFormats as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST),
+            "::",
+            stringify!(numFormats)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST>())).formats as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST),
+            "::",
+            stringify!(formats)
+        )
+    );
+}
+pub type CLIPRDR_FORMAT_LIST = _CLIPRDR_FORMAT_LIST;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FORMAT_LIST_RESPONSE {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FORMAT_LIST_RESPONSE() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FORMAT_LIST_RESPONSE>(),
+        8usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FORMAT_LIST_RESPONSE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FORMAT_LIST_RESPONSE>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FORMAT_LIST_RESPONSE))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST_RESPONSE>())).msgType as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST_RESPONSE),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST_RESPONSE>())).msgFlags as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST_RESPONSE),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_LIST_RESPONSE>())).dataLen as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_LIST_RESPONSE),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+}
+pub type CLIPRDR_FORMAT_LIST_RESPONSE = _CLIPRDR_FORMAT_LIST_RESPONSE;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_LOCK_CLIPBOARD_DATA {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub clipDataId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_LOCK_CLIPBOARD_DATA() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_LOCK_CLIPBOARD_DATA>(),
+        12usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_LOCK_CLIPBOARD_DATA))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_LOCK_CLIPBOARD_DATA>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_LOCK_CLIPBOARD_DATA))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_LOCK_CLIPBOARD_DATA>())).msgType as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_LOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_LOCK_CLIPBOARD_DATA>())).msgFlags as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_LOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_LOCK_CLIPBOARD_DATA>())).dataLen as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_LOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_LOCK_CLIPBOARD_DATA>())).clipDataId as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_LOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(clipDataId)
+        )
+    );
+}
+pub type CLIPRDR_LOCK_CLIPBOARD_DATA = _CLIPRDR_LOCK_CLIPBOARD_DATA;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_UNLOCK_CLIPBOARD_DATA {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub clipDataId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_UNLOCK_CLIPBOARD_DATA() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_UNLOCK_CLIPBOARD_DATA>(),
+        12usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_UNLOCK_CLIPBOARD_DATA))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_UNLOCK_CLIPBOARD_DATA>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_UNLOCK_CLIPBOARD_DATA))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_UNLOCK_CLIPBOARD_DATA>())).msgType as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_UNLOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_UNLOCK_CLIPBOARD_DATA>())).msgFlags as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_UNLOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_UNLOCK_CLIPBOARD_DATA>())).dataLen as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_UNLOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_UNLOCK_CLIPBOARD_DATA>())).clipDataId as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_UNLOCK_CLIPBOARD_DATA),
+            "::",
+            stringify!(clipDataId)
+        )
+    );
+}
+pub type CLIPRDR_UNLOCK_CLIPBOARD_DATA = _CLIPRDR_UNLOCK_CLIPBOARD_DATA;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FORMAT_DATA_REQUEST {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub requestedFormatId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FORMAT_DATA_REQUEST() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FORMAT_DATA_REQUEST>(),
+        12usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FORMAT_DATA_REQUEST))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FORMAT_DATA_REQUEST>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FORMAT_DATA_REQUEST))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_REQUEST>())).msgType as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_REQUEST),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_REQUEST>())).msgFlags as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_REQUEST),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_REQUEST>())).dataLen as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_REQUEST),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_REQUEST>())).requestedFormatId as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_REQUEST),
+            "::",
+            stringify!(requestedFormatId)
+        )
+    );
+}
+pub type CLIPRDR_FORMAT_DATA_REQUEST = _CLIPRDR_FORMAT_DATA_REQUEST;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FORMAT_DATA_RESPONSE {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub requestedFormatData: *const BYTE,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FORMAT_DATA_RESPONSE() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FORMAT_DATA_RESPONSE>(),
+        16usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FORMAT_DATA_RESPONSE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FORMAT_DATA_RESPONSE>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FORMAT_DATA_RESPONSE))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_RESPONSE>())).msgType as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_RESPONSE),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_RESPONSE>())).msgFlags as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_RESPONSE),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_RESPONSE>())).dataLen as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_RESPONSE),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FORMAT_DATA_RESPONSE>())).requestedFormatData
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_DATA_RESPONSE),
+            "::",
+            stringify!(requestedFormatData)
+        )
+    );
+}
+pub type CLIPRDR_FORMAT_DATA_RESPONSE = _CLIPRDR_FORMAT_DATA_RESPONSE;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FILE_CONTENTS_REQUEST {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub streamId: UINT32,
+    pub listIndex: UINT32,
+    pub dwFlags: UINT32,
+    pub nPositionLow: UINT32,
+    pub nPositionHigh: UINT32,
+    pub cbRequested: UINT32,
+    pub haveClipDataId: BOOL,
+    pub clipDataId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FILE_CONTENTS_REQUEST() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FILE_CONTENTS_REQUEST>(),
+        40usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FILE_CONTENTS_REQUEST>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).msgType as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).msgFlags as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).dataLen as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).streamId as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(streamId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).listIndex as *const _
+                as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(listIndex)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).dwFlags as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(dwFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).nPositionLow as *const _
+                as usize
+        },
+        20usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(nPositionLow)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).nPositionHigh as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(nPositionHigh)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).cbRequested as *const _
+                as usize
+        },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(cbRequested)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).haveClipDataId as *const _
+                as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(haveClipDataId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_REQUEST>())).clipDataId as *const _
+                as usize
+        },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_REQUEST),
+            "::",
+            stringify!(clipDataId)
+        )
+    );
+}
+pub type CLIPRDR_FILE_CONTENTS_REQUEST = _CLIPRDR_FILE_CONTENTS_REQUEST;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FILE_CONTENTS_RESPONSE {
+    pub msgType: UINT16,
+    pub msgFlags: UINT16,
+    pub dataLen: UINT32,
+    pub streamId: UINT32,
+    pub cbRequested: UINT32,
+    pub requestedData: *const BYTE,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FILE_CONTENTS_RESPONSE() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FILE_CONTENTS_RESPONSE>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FILE_CONTENTS_RESPONSE>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_RESPONSE>())).msgType as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE),
+            "::",
+            stringify!(msgType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_RESPONSE>())).msgFlags as *const _
+                as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE),
+            "::",
+            stringify!(msgFlags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_RESPONSE>())).dataLen as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE),
+            "::",
+            stringify!(dataLen)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_RESPONSE>())).streamId as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE),
+            "::",
+            stringify!(streamId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_RESPONSE>())).cbRequested as *const _
+                as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE),
+            "::",
+            stringify!(cbRequested)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_CLIPRDR_FILE_CONTENTS_RESPONSE>())).requestedData as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FILE_CONTENTS_RESPONSE),
+            "::",
+            stringify!(requestedData)
+        )
+    );
+}
+pub type CLIPRDR_FILE_CONTENTS_RESPONSE = _CLIPRDR_FILE_CONTENTS_RESPONSE;
+#[doc = " Client Interface"]
+pub type CliprdrClientContext = _cliprdr_client_context;
+pub type pcCliprdrServerCapabilities = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        capabilities: *const CLIPRDR_CAPABILITIES,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientCapabilities = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        capabilities: *const CLIPRDR_CAPABILITIES,
+    ) -> UINT,
+>;
+pub type pcCliprdrMonitorReady = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        monitorReady: *const CLIPRDR_MONITOR_READY,
+    ) -> UINT,
+>;
+pub type pcCliprdrTempDirectory = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        tempDirectory: *const CLIPRDR_TEMP_DIRECTORY,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientFormatList = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatList: *const CLIPRDR_FORMAT_LIST,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerFormatList = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatList: *const CLIPRDR_FORMAT_LIST,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientFormatListResponse = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatListResponse: *const CLIPRDR_FORMAT_LIST_RESPONSE,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerFormatListResponse = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatListResponse: *const CLIPRDR_FORMAT_LIST_RESPONSE,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientLockClipboardData = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        lockClipboardData: *const CLIPRDR_LOCK_CLIPBOARD_DATA,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerLockClipboardData = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        lockClipboardData: *const CLIPRDR_LOCK_CLIPBOARD_DATA,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientUnlockClipboardData = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        unlockClipboardData: *const CLIPRDR_UNLOCK_CLIPBOARD_DATA,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerUnlockClipboardData = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        unlockClipboardData: *const CLIPRDR_UNLOCK_CLIPBOARD_DATA,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientFormatDataRequest = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatDataRequest: *const CLIPRDR_FORMAT_DATA_REQUEST,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerFormatDataRequest = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatDataRequest: *const CLIPRDR_FORMAT_DATA_REQUEST,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientFormatDataResponse = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatDataResponse: *const CLIPRDR_FORMAT_DATA_RESPONSE,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerFormatDataResponse = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        formatDataResponse: *const CLIPRDR_FORMAT_DATA_RESPONSE,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientFileContentsRequest = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        fileContentsRequest: *const CLIPRDR_FILE_CONTENTS_REQUEST,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerFileContentsRequest = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        fileContentsRequest: *const CLIPRDR_FILE_CONTENTS_REQUEST,
+    ) -> UINT,
+>;
+pub type pcCliprdrClientFileContentsResponse = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        fileContentsResponse: *const CLIPRDR_FILE_CONTENTS_RESPONSE,
+    ) -> UINT,
+>;
+pub type pcCliprdrServerFileContentsResponse = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut CliprdrClientContext,
+        fileContentsResponse: *const CLIPRDR_FILE_CONTENTS_RESPONSE,
+    ) -> UINT,
+>;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _cliprdr_client_context {
+    pub handle: *mut ::std::os::raw::c_void,
+    pub custom: *mut ::std::os::raw::c_void,
+    pub ServerCapabilities: pcCliprdrServerCapabilities,
+    pub ClientCapabilities: pcCliprdrClientCapabilities,
+    pub MonitorReady: pcCliprdrMonitorReady,
+    pub TempDirectory: pcCliprdrTempDirectory,
+    pub ClientFormatList: pcCliprdrClientFormatList,
+    pub ServerFormatList: pcCliprdrServerFormatList,
+    pub ClientFormatListResponse: pcCliprdrClientFormatListResponse,
+    pub ServerFormatListResponse: pcCliprdrServerFormatListResponse,
+    pub ClientLockClipboardData: pcCliprdrClientLockClipboardData,
+    pub ServerLockClipboardData: pcCliprdrServerLockClipboardData,
+    pub ClientUnlockClipboardData: pcCliprdrClientUnlockClipboardData,
+    pub ServerUnlockClipboardData: pcCliprdrServerUnlockClipboardData,
+    pub ClientFormatDataRequest: pcCliprdrClientFormatDataRequest,
+    pub ServerFormatDataRequest: pcCliprdrServerFormatDataRequest,
+    pub ClientFormatDataResponse: pcCliprdrClientFormatDataResponse,
+    pub ServerFormatDataResponse: pcCliprdrServerFormatDataResponse,
+    pub ClientFileContentsRequest: pcCliprdrClientFileContentsRequest,
+    pub ServerFileContentsRequest: pcCliprdrServerFileContentsRequest,
+    pub ClientFileContentsResponse: pcCliprdrClientFileContentsResponse,
+    pub ServerFileContentsResponse: pcCliprdrServerFileContentsResponse,
+    pub lastRequestedFormatId: UINT32,
+    pub rdpcontext: *mut rdpContext,
+}
+#[test]
+fn bindgen_test_layout__cliprdr_client_context() {
+    assert_eq!(
+        ::std::mem::size_of::<_cliprdr_client_context>(),
+        192usize,
+        concat!("Size of: ", stringify!(_cliprdr_client_context))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_cliprdr_client_context>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_cliprdr_client_context))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_cliprdr_client_context>())).handle as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_cliprdr_client_context>())).custom as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(custom)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerCapabilities as *const _
+                as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerCapabilities)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientCapabilities as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientCapabilities)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).MonitorReady as *const _ as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(MonitorReady)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).TempDirectory as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(TempDirectory)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientFormatList as *const _
+                as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientFormatList)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerFormatList as *const _
+                as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerFormatList)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientFormatListResponse as *const _
+                as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientFormatListResponse)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerFormatListResponse as *const _
+                as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerFormatListResponse)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientLockClipboardData as *const _
+                as usize
+        },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientLockClipboardData)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerLockClipboardData as *const _
+                as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerLockClipboardData)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientUnlockClipboardData
+                as *const _ as usize
+        },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientUnlockClipboardData)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerUnlockClipboardData
+                as *const _ as usize
+        },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerUnlockClipboardData)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientFormatDataRequest as *const _
+                as usize
+        },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientFormatDataRequest)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerFormatDataRequest as *const _
+                as usize
+        },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerFormatDataRequest)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientFormatDataResponse as *const _
+                as usize
+        },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientFormatDataResponse)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerFormatDataResponse as *const _
+                as usize
+        },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerFormatDataResponse)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientFileContentsRequest
+                as *const _ as usize
+        },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientFileContentsRequest)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerFileContentsRequest
+                as *const _ as usize
+        },
+        152usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerFileContentsRequest)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ClientFileContentsResponse
+                as *const _ as usize
+        },
+        160usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ClientFileContentsResponse)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).ServerFileContentsResponse
+                as *const _ as usize
+        },
+        168usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(ServerFileContentsResponse)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).lastRequestedFormatId as *const _
+                as usize
+        },
+        176usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(lastRequestedFormatId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_cliprdr_client_context>())).rdpcontext as *const _ as usize
+        },
+        184usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_cliprdr_client_context),
+            "::",
+            stringify!(rdpcontext)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CLIPRDR_FORMAT_NAME {
+    pub id: UINT32,
+    pub name: *mut ::std::os::raw::c_char,
+    pub length: ::std::os::raw::c_int,
+}
+#[test]
+fn bindgen_test_layout__CLIPRDR_FORMAT_NAME() {
+    assert_eq!(
+        ::std::mem::size_of::<_CLIPRDR_FORMAT_NAME>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CLIPRDR_FORMAT_NAME))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CLIPRDR_FORMAT_NAME>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CLIPRDR_FORMAT_NAME))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_NAME>())).id as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_NAME),
+            "::",
+            stringify!(id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_NAME>())).name as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_NAME),
+            "::",
+            stringify!(name)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_CLIPRDR_FORMAT_NAME>())).length as *const _ as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CLIPRDR_FORMAT_NAME),
+            "::",
+            stringify!(length)
+        )
+    );
+}
+pub type CLIPRDR_FORMAT_NAME = _CLIPRDR_FORMAT_NAME;
 #[doc = " Client Interface"]
 pub type RdpgfxClientContext = _rdpgfx_client_context;
 pub type pcRdpgfxResetGraphics = ::std::option::Option<
@@ -32846,6 +36761,1085 @@ extern "C" {
 }
 extern "C" {
     pub fn rdpgfx_client_context_free(context: *mut RdpgfxClientContext);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_UNICODE_STRING {
+    pub cchString: UINT16,
+    pub wString: [WCHAR; 1024usize],
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_UNICODE_STRING() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_UNICODE_STRING>(),
+        2050usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_UNICODE_STRING))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_UNICODE_STRING>(),
+        2usize,
+        concat!("Alignment of ", stringify!(_ENCOMSP_UNICODE_STRING))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_UNICODE_STRING>())).cchString as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_UNICODE_STRING),
+            "::",
+            stringify!(cchString)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_ENCOMSP_UNICODE_STRING>())).wString as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_UNICODE_STRING),
+            "::",
+            stringify!(wString)
+        )
+    );
+}
+pub type ENCOMSP_UNICODE_STRING = _ENCOMSP_UNICODE_STRING;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_FILTER_UPDATED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub Flags: BYTE,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_FILTER_UPDATED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_FILTER_UPDATED_PDU>(),
+        6usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_FILTER_UPDATED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_FILTER_UPDATED_PDU>(),
+        2usize,
+        concat!("Alignment of ", stringify!(_ENCOMSP_FILTER_UPDATED_PDU))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_FILTER_UPDATED_PDU>())).Type as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_FILTER_UPDATED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_FILTER_UPDATED_PDU>())).Length as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_FILTER_UPDATED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_FILTER_UPDATED_PDU>())).Flags as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_FILTER_UPDATED_PDU),
+            "::",
+            stringify!(Flags)
+        )
+    );
+}
+pub type ENCOMSP_FILTER_UPDATED_PDU = _ENCOMSP_FILTER_UPDATED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_APPLICATION_CREATED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub Flags: UINT16,
+    pub AppId: UINT32,
+    pub Name: ENCOMSP_UNICODE_STRING,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_APPLICATION_CREATED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_APPLICATION_CREATED_PDU>(),
+        2064usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_APPLICATION_CREATED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_APPLICATION_CREATED_PDU>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(_ENCOMSP_APPLICATION_CREATED_PDU)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_CREATED_PDU>())).Type as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_CREATED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_CREATED_PDU>())).Length as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_CREATED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_CREATED_PDU>())).Flags as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_CREATED_PDU),
+            "::",
+            stringify!(Flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_CREATED_PDU>())).AppId as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_CREATED_PDU),
+            "::",
+            stringify!(AppId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_CREATED_PDU>())).Name as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_CREATED_PDU),
+            "::",
+            stringify!(Name)
+        )
+    );
+}
+pub type ENCOMSP_APPLICATION_CREATED_PDU = _ENCOMSP_APPLICATION_CREATED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_APPLICATION_REMOVED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub AppId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_APPLICATION_REMOVED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_APPLICATION_REMOVED_PDU>(),
+        8usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_APPLICATION_REMOVED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_APPLICATION_REMOVED_PDU>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(_ENCOMSP_APPLICATION_REMOVED_PDU)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_REMOVED_PDU>())).Type as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_REMOVED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_REMOVED_PDU>())).Length as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_REMOVED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_APPLICATION_REMOVED_PDU>())).AppId as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_APPLICATION_REMOVED_PDU),
+            "::",
+            stringify!(AppId)
+        )
+    );
+}
+pub type ENCOMSP_APPLICATION_REMOVED_PDU = _ENCOMSP_APPLICATION_REMOVED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_WINDOW_CREATED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub Flags: UINT16,
+    pub AppId: UINT32,
+    pub WndId: UINT32,
+    pub Name: ENCOMSP_UNICODE_STRING,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_WINDOW_CREATED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_WINDOW_CREATED_PDU>(),
+        2068usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_WINDOW_CREATED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_WINDOW_CREATED_PDU>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_ENCOMSP_WINDOW_CREATED_PDU))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_CREATED_PDU>())).Type as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_CREATED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_CREATED_PDU>())).Length as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_CREATED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_CREATED_PDU>())).Flags as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_CREATED_PDU),
+            "::",
+            stringify!(Flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_CREATED_PDU>())).AppId as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_CREATED_PDU),
+            "::",
+            stringify!(AppId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_CREATED_PDU>())).WndId as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_CREATED_PDU),
+            "::",
+            stringify!(WndId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_CREATED_PDU>())).Name as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_CREATED_PDU),
+            "::",
+            stringify!(Name)
+        )
+    );
+}
+pub type ENCOMSP_WINDOW_CREATED_PDU = _ENCOMSP_WINDOW_CREATED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_WINDOW_REMOVED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub WndId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_WINDOW_REMOVED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_WINDOW_REMOVED_PDU>(),
+        8usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_WINDOW_REMOVED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_WINDOW_REMOVED_PDU>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_ENCOMSP_WINDOW_REMOVED_PDU))
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_REMOVED_PDU>())).Type as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_REMOVED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_REMOVED_PDU>())).Length as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_REMOVED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_WINDOW_REMOVED_PDU>())).WndId as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_WINDOW_REMOVED_PDU),
+            "::",
+            stringify!(WndId)
+        )
+    );
+}
+pub type ENCOMSP_WINDOW_REMOVED_PDU = _ENCOMSP_WINDOW_REMOVED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_SHOW_WINDOW_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub WndId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_SHOW_WINDOW_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_SHOW_WINDOW_PDU>(),
+        8usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_SHOW_WINDOW_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_SHOW_WINDOW_PDU>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_ENCOMSP_SHOW_WINDOW_PDU))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_ENCOMSP_SHOW_WINDOW_PDU>())).Type as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_SHOW_WINDOW_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_ENCOMSP_SHOW_WINDOW_PDU>())).Length as *const _ as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_SHOW_WINDOW_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_ENCOMSP_SHOW_WINDOW_PDU>())).WndId as *const _ as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_SHOW_WINDOW_PDU),
+            "::",
+            stringify!(WndId)
+        )
+    );
+}
+pub type ENCOMSP_SHOW_WINDOW_PDU = _ENCOMSP_SHOW_WINDOW_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_PARTICIPANT_CREATED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub ParticipantId: UINT32,
+    pub GroupId: UINT32,
+    pub Flags: UINT16,
+    pub FriendlyName: ENCOMSP_UNICODE_STRING,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_PARTICIPANT_CREATED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_PARTICIPANT_CREATED_PDU>(),
+        2064usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_PARTICIPANT_CREATED_PDU>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_CREATED_PDU>())).Type as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_CREATED_PDU>())).Length as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_CREATED_PDU>())).ParticipantId as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU),
+            "::",
+            stringify!(ParticipantId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_CREATED_PDU>())).GroupId as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU),
+            "::",
+            stringify!(GroupId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_CREATED_PDU>())).Flags as *const _ as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU),
+            "::",
+            stringify!(Flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_CREATED_PDU>())).FriendlyName as *const _
+                as usize
+        },
+        14usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_CREATED_PDU),
+            "::",
+            stringify!(FriendlyName)
+        )
+    );
+}
+pub type ENCOMSP_PARTICIPANT_CREATED_PDU = _ENCOMSP_PARTICIPANT_CREATED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_PARTICIPANT_REMOVED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub ParticipantId: UINT32,
+    pub DiscType: UINT32,
+    pub DiscCode: UINT32,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_PARTICIPANT_REMOVED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_PARTICIPANT_REMOVED_PDU>(),
+        16usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_PARTICIPANT_REMOVED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_PARTICIPANT_REMOVED_PDU>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(_ENCOMSP_PARTICIPANT_REMOVED_PDU)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_REMOVED_PDU>())).Type as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_REMOVED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_REMOVED_PDU>())).Length as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_REMOVED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_REMOVED_PDU>())).ParticipantId as *const _
+                as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_REMOVED_PDU),
+            "::",
+            stringify!(ParticipantId)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_REMOVED_PDU>())).DiscType as *const _
+                as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_REMOVED_PDU),
+            "::",
+            stringify!(DiscType)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_PARTICIPANT_REMOVED_PDU>())).DiscCode as *const _
+                as usize
+        },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_PARTICIPANT_REMOVED_PDU),
+            "::",
+            stringify!(DiscCode)
+        )
+    );
+}
+pub type ENCOMSP_PARTICIPANT_REMOVED_PDU = _ENCOMSP_PARTICIPANT_REMOVED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+    pub Flags: UINT16,
+    pub ParticipantId: UINT32,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU>(),
+        12usize,
+        concat!(
+            "Size of: ",
+            stringify!(_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU>())).Type
+                as *const _ as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU>())).Length
+                as *const _ as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU>())).Flags
+                as *const _ as usize
+        },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU),
+            "::",
+            stringify!(Flags)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU>())).ParticipantId
+                as *const _ as usize
+        },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU),
+            "::",
+            stringify!(ParticipantId)
+        )
+    );
+}
+pub type ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU =
+    _ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU>(),
+        4usize,
+        concat!("Size of: ", stringify!(_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU>(),
+        2usize,
+        concat!(
+            "Alignment of ",
+            stringify!(_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU>())).Type as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU>())).Length as *const _
+                as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+}
+pub type ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU = _ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU {
+    pub Type: UINT16,
+    pub Length: UINT16,
+}
+#[test]
+fn bindgen_test_layout__ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU() {
+    assert_eq!(
+        ::std::mem::size_of::<_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU>(),
+        2usize,
+        concat!(
+            "Alignment of ",
+            stringify!(_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU>())).Type as *const _
+                as usize
+        },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU),
+            "::",
+            stringify!(Type)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU>())).Length as *const _
+                as usize
+        },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU),
+            "::",
+            stringify!(Length)
+        )
+    );
+}
+pub type ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU = _ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU;
+#[doc = " Client Interface"]
+pub type EncomspClientContext = _encomsp_client_context;
+pub type pcEncomspFilterUpdated = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        filterUpdated: *const ENCOMSP_FILTER_UPDATED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspApplicationCreated = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        applicationCreated: *const ENCOMSP_APPLICATION_CREATED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspApplicationRemoved = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        applicationRemoved: *const ENCOMSP_APPLICATION_REMOVED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspWindowCreated = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        windowCreated: *const ENCOMSP_WINDOW_CREATED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspWindowRemoved = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        windowRemoved: *const ENCOMSP_WINDOW_REMOVED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspShowWindow = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        showWindow: *const ENCOMSP_SHOW_WINDOW_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspParticipantCreated = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        participantCreated: *const ENCOMSP_PARTICIPANT_CREATED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspParticipantRemoved = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        participantRemoved: *const ENCOMSP_PARTICIPANT_REMOVED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspChangeParticipantControlLevel = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        changeParticipantControlLevel: *const ENCOMSP_CHANGE_PARTICIPANT_CONTROL_LEVEL_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspGraphicsStreamPaused = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        graphicsStreamPaused: *const ENCOMSP_GRAPHICS_STREAM_PAUSED_PDU,
+    ) -> UINT,
+>;
+pub type pcEncomspGraphicsStreamResumed = ::std::option::Option<
+    unsafe extern "C" fn(
+        context: *mut EncomspClientContext,
+        graphicsStreamResumed: *const ENCOMSP_GRAPHICS_STREAM_RESUMED_PDU,
+    ) -> UINT,
+>;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _encomsp_client_context {
+    pub handle: *mut ::std::os::raw::c_void,
+    pub custom: *mut ::std::os::raw::c_void,
+    pub FilterUpdated: pcEncomspFilterUpdated,
+    pub ApplicationCreated: pcEncomspApplicationCreated,
+    pub ApplicationRemoved: pcEncomspApplicationRemoved,
+    pub WindowCreated: pcEncomspWindowCreated,
+    pub WindowRemoved: pcEncomspWindowRemoved,
+    pub ShowWindow: pcEncomspShowWindow,
+    pub ParticipantCreated: pcEncomspParticipantCreated,
+    pub ParticipantRemoved: pcEncomspParticipantRemoved,
+    pub ChangeParticipantControlLevel: pcEncomspChangeParticipantControlLevel,
+    pub GraphicsStreamPaused: pcEncomspGraphicsStreamPaused,
+    pub GraphicsStreamResumed: pcEncomspGraphicsStreamResumed,
+}
+#[test]
+fn bindgen_test_layout__encomsp_client_context() {
+    assert_eq!(
+        ::std::mem::size_of::<_encomsp_client_context>(),
+        104usize,
+        concat!("Size of: ", stringify!(_encomsp_client_context))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_encomsp_client_context>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_encomsp_client_context))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_encomsp_client_context>())).handle as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(handle)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<_encomsp_client_context>())).custom as *const _ as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(custom)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).FilterUpdated as *const _ as usize
+        },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(FilterUpdated)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).ApplicationCreated as *const _
+                as usize
+        },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(ApplicationCreated)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).ApplicationRemoved as *const _
+                as usize
+        },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(ApplicationRemoved)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).WindowCreated as *const _ as usize
+        },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(WindowCreated)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).WindowRemoved as *const _ as usize
+        },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(WindowRemoved)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).ShowWindow as *const _ as usize
+        },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(ShowWindow)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).ParticipantCreated as *const _
+                as usize
+        },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(ParticipantCreated)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).ParticipantRemoved as *const _
+                as usize
+        },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(ParticipantRemoved)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).ChangeParticipantControlLevel
+                as *const _ as usize
+        },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(ChangeParticipantControlLevel)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).GraphicsStreamPaused as *const _
+                as usize
+        },
+        88usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(GraphicsStreamPaused)
+        )
+    );
+    assert_eq!(
+        unsafe {
+            &(*(::std::ptr::null::<_encomsp_client_context>())).GraphicsStreamResumed as *const _
+                as usize
+        },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_encomsp_client_context),
+            "::",
+            stringify!(GraphicsStreamResumed)
+        )
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

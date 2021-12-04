@@ -1,3 +1,6 @@
+mod cliprdr;
+pub use cliprdr::*;
+
 mod context;
 pub use context::*;
 
