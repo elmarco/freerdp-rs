@@ -140,6 +140,16 @@ impl Settings {
         }
     }
 
+    pub fn set_remote_fx_codec(&mut self, remotefx: bool) {
+        unsafe {
+            self.inner.as_mut().RemoteFxCodec = remotefx as _;
+        }
+    }
+
+    pub fn remote_fx_codec(&self) -> bool {
+        unsafe { self.inner.as_ref().RemoteFxCodec != 0 }
+    }
+
     pub fn set_allow_font_smoothing(&mut self, allow: bool) {
         unsafe {
             self.inner.as_mut().AllowFontSmoothing = allow as _;
