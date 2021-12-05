@@ -8,9 +8,9 @@ use std::{
 use crate::{
     channels,
     client::{
-        CliprdrClientContext, DispClientContext, EventChannelConnected, EventChannelDisconnected,
-        GeometryClientContext, PubSub, PubSubHandle, PubSubHandler, RdpeiClientContext,
-        RdpgfxClientContext, VideoClientContext,
+        CliprdrClientContext, CliprdrHandler, DispClientContext, EventChannelConnected,
+        EventChannelDisconnected, GeometryClientContext, PubSub, PubSubHandle, PubSubHandler,
+        RdpeiClientContext, RdpgfxClientContext, VideoClientContext,
     },
     gdi::{self, Gdi},
     graphics::Graphics,
@@ -126,9 +126,9 @@ pub trait Handler {
                     }
                     channels::rail::SVC_CHANNEL_NAME => {}
                     channels::cliprdr::SVC_CHANNEL_NAME => {
-                        let iface =
+                        let mut iface =
                             unsafe { CliprdrClientContext::from_ptr(event.interface as *mut _) };
-                        dbg!();
+                        iface.register_handler(StubCliprdrHandler)
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {
                         dbg!();
@@ -595,6 +595,10 @@ extern "C" fn rdp_client_stop<H: Handler>(context: *mut sys::rdpContext) -> c_in
         Err(e) => e,
     }
 }
+
+struct StubCliprdrHandler;
+
+impl CliprdrHandler for StubCliprdrHandler {}
 
 pub enum VerifyCertificateResult {
     AcceptAndStore,

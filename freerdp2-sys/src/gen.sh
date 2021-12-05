@@ -22,6 +22,7 @@ bindgen -o bindgen.rs freerdp.h  \
 	--allowlist-type '.*ClientContext' \
 	--allowlist-var 'AUDIN_.*' \
 	--allowlist-var 'CB_.*' \
+	--allowlist-var 'CF_.*' \
 	--allowlist-var 'CLIPRDR_.*' \
 	--allowlist-var 'CONNECTION_.*' \
 	--allowlist-var 'FreeRDP.*' \
