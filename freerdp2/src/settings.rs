@@ -7,15 +7,36 @@ use crate::{locale::KeyboardLayout, sys, ConnectionType, RdpError, Result};
 
 pub struct Settings {
     pub(crate) inner: ptr::NonNull<sys::rdpSettings>,
+    owned: bool,
 }
 
 unsafe impl Send for Settings {}
 unsafe impl Sync for Settings {}
 
+impl Clone for Settings {
+    fn clone(&self) -> Self {
+        Self::new(true, unsafe { sys::freerdp_settings_clone(self.inner.as_ptr()) })
+    }
+
+    fn clone_from(&mut self, source: &Self) {
+        unsafe { sys::freerdp_settings_copy(self.inner.as_ptr(), source.inner.as_ptr()); }
+    }
+}
+
+impl Drop for Settings {
+    fn drop(&mut self) {
+        if !self.owned {
+            return;
+        }
+        unsafe { sys::freerdp_settings_free(self.inner.as_ptr()) }
+    }
+}
+
 impl Settings {
-    pub(crate) fn new(settings: *mut sys::rdpSettings) -> Self {
+    pub(crate) fn new(owned: bool, settings: *mut sys::rdpSettings) -> Self {
         Self {
             inner: std::ptr::NonNull::new(settings).unwrap(),
+            owned,
         }
     }
 
@@ -245,6 +266,10 @@ impl Settings {
                     .to_string(),
             )
         }
+    }
+
+    pub fn gfx_h264(&self) -> bool {
+        unsafe { self.inner.as_ref().GfxH264 != 0 }
     }
 }
 

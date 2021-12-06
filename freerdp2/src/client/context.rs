@@ -340,7 +340,7 @@ impl<H> Context<H> {
 impl<H: Handler> Context<H> {
     pub(crate) fn from_context(owned: bool, context: ptr::NonNull<RdpContext<H>>) -> Self {
         let ctx = unsafe { context.as_ref() };
-        let settings = Settings::new(ctx.context.settings);
+        let settings = Settings::new(false, ctx.context.settings);
         let instance = FreeRdp::new(ctx.context.instance);
 
         Self {
