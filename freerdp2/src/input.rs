@@ -34,6 +34,8 @@ bitflags! {
     }
 }
 
+pub const WHEEL_ROTATION_MASK: u16 = 0x01FF;
+
 bitflags! {
     pub struct PtrXFlags: u16 {
         const DOWN = 0x8000;
