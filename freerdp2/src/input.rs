@@ -23,9 +23,9 @@ bitflags! {
 
 bitflags! {
     pub struct PtrFlags: u16 {
-        const HWHELL = 0x0400;
-        const WHELL = 0x0200;
-        const WHELL_NEGATIVE = 0x0100;
+        const HWHEEL = 0x0400;
+        const WHEEL = 0x0200;
+        const WHEEL_NEGATIVE = 0x0100;
         const MOVE = 0x0800;
         const DOWN = 0x8000;
         const BUTTON1 = 0x1000; // left
