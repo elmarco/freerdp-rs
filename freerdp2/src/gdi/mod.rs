@@ -8,6 +8,20 @@ pub mod gfx;
 pub mod video;
 
 #[derive(Debug)]
+pub struct GdiPalette {
+    pub(crate) inner: ptr::NonNull<sys::gdi_palette>,
+}
+
+impl GdiPalette {
+    pub(crate) fn new(palette: *mut sys::gdi_palette) -> Self {
+        Self {
+            // FIXME: const vs mut
+            inner: ptr::NonNull::new(palette).unwrap(),
+        }
+    }
+}
+
+#[derive(Debug)]
 pub struct GdiRgn {
     inner: ptr::NonNull<sys::GDI_RGN>,
 }
@@ -104,13 +118,17 @@ impl GdiBitmap {
 #[derive(Debug)]
 pub struct Gdi<'a> {
     inner: ptr::NonNull<sys::rdpGdi>,
+    palette: GdiPalette,
     _lifetime: PhantomData<&'a ()>,
 }
 
 impl<'a> Gdi<'a> {
     pub(crate) fn new(gdi: *mut sys::rdpGdi) -> Self {
+        let mut inner = ptr::NonNull::new(gdi).unwrap();
+        let palette = GdiPalette::new(&mut unsafe { inner.as_mut() }.palette);
         Self {
-            inner: ptr::NonNull::new(gdi).unwrap(),
+            inner,
+            palette,
             _lifetime: PhantomData,
         }
     }
@@ -156,5 +174,9 @@ impl<'a> Gdi<'a> {
         } else {
             Ok(())
         }
+    }
+
+    pub fn palette(&self) -> &GdiPalette {
+        &self.palette
     }
 }

@@ -15,11 +15,15 @@ unsafe impl Sync for Settings {}
 
 impl Clone for Settings {
     fn clone(&self) -> Self {
-        Self::new(true, unsafe { sys::freerdp_settings_clone(self.inner.as_ptr()) })
+        Self::new(true, unsafe {
+            sys::freerdp_settings_clone(self.inner.as_ptr())
+        })
     }
 
     fn clone_from(&mut self, source: &Self) {
-        unsafe { sys::freerdp_settings_copy(self.inner.as_ptr(), source.inner.as_ptr()); }
+        unsafe {
+            sys::freerdp_settings_copy(self.inner.as_ptr(), source.inner.as_ptr());
+        }
     }
 }
 

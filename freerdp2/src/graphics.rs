@@ -7,7 +7,8 @@ use std::{
 
 use crate::{
     client::{Context, Handler, RdpContext},
-    sys, Result,
+    gdi::GdiPalette,
+    sys, RdpError, Result, PIXEL_FORMAT_BGRA32,
 };
 
 struct RdpPointer<H: PointerHandler> {
@@ -65,6 +66,36 @@ impl<'a> Pointer<'a> {
     pub fn and_mask(&self) -> &[u8] {
         let p = unsafe { self.inner.as_ref() };
         unsafe { slice::from_raw_parts(p.andMaskData, p.lengthAndMask as _) }
+    }
+
+    pub fn bgra_data(&self, palette: &GdiPalette) -> Result<Vec<u8>> {
+        let len = self.height() * self.width() * 4;
+        let mut data = Vec::with_capacity(len as _);
+        let res = unsafe {
+            sys::freerdp_image_copy_from_pointer_data(
+                data.as_mut_ptr(),
+                PIXEL_FORMAT_BGRA32.into(),
+                self.width() * 4,
+                0,
+                0,
+                self.width(),
+                self.height(),
+                self.xor_mask().as_ptr(),
+                self.xor_mask().len() as _,
+                self.and_mask().as_ptr(),
+                self.and_mask().len() as _,
+                self.xor_bpp(),
+                palette.inner.as_ptr(),
+            )
+        };
+        if res == 0 {
+            Err(RdpError::Failed(
+                "freerdp_image_copy_from_pointer_data() failed".into(),
+            ))
+        } else {
+            unsafe { data.set_len(len as _) };
+            Ok(data)
+        }
     }
 }
 
