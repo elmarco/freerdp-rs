@@ -271,6 +271,16 @@ impl Settings {
     pub fn gfx_h264(&self) -> bool {
         unsafe { self.inner.as_ref().GfxH264 != 0 }
     }
+
+    pub fn set_support_display_control(&mut self, enabled: bool) {
+        unsafe {
+            self.inner.as_mut().SupportDisplayControl = enabled as _;
+        }
+    }
+
+    pub fn support_display_control(&self) -> bool {
+        unsafe { self.inner.as_ref().SupportDisplayControl != 0 }
+    }
 }
 
 impl std::fmt::Debug for Settings {

@@ -27,6 +27,9 @@ pub(crate) struct RdpContext<H> {
 
     default_channel_connected: Option<PubSubHandle>,
     default_channel_disconnected: Option<PubSubHandle>,
+
+    rdpei: Option<RdpeiClientContext>,
+    disp: Option<DispClientContext>,
 }
 
 unsafe impl<H> Send for RdpContext<H> where H: Send {}
@@ -40,8 +43,6 @@ pub struct Context<H> {
 
     pub settings: Settings,
     pub instance: FreeRdp,
-    pub rdpei: Option<RdpeiClientContext>,
-    pub disp: Option<DispClientContext>,
 }
 
 unsafe impl<H> Send for Context<H> where H: Send {}
@@ -59,6 +60,8 @@ impl<H> Drop for Context<H> {
             inner.handler.take();
             inner.default_channel_connected.take();
             inner.default_channel_disconnected.take();
+            inner.rdpei.take();
+            inner.disp.take();
             sys::freerdp_client_context_free(self.inner.as_ptr().cast());
         }
     }
@@ -113,11 +116,12 @@ pub trait Handler {
             type Event = EventChannelConnected;
 
             fn handle<H>(context: &mut Context<H>, event: &Self::Event, _sender: Option<&str>) {
+                let inner = unsafe { context.inner.as_mut() };
                 match event.name.as_str() {
                     channels::rdpei::DVC_CHANNEL_NAME => {
                         let iface =
                             unsafe { RdpeiClientContext::from_ptr(event.interface as *mut _) };
-                        context.rdpei = Some(iface);
+                        inner.rdpei = Some(iface);
                     }
                     channels::rdpgfx::DVC_CHANNEL_NAME => {
                         let iface =
@@ -136,7 +140,7 @@ pub trait Handler {
                     channels::disp::DVC_CHANNEL_NAME => {
                         let iface =
                             unsafe { DispClientContext::from_ptr(event.interface as *mut _) };
-                        context.disp = Some(iface);
+                        inner.disp = Some(iface);
                     }
                     channels::geometry::DVC_CHANNEL_NAME => {
                         let iface =
@@ -322,6 +326,14 @@ impl<H> Context<H> {
         }
     }
 
+    pub fn rdpei_mut(&mut self) -> Option<&mut RdpeiClientContext> {
+        unsafe { self.inner.as_mut() }.rdpei.as_mut()
+    }
+
+    pub fn disp_mut(&mut self) -> Option<&mut DispClientContext> {
+        unsafe { self.inner.as_mut() }.disp.as_mut()
+    }
+
     fn load_addins(&mut self) -> Result<()> {
         unsafe {
             if sys::freerdp_client_load_addins(
@@ -348,8 +360,6 @@ impl<H: Handler> Context<H> {
             owned,
             settings,
             instance,
-            rdpei: None,
-            disp: None,
         }
     }
 
