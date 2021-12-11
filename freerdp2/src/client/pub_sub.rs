@@ -30,7 +30,7 @@ pub trait PubSubEvent<'a>: From<&'a sys::wEventArgs> + std::fmt::Debug {
 pub trait PubSubHandler<'a> {
     type Event: PubSubEvent<'a>;
 
-    fn handle<H>(context: &mut Context<H>, event: &Self::Event, sender: Option<&str>);
+    fn handle<H: Handler>(context: &mut Context<H>, event: &Self::Event, sender: Option<&str>);
 }
 
 #[derive(Debug)]

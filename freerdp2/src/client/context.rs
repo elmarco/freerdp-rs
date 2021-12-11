@@ -8,9 +8,9 @@ use std::{
 use crate::{
     channels,
     client::{
-        CliprdrClientContext, CliprdrHandler, DispClientContext, EventChannelConnected,
-        EventChannelDisconnected, GeometryClientContext, PubSub, PubSubHandle, PubSubHandler,
-        RdpeiClientContext, RdpgfxClientContext, VideoClientContext,
+        CliprdrClientContext, DispClientContext, EventChannelConnected, EventChannelDisconnected,
+        GeometryClientContext, PubSub, PubSubHandle, PubSubHandler, RdpeiClientContext,
+        RdpgfxClientContext, VideoClientContext,
     },
     gdi::{self, Gdi},
     graphics::Graphics,
@@ -21,6 +21,7 @@ use crate::{
     ConnectionType, FreeRdp, RdpError, Result, Settings,
 };
 
+// this struct is allocated from C/freerdp, to improve
 pub(crate) struct RdpContext<H> {
     context: sys::rdpContext,
     handler: Option<Box<H>>,
@@ -56,7 +57,7 @@ impl<H> Drop for Context<H> {
 
         unsafe {
             let inner = self.inner.as_mut();
-            // ugh...
+            // TOOD: replace with a big Box..
             inner.handler.take();
             inner.default_channel_connected.take();
             inner.default_channel_disconnected.take();
@@ -115,7 +116,11 @@ pub trait Handler {
         impl<'a> PubSubHandler<'a> for ChannelConnected {
             type Event = EventChannelConnected;
 
-            fn handle<H>(context: &mut Context<H>, event: &Self::Event, _sender: Option<&str>) {
+            fn handle<H: Handler>(
+                context: &mut Context<H>,
+                event: &Self::Event,
+                _sender: Option<&str>,
+            ) {
                 let inner = unsafe { context.inner.as_mut() };
                 match event.name.as_str() {
                     channels::rdpei::DVC_CHANNEL_NAME => {
@@ -130,9 +135,10 @@ pub trait Handler {
                     }
                     channels::rail::SVC_CHANNEL_NAME => {}
                     channels::cliprdr::SVC_CHANNEL_NAME => {
-                        let mut iface =
+                        let iface =
                             unsafe { CliprdrClientContext::from_ptr(event.interface as *mut _) };
-                        iface.register_handler(StubCliprdrHandler)
+                        let handler = context.handler_mut().unwrap();
+                        handler.clipboard_connected(iface);
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {
                         dbg!();
@@ -179,6 +185,12 @@ pub trait Handler {
 
         context.load_addins()?;
         Ok(())
+    }
+
+    fn clipboard_connected(&mut self, _clip: CliprdrClientContext)
+    where
+        Self: Sized,
+    {
     }
 
     fn authenticate(&mut self, _context: &mut Context<Self>) -> Result<()>
@@ -605,10 +617,6 @@ extern "C" fn rdp_client_stop<H: Handler>(context: *mut sys::rdpContext) -> c_in
         Err(e) => e,
     }
 }
-
-struct StubCliprdrHandler;
-
-impl CliprdrHandler for StubCliprdrHandler {}
 
 pub enum VerifyCertificateResult {
     AcceptAndStore,

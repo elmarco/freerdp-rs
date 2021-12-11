@@ -5,7 +5,7 @@ use crate::{sys, RdpError};
 pub const SVC_CHANNEL_NAME: &'static str = "cliprdr";
 
 #[non_exhaustive]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug)]
 pub enum Format {
     Raw = sys::CF_RAW as _,
     Text = sys::CF_TEXT as _,

@@ -1,5 +1,8 @@
 use core::slice;
-use std::{ffi::CStr, mem, ptr};
+use std::{
+    ffi::{CStr, CString},
+    mem, ptr,
+};
 
 use sys::CB_CAPSTYPE_GENERAL_LEN;
 
@@ -11,7 +14,7 @@ use crate::{
 #[derive(Debug)]
 pub struct CliprdrFormat {
     pub id: Option<Format>,
-    pub name: String,
+    pub name: Option<String>,
 }
 
 #[derive(Debug)]
@@ -110,6 +113,67 @@ impl CliprdrClientContext {
             )))
         }
     }
+
+    pub fn send_client_format_list(&mut self, formats: &[CliprdrFormat]) -> Result<()> {
+        let mut list: sys::CLIPRDR_FORMAT_LIST = unsafe { mem::zeroed() };
+        list.msgType = sys::CB_FORMAT_LIST as _;
+        list.msgFlags = sys::CB_RESPONSE_OK as _;
+        list.numFormats = formats.len() as _;
+        let mut formats: Vec<_> = formats
+            .iter()
+            .map(|f| {
+                let mut format: sys::CLIPRDR_FORMAT = unsafe { mem::zeroed() };
+                format.formatId = *f.id.as_ref().unwrap() as _;
+                if let Some(name) = &f.name {
+                    format.formatName = CString::new(name.as_str()).unwrap().into_raw();
+                }
+                format
+            })
+            .collect();
+        list.formats = formats.as_mut_ptr();
+        let res = unsafe {
+            let f = self.inner.as_ref().ClientFormatList.unwrap();
+            f(self.inner.as_ptr(), &list)
+        };
+        for f in formats {
+            if !f.formatName.is_null() {
+                unsafe {
+                    drop(CString::from_raw(f.formatName));
+                }
+            }
+        }
+
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(RdpError::IOError(std::io::Error::from_raw_os_error(
+                res as _,
+            )))
+        }
+    }
+
+    pub fn send_client_format_list_response(&mut self, ok: bool) -> Result<()> {
+        let mut rep: sys::CLIPRDR_FORMAT_LIST_RESPONSE = unsafe { mem::zeroed() };
+        rep.msgType = sys::CB_FORMAT_LIST_RESPONSE as _;
+        rep.msgFlags = if ok {
+            sys::CB_RESPONSE_OK
+        } else {
+            sys::CB_RESPONSE_FAIL
+        } as _;
+
+        let res = unsafe {
+            let f = self.inner.as_ref().ClientFormatListResponse.unwrap();
+            f(self.inner.as_ptr(), &rep)
+        };
+
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(RdpError::IOError(std::io::Error::from_raw_os_error(
+                res as _,
+            )))
+        }
+    }
 }
 
 extern "C" fn rdp_cliprdr_monitor_ready<H: CliprdrHandler>(
@@ -177,9 +241,15 @@ extern "C" fn rdp_cliprdr_server_format_list<H: CliprdrHandler>(
     let list: Vec<_> = list
         .iter()
         .map(|f| {
-            let name = unsafe { CStr::from_ptr(f.formatName) }
-                .to_string_lossy()
-                .into();
+            let name = if f.formatName.is_null() {
+                None
+            } else {
+                Some(
+                    unsafe { CStr::from_ptr(f.formatName) }
+                        .to_string_lossy()
+                        .into(),
+                )
+            };
             let id = f.formatId.try_into().ok();
             CliprdrFormat { id, name }
         })
