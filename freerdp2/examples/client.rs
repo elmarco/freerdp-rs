@@ -72,7 +72,7 @@ impl UpdateHandler for MyUpdateHandler {
 
 #[derive(Debug)]
 struct MyContextHandler {
-    test: u32,
+    _test: u32,
 }
 
 impl MyContextHandler {
@@ -113,7 +113,7 @@ impl Handler for MyContextHandler {
 }
 
 fn main() {
-    let mut ctxt = Context::new(MyContextHandler { test: 42 });
+    let mut ctxt = Context::new(MyContextHandler { _test: 42 });
 
     ctxt.client_start().unwrap();
     ctxt.settings

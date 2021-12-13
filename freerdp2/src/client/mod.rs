@@ -22,7 +22,7 @@ pub use video::*;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{FreeRdp, RdpError, Result};
+    use crate::{FreeRdp, Result};
 
     #[test]
     fn it_works() {
@@ -53,6 +53,10 @@ mod tests {
             }
 
             fn client_stop(&mut self) -> std::result::Result<(), i32> {
+                Ok(())
+            }
+
+            fn post_connect(&mut self, _context: &mut Context<Self>) -> Result<()> {
                 Ok(())
             }
         }

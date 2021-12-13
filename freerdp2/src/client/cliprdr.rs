@@ -301,7 +301,6 @@ extern "C" fn rdp_cliprdr_server_format_data_request<H: CliprdrHandler>(
 ) -> u32 {
     let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context) };
     let self_ = unsafe { (ctxt.inner.as_mut().custom as *mut H).as_mut().unwrap() };
-
     if let Ok(format) = unsafe { (*req).requestedFormatId }.try_into() {
         if self_.server_format_data_request(&mut ctxt, format).is_ok() {
             return 0;
