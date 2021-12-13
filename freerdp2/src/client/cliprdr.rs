@@ -174,6 +174,23 @@ impl CliprdrClientContext {
             )))
         }
     }
+
+    pub fn send_client_format_data_request(&mut self, format: Format) -> Result<()> {
+        let mut req: sys::CLIPRDR_FORMAT_DATA_REQUEST = unsafe { mem::zeroed() };
+        req.requestedFormatId = format as _;
+        let res = unsafe {
+            let f = self.inner.as_ref().ClientFormatDataRequest.unwrap();
+            f(self.inner.as_ptr(), &req)
+        };
+
+        if res == 0 {
+            Ok(())
+        } else {
+            Err(RdpError::IOError(std::io::Error::from_raw_os_error(
+                res as _,
+            )))
+        }
+    }
 }
 
 extern "C" fn rdp_cliprdr_monitor_ready<H: CliprdrHandler>(
