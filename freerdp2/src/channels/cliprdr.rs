@@ -35,6 +35,15 @@ pub enum Format {
     TextUriList = sys::CB_FORMAT_TEXTURILIST as _,
 }
 
+impl Format {
+    pub fn is_text(&self) -> bool {
+        match self {
+            Format::Text | Format::UnicodeText | Format::OemText => true,
+            _ => false,
+        }
+    }
+}
+
 impl TryFrom<u32> for Format {
     type Error = RdpError;
 
