@@ -7,6 +7,9 @@ pub use context::*;
 mod disp;
 pub use disp::*;
 
+mod encomsp;
+pub use encomsp::*;
+
 mod pub_sub;
 pub use pub_sub::*;
 

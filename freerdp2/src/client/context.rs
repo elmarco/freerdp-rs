@@ -8,9 +8,9 @@ use std::{
 use crate::{
     channels,
     client::{
-        CliprdrClientContext, DispClientContext, EventChannelConnected, EventChannelDisconnected,
-        GeometryClientContext, PubSub, PubSubHandle, PubSubHandler, RdpeiClientContext,
-        RdpgfxClientContext, VideoClientContext,
+        CliprdrClientContext, DispClientContext, EncomspClientContext, EventChannelConnected,
+        EventChannelDisconnected, GeometryClientContext, PubSub, PubSubHandle, PubSubHandler,
+        RdpeiClientContext, RdpgfxClientContext, VideoClientContext,
     },
     gdi::{self, Gdi},
     graphics::Graphics,
@@ -141,7 +141,10 @@ pub trait Handler {
                         handler.clipboard_connected(iface);
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {
-                        dbg!();
+                        let iface =
+                            unsafe { EncomspClientContext::from_ptr(event.interface as *mut _) };
+                        let handler = context.handler_mut().unwrap();
+                        handler.encomsp_connected(iface);
                     }
                     channels::disp::DVC_CHANNEL_NAME => {
                         let iface =
@@ -188,6 +191,12 @@ pub trait Handler {
     }
 
     fn clipboard_connected(&mut self, _clip: CliprdrClientContext)
+    where
+        Self: Sized,
+    {
+    }
+
+    fn encomsp_connected(&mut self, _encomsp: EncomspClientContext)
     where
         Self: Sized,
     {
