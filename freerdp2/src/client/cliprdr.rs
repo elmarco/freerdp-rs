@@ -123,7 +123,9 @@ impl CliprdrClientContext {
             .iter()
             .map(|f| {
                 let mut format: sys::CLIPRDR_FORMAT = unsafe { mem::zeroed() };
-                format.formatId = *f.id.as_ref().unwrap() as _;
+                if let Some(id) = f.id {
+                    format.formatId = id as _;
+                }
                 if let Some(name) = &f.name {
                     format.formatName = CString::new(name.as_str()).unwrap().into_raw();
                 }
