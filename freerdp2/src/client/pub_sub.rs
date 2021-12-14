@@ -67,18 +67,31 @@ impl<'a> PubSubEvent<'a> for EventChannelConnected {
 }
 
 #[derive(Debug)]
-pub struct EventChannelDisconnected {}
+pub struct EventChannelDisconnected {
+    pub name: String,
+    pub interface: *const c_void,
+}
 
 #[doc(hidden)]
 #[derive(Debug)]
 #[repr(C)]
 pub struct CEventChannelDisconnected {
     event: sys::wEventArgs,
+    name: *const c_char,
+    interface: *const c_void,
 }
 
 impl From<&sys::wEventArgs> for EventChannelDisconnected {
-    fn from(_: &sys::wEventArgs) -> Self {
-        todo!()
+    fn from(args: &sys::wEventArgs) -> Self {
+        unsafe {
+            let args =
+                ptr::NonNull::new(args as *const _ as *mut CEventChannelDisconnected).unwrap();
+            let cname = CStr::from_ptr(args.as_ref().name);
+            Self {
+                name: cname.to_string_lossy().into_owned(),
+                interface: args.as_ref().interface,
+            }
+        }
     }
 }
 

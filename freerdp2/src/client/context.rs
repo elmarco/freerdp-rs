@@ -31,6 +31,8 @@ pub(crate) struct RdpContext<H> {
 
     rdpei: Option<RdpeiClientContext>,
     disp: Option<DispClientContext>,
+    cliprdr: Option<CliprdrClientContext>,
+    encomsp: Option<EncomspClientContext>,
 }
 
 unsafe impl<H> Send for RdpContext<H> where H: Send {}
@@ -63,6 +65,8 @@ impl<H> Drop for Context<H> {
             inner.default_channel_disconnected.take();
             inner.rdpei.take();
             inner.disp.take();
+            inner.encomsp.take();
+            inner.cliprdr.take();
             sys::freerdp_client_context_free(self.inner.as_ptr().cast());
         }
     }
@@ -107,11 +111,6 @@ pub trait Handler {
     where
         Self: Sized,
     {
-        context.settings.set_os_major_type(sys::OSMAJORTYPE_UNIX);
-        context
-            .settings
-            .set_os_minor_type(sys::OSMINORTYPE_NATIVE_WAYLAND);
-
         struct ChannelConnected;
         impl<'a> PubSubHandler<'a> for ChannelConnected {
             type Event = EventChannelConnected;
@@ -135,17 +134,19 @@ pub trait Handler {
                     }
                     channels::rail::SVC_CHANNEL_NAME => {}
                     channels::cliprdr::SVC_CHANNEL_NAME => {
-                        let iface = unsafe {
+                        let mut iface = unsafe {
                             CliprdrClientContext::from_ptr(event.interface as *mut _, true)
                         };
                         let handler = context.handler_mut().unwrap();
-                        handler.clipboard_connected(iface);
+                        handler.clipboard_connected(&mut iface);
+                        inner.cliprdr = Some(iface);
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {
-                        let iface =
+                        let mut iface =
                             unsafe { EncomspClientContext::from_ptr(event.interface as *mut _) };
                         let handler = context.handler_mut().unwrap();
-                        handler.encomsp_connected(iface);
+                        handler.encomsp_connected(&mut iface);
+                        inner.encomsp = Some(iface);
                     }
                     channels::disp::DVC_CHANNEL_NAME => {
                         let iface =
@@ -180,8 +181,46 @@ pub trait Handler {
         impl<'a> PubSubHandler<'a> for ChannelDisconnected {
             type Event = EventChannelDisconnected;
 
-            fn handle<H>(_context: &mut Context<H>, event: &Self::Event, _sender: Option<&str>) {
-                dbg!(event);
+            fn handle<H>(context: &mut Context<H>, event: &Self::Event, _sender: Option<&str>) {
+                let inner = unsafe { context.inner.as_mut() };
+                match event.name.as_str() {
+                    channels::rdpei::DVC_CHANNEL_NAME => {
+                        inner.rdpei = None;
+                    }
+                    channels::rdpgfx::DVC_CHANNEL_NAME => {
+                        let iface =
+                            unsafe { RdpgfxClientContext::from_ptr(event.interface as *mut _) };
+                        gdi::gfx::graphics_pipeline_uninit(&context.gdi().unwrap(), &iface).unwrap()
+                    }
+                    channels::rail::SVC_CHANNEL_NAME => {}
+                    channels::cliprdr::SVC_CHANNEL_NAME => {
+                        inner.cliprdr = None;
+                    }
+                    channels::encomsp::SVC_CHANNEL_NAME => {
+                        inner.encomsp = None;
+                    }
+                    channels::disp::DVC_CHANNEL_NAME => {
+                        inner.disp = None;
+                    }
+                    channels::geometry::DVC_CHANNEL_NAME => {
+                        let iface =
+                            unsafe { GeometryClientContext::from_ptr(event.interface as *mut _) };
+                        gdi::video::geometry_uninit(&context.gdi().unwrap(), &iface).unwrap()
+                    }
+                    channels::video::CONTROL_DVC_CHANNEL_NAME => {
+                        let iface =
+                            unsafe { VideoClientContext::from_ptr(event.interface as *mut _) };
+                        gdi::video::control_uninit(&context.gdi().unwrap(), &iface).unwrap()
+                    }
+                    channels::video::DATA_DVC_CHANNEL_NAME => {
+                        let iface =
+                            unsafe { VideoClientContext::from_ptr(event.interface as *mut _) };
+                        gdi::video::data_uninit(&context.gdi().unwrap(), &iface).unwrap()
+                    }
+                    name => {
+                        dbg!(name);
+                    }
+                }
             }
         }
         inner.default_channel_disconnected =
@@ -191,13 +230,13 @@ pub trait Handler {
         Ok(())
     }
 
-    fn clipboard_connected(&mut self, _clip: CliprdrClientContext)
+    fn clipboard_connected(&mut self, _clip: &mut CliprdrClientContext)
     where
         Self: Sized,
     {
     }
 
-    fn encomsp_connected(&mut self, _encomsp: EncomspClientContext)
+    fn encomsp_connected(&mut self, _encomsp: &mut EncomspClientContext)
     where
         Self: Sized,
     {
@@ -354,6 +393,14 @@ impl<H> Context<H> {
 
     pub fn disp_mut(&mut self) -> Option<&mut DispClientContext> {
         unsafe { self.inner.as_mut() }.disp.as_mut()
+    }
+
+    pub fn cliprdr_mut(&mut self) -> Option<&mut CliprdrClientContext> {
+        unsafe { self.inner.as_mut() }.cliprdr.as_mut()
+    }
+
+    pub fn encomsp_mut(&mut self) -> Option<&mut EncomspClientContext> {
+        unsafe { self.inner.as_mut() }.encomsp.as_mut()
     }
 
     fn load_addins(&mut self) -> Result<()> {
