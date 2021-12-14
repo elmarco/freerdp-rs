@@ -18,7 +18,7 @@ use crate::{
     sys,
     update::Update,
     winpr::{self, Handle},
-    ConnectionType, FreeRdp, RdpError, Result, Settings,
+    ConnectionType, FreeRdp, RdpCode, RdpError, Result, Settings,
 };
 
 // this struct is allocated from C/freerdp, to improve
@@ -305,21 +305,21 @@ pub trait Handler {
     }
 }
 
-fn cvt_nz(error: c_int) -> Result<()> {
+fn cvt_nz(error: u32) -> Result<()> {
     if error == 0 {
         Ok(())
     } else {
-        Err(RdpError::Code(error as _))
+        Err(RdpError::Code(RdpCode(error)))
     }
 }
 
 impl<H> Context<H> {
     pub fn client_start(&mut self) -> Result<()> {
-        cvt_nz(unsafe { sys::freerdp_client_start(self.inner.as_ptr().cast()) })
+        cvt_nz(unsafe { sys::freerdp_client_start(self.inner.as_ptr().cast()) } as _)
     }
 
     pub fn client_stop(&mut self) -> Result<()> {
-        cvt_nz(unsafe { sys::freerdp_client_stop(self.inner.as_ptr().cast()) })
+        cvt_nz(unsafe { sys::freerdp_client_stop(self.inner.as_ptr().cast()) } as _)
     }
 
     pub fn event_handles(&self) -> Result<Vec<Handle>> {

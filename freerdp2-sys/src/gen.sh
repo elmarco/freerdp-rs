@@ -26,6 +26,8 @@ bindgen -o bindgen.rs freerdp.h  \
 	--allowlist-var 'CF_.*' \
 	--allowlist-var 'CLIPRDR_.*' \
 	--allowlist-var 'CONNECTION_.*' \
+	--allowlist-var 'ERRBASE.*' \
+	--allowlist-var 'ERRCONNECT.*' \
 	--allowlist-var 'ERRINFO.*' \
 	--allowlist-var 'FREERDP.*' \
 	--allowlist-var 'FreeRDP.*' \
