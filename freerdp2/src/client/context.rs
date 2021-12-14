@@ -135,8 +135,9 @@ pub trait Handler {
                     }
                     channels::rail::SVC_CHANNEL_NAME => {}
                     channels::cliprdr::SVC_CHANNEL_NAME => {
-                        let iface =
-                            unsafe { CliprdrClientContext::from_ptr(event.interface as *mut _) };
+                        let iface = unsafe {
+                            CliprdrClientContext::from_ptr(event.interface as *mut _, true)
+                        };
                         let handler = context.handler_mut().unwrap();
                         handler.clipboard_connected(iface);
                     }

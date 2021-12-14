@@ -1,6 +1,6 @@
 use core::slice;
 use std::{
-    ffi::{CStr, CString},
+    ffi::{c_void, CStr, CString},
     mem, ptr,
 };
 
@@ -20,10 +20,34 @@ pub struct CliprdrFormat {
 #[derive(Debug)]
 pub struct CliprdrClientContext {
     pub(crate) inner: ptr::NonNull<sys::CliprdrClientContext>,
+    owned: bool,
+}
+
+struct Custom {
+    handler: *mut c_void,
+    free: fn(*mut c_void),
+}
+
+impl Drop for Custom {
+    fn drop(&mut self) {
+        (self.free)(self.handler)
+    }
 }
 
 unsafe impl Send for CliprdrClientContext {}
 unsafe impl Sync for CliprdrClientContext {}
+
+impl Drop for CliprdrClientContext {
+    fn drop(&mut self) {
+        if !self.owned {
+            return;
+        }
+        unsafe {
+            let inner = self.inner.as_mut();
+            drop(Box::from_raw(inner.custom as *mut Custom));
+        }
+    }
+}
 
 pub trait CliprdrHandler {
     fn monitor_ready(&mut self, _context: &mut CliprdrClientContext) -> Result<()> {
@@ -68,22 +92,34 @@ pub trait CliprdrHandler {
 }
 
 impl CliprdrClientContext {
-    pub unsafe fn from_ptr(context: *mut sys::CliprdrClientContext) -> Self {
+    pub unsafe fn from_ptr(context: *mut sys::CliprdrClientContext, owned: bool) -> Self {
         Self {
             inner: ptr::NonNull::new(context).unwrap(),
+            owned,
         }
     }
 
     pub fn register_handler<H: CliprdrHandler>(&mut self, handler: H) {
         let inner = unsafe { self.inner.as_mut() };
+        assert!(inner.custom.is_null());
         inner.MonitorReady = Some(rdp_cliprdr_monitor_ready::<H>);
         inner.ServerCapabilities = Some(rdp_cliprdr_server_capabilities::<H>);
         inner.ServerFormatList = Some(rdp_cliprdr_server_format_list::<H>);
         inner.ServerFormatListResponse = Some(rdp_cliprdr_server_format_list_response::<H>);
         inner.ServerFormatDataRequest = Some(rdp_cliprdr_server_format_data_request::<H>);
         inner.ServerFormatDataResponse = Some(rdp_cliprdr_server_format_data_response::<H>);
-        // FIXME: where is the dtor?
-        inner.custom = Box::into_raw(Box::new(handler)) as *mut _;
+        inner.custom = Box::into_raw(Box::new(Custom {
+            handler: Box::into_raw(Box::new(handler)) as *mut _,
+            free: |raw| unsafe { drop(Box::from_raw(raw)) },
+        })) as *mut _;
+    }
+
+    // should be safe as long as inner.custom is set only once
+    unsafe fn handler<'a, 'b, H: CliprdrHandler>(&'a mut self) -> &'b mut H {
+        let custom = (self.inner.as_mut().custom as *mut Custom)
+            .as_mut()
+            .unwrap();
+        (custom.handler as *mut H).as_mut().unwrap()
     }
 
     pub fn send_client_general_capabilities(
@@ -223,9 +259,9 @@ extern "C" fn rdp_cliprdr_monitor_ready<H: CliprdrHandler>(
     context: *mut sys::CliprdrClientContext,
     _ready: *const sys::CLIPRDR_MONITOR_READY,
 ) -> u32 {
-    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context) };
-    let self_ = unsafe { (ctxt.inner.as_mut().custom as *mut H).as_mut().unwrap() };
-    if self_.monitor_ready(&mut ctxt).is_ok() {
+    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context, false) };
+    let handler = unsafe { ctxt.handler::<H>() };
+    if handler.monitor_ready(&mut ctxt).is_ok() {
         0
     } else {
         1
@@ -236,8 +272,8 @@ extern "C" fn rdp_cliprdr_server_capabilities<H: CliprdrHandler>(
     context: *mut sys::CliprdrClientContext,
     capabilities: *const sys::CLIPRDR_CAPABILITIES,
 ) -> u32 {
-    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context) };
-    let self_ = unsafe { (ctxt.inner.as_mut().custom as *mut H).as_mut().unwrap() };
+    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context, false) };
+    let handler = unsafe { ctxt.handler::<H>() };
     let mut gen_caps = None;
 
     let capabilities = unsafe { capabilities.as_ref().unwrap() };
@@ -263,7 +299,7 @@ extern "C" fn rdp_cliprdr_server_capabilities<H: CliprdrHandler>(
         }
     }
 
-    if self_
+    if handler
         .server_capabilities(&mut ctxt, gen_caps.as_ref())
         .is_ok()
     {
@@ -277,8 +313,8 @@ extern "C" fn rdp_cliprdr_server_format_list<H: CliprdrHandler>(
     context: *mut sys::CliprdrClientContext,
     list: *const sys::CLIPRDR_FORMAT_LIST,
 ) -> u32 {
-    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context) };
-    let self_ = unsafe { (ctxt.inner.as_mut().custom as *mut H).as_mut().unwrap() };
+    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context, false) };
+    let handler = unsafe { ctxt.handler::<H>() };
     let list = unsafe { slice::from_raw_parts((*list).formats, (*list).numFormats as _) };
 
     let list: Vec<_> = list
@@ -298,7 +334,7 @@ extern "C" fn rdp_cliprdr_server_format_list<H: CliprdrHandler>(
         })
         .collect();
 
-    if self_.server_format_list(&mut ctxt, &list).is_ok() {
+    if handler.server_format_list(&mut ctxt, &list).is_ok() {
         0
     } else {
         1
@@ -309,10 +345,10 @@ extern "C" fn rdp_cliprdr_server_format_list_response<H: CliprdrHandler>(
     context: *mut sys::CliprdrClientContext,
     _resp: *const sys::CLIPRDR_FORMAT_LIST_RESPONSE,
 ) -> u32 {
-    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context) };
-    let self_ = unsafe { (ctxt.inner.as_mut().custom as *mut H).as_mut().unwrap() };
+    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context, false) };
+    let handler = unsafe { ctxt.handler::<H>() };
 
-    if self_.server_format_list_response(&mut ctxt).is_ok() {
+    if handler.server_format_list_response(&mut ctxt).is_ok() {
         0
     } else {
         1
@@ -323,10 +359,13 @@ extern "C" fn rdp_cliprdr_server_format_data_request<H: CliprdrHandler>(
     context: *mut sys::CliprdrClientContext,
     req: *const sys::CLIPRDR_FORMAT_DATA_REQUEST,
 ) -> u32 {
-    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context) };
-    let self_ = unsafe { (ctxt.inner.as_mut().custom as *mut H).as_mut().unwrap() };
+    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context, false) };
+    let handler = unsafe { ctxt.handler::<H>() };
     if let Ok(format) = unsafe { (*req).requestedFormatId }.try_into() {
-        if self_.server_format_data_request(&mut ctxt, format).is_ok() {
+        if handler
+            .server_format_data_request(&mut ctxt, format)
+            .is_ok()
+        {
             return 0;
         }
     }
@@ -338,11 +377,11 @@ extern "C" fn rdp_cliprdr_server_format_data_response<H: CliprdrHandler>(
     context: *mut sys::CliprdrClientContext,
     resp: *const sys::CLIPRDR_FORMAT_DATA_RESPONSE,
 ) -> u32 {
-    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context) };
-    let self_ = unsafe { (ctxt.inner.as_mut().custom as *mut H).as_mut().unwrap() };
+    let mut ctxt = unsafe { CliprdrClientContext::from_ptr(context, false) };
+    let handler = unsafe { ctxt.handler::<H>() };
     let data = unsafe { slice::from_raw_parts((*resp).requestedFormatData, (*resp).dataLen as _) };
 
-    if self_.server_format_data_response(&mut ctxt, data).is_ok() {
+    if handler.server_format_data_response(&mut ctxt, data).is_ok() {
         0
     } else {
         1
