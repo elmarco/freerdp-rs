@@ -4,30 +4,33 @@ bindgen -o bindgen.rs freerdp.h  \
 	--allowlist-function '.*Channel.*' \
 	--allowlist-function 'Close.*' \
 	--allowlist-function 'Create.*' \
+	--allowlist-function 'FreeRDP.*' \
 	--allowlist-function 'Get.*' \
 	--allowlist-function 'PubSub.*' \
 	--allowlist-function 'WLog.*' \
-	--allowlist-function 'client_.*' \
-	--allowlist-function 'freerdp_.*' \
-	--allowlist-function 'FreeRDP.*' \
-	--allowlist-function 'cliprdr_.*' \
-	--allowlist-function 'gdi_.*' \
-	--allowlist-function 'rdpgfx_.*' \
-	--allowlist-function 'graphics_.*' \
-	--allowlist-function 'stream_.*' \
 	--allowlist-function 'Wait.*' \
-	--allowlist-type 'Rdp.*' \
-	--allowlist-type 'Disp.*' \
-	--allowlist-type 'CLIP.*' \
+	--allowlist-function 'client_.*' \
+	--allowlist-function 'cliprdr_.*' \
+	--allowlist-function 'freerdp_.*' \
+	--allowlist-function 'gdi_.*' \
+	--allowlist-function 'graphics_.*' \
+	--allowlist-function 'rdpgfx_.*' \
+	--allowlist-function 'stream_.*' \
 	--allowlist-type '.*ClientContext' \
+	--allowlist-type 'CLIP.*' \
+	--allowlist-type 'Disp.*' \
+	--allowlist-type 'Rdp.*' \
 	--allowlist-var 'AUDIN_.*' \
+	--allowlist-var 'CAT_.*' \
 	--allowlist-var 'CB_.*' \
 	--allowlist-var 'CF_.*' \
 	--allowlist-var 'CLIPRDR_.*' \
 	--allowlist-var 'CONNECTION_.*' \
+	--allowlist-var 'ERRINFO.*' \
+	--allowlist-var 'FREERDP.*' \
 	--allowlist-var 'FreeRDP.*' \
-	--allowlist-var 'RDP.*' \
-	--allowlist-var 'PIXEL_.*' \
 	--allowlist-var 'OS.*' \
+	--allowlist-var 'PIXEL_.*' \
+	--allowlist-var 'RDP.*' \
 	--allowlist-var 'WAIT_.*' \
 	-- `pkg-config --cflags freerdp2`
