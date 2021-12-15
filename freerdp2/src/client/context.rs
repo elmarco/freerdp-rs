@@ -347,8 +347,11 @@ impl<H> Context<H> {
         unsafe { sys::freerdp_check_event_handles(self.inner.as_ptr().cast()) > 0 }
     }
 
-    pub fn last_error(&self) -> Result<()> {
-        cvt_nz(unsafe { sys::freerdp_get_last_error(self.inner.as_ptr().cast()) as _ })
+    pub fn last_error(&self) -> Option<crate::RdpErr> {
+        match cvt_nz(unsafe { sys::freerdp_get_last_error(self.inner.as_ptr().cast()) as _ }) {
+            Err(RdpError::Code(code)) => code.as_err(),
+            _ => None,
+        }
     }
 
     pub fn input(&self) -> Option<Input> {
