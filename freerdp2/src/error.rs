@@ -46,122 +46,288 @@ impl TryFrom<u32> for RdpErrInfo {
 
     fn try_from(value: u32) -> std::result::Result<Self, Self::Error> {
         match value {
-            v if v == RdpErrInfo::RpcInitiatedDisconnected as u32 => Ok(RdpErrInfo::RpcInitiatedDisconnected),
+            v if v == RdpErrInfo::RpcInitiatedDisconnected as u32 => {
+                Ok(RdpErrInfo::RpcInitiatedDisconnected)
+            }
             v if v == RdpErrInfo::RpcInitiatedLogoff as u32 => Ok(RdpErrInfo::RpcInitiatedLogoff),
             v if v == RdpErrInfo::IdleTimeout as u32 => Ok(RdpErrInfo::IdleTimeout),
             v if v == RdpErrInfo::LogonTimeout as u32 => Ok(RdpErrInfo::LogonTimeout),
-            v if v == RdpErrInfo::DisconnectedByOtherConnection as u32 => Ok(RdpErrInfo::DisconnectedByOtherConnection),
+            v if v == RdpErrInfo::DisconnectedByOtherConnection as u32 => {
+                Ok(RdpErrInfo::DisconnectedByOtherConnection)
+            }
             v if v == RdpErrInfo::OutOfMemory as u32 => Ok(RdpErrInfo::OutOfMemory),
-            v if v == RdpErrInfo::ServerDeniedConnection as u32 => Ok(RdpErrInfo::ServerDeniedConnection),
-            v if v == RdpErrInfo::ServerInsufficientPrivileges as u32 => Ok(RdpErrInfo::ServerInsufficientPrivileges),
-            v if v == RdpErrInfo::ServerFreshCredentialsRequired as u32 => Ok(RdpErrInfo::ServerFreshCredentialsRequired),
-            v if v == RdpErrInfo::RpcInitiatedDisconnectByUser as u32 => Ok(RdpErrInfo::RpcInitiatedDisconnectByUser),
+            v if v == RdpErrInfo::ServerDeniedConnection as u32 => {
+                Ok(RdpErrInfo::ServerDeniedConnection)
+            }
+            v if v == RdpErrInfo::ServerInsufficientPrivileges as u32 => {
+                Ok(RdpErrInfo::ServerInsufficientPrivileges)
+            }
+            v if v == RdpErrInfo::ServerFreshCredentialsRequired as u32 => {
+                Ok(RdpErrInfo::ServerFreshCredentialsRequired)
+            }
+            v if v == RdpErrInfo::RpcInitiatedDisconnectByUser as u32 => {
+                Ok(RdpErrInfo::RpcInitiatedDisconnectByUser)
+            }
             v if v == RdpErrInfo::LogoffByUser as u32 => Ok(RdpErrInfo::LogoffByUser),
-            v if v == RdpErrInfo::CloseStackOnDriverNotReady as u32 => Ok(RdpErrInfo::CloseStackOnDriverNotReady),
+            v if v == RdpErrInfo::CloseStackOnDriverNotReady as u32 => {
+                Ok(RdpErrInfo::CloseStackOnDriverNotReady)
+            }
             v if v == RdpErrInfo::ServerDwmCrash as u32 => Ok(RdpErrInfo::ServerDwmCrash),
-            v if v == RdpErrInfo::CloseStackOnDriverFailure as u32 => Ok(RdpErrInfo::CloseStackOnDriverFailure),
-            v if v == RdpErrInfo::CloseStackOnDriverIfaceFailure as u32 => Ok(RdpErrInfo::CloseStackOnDriverIfaceFailure),
+            v if v == RdpErrInfo::CloseStackOnDriverFailure as u32 => {
+                Ok(RdpErrInfo::CloseStackOnDriverFailure)
+            }
+            v if v == RdpErrInfo::CloseStackOnDriverIfaceFailure as u32 => {
+                Ok(RdpErrInfo::CloseStackOnDriverIfaceFailure)
+            }
             v if v == RdpErrInfo::ServerWinlogonCrash as u32 => Ok(RdpErrInfo::ServerWinlogonCrash),
             v if v == RdpErrInfo::ServerCsrssCrash as u32 => Ok(RdpErrInfo::ServerCsrssCrash),
             v if v == RdpErrInfo::LicenseInternal as u32 => Ok(RdpErrInfo::LicenseInternal),
-            v if v == RdpErrInfo::LicenseNoLicenseServer as u32 => Ok(RdpErrInfo::LicenseNoLicenseServer),
+            v if v == RdpErrInfo::LicenseNoLicenseServer as u32 => {
+                Ok(RdpErrInfo::LicenseNoLicenseServer)
+            }
             v if v == RdpErrInfo::LicenseNoLicense as u32 => Ok(RdpErrInfo::LicenseNoLicense),
             v if v == RdpErrInfo::LicenseBadClientMsg as u32 => Ok(RdpErrInfo::LicenseBadClientMsg),
-            v if v == RdpErrInfo::LicenseHwidDoesntMatchLicense as u32 => Ok(RdpErrInfo::LicenseHwidDoesntMatchLicense),
-            v if v == RdpErrInfo::LicenseBadClientLicense as u32 => Ok(RdpErrInfo::LicenseBadClientLicense),
-            v if v == RdpErrInfo::LicenseCantFinishProtocol as u32 => Ok(RdpErrInfo::LicenseCantFinishProtocol),
-            v if v == RdpErrInfo::LicenseClientEndedProtocol as u32 => Ok(RdpErrInfo::LicenseClientEndedProtocol),
-            v if v == RdpErrInfo::LicenseBadClientEncryption as u32 => Ok(RdpErrInfo::LicenseBadClientEncryption),
-            v if v == RdpErrInfo::LicenseCantUpgradeLicense as u32 => Ok(RdpErrInfo::LicenseCantUpgradeLicense),
-            v if v == RdpErrInfo::LicenseNoRemoteConnections as u32 => Ok(RdpErrInfo::LicenseNoRemoteConnections),
-            v if v == RdpErrInfo::CbDestinationNotFound as u32 => Ok(RdpErrInfo::CbDestinationNotFound),
-            v if v == RdpErrInfo::CbLoadingDestination as u32 => Ok(RdpErrInfo::CbLoadingDestination),
-            v if v == RdpErrInfo::CbRedirectingToDestination as u32 => Ok(RdpErrInfo::CbRedirectingToDestination),
-            v if v == RdpErrInfo::CbSessionOnlineVmWake as u32 => Ok(RdpErrInfo::CbSessionOnlineVmWake),
-            v if v == RdpErrInfo::CbSessionOnlineVmBoot as u32 => Ok(RdpErrInfo::CbSessionOnlineVmBoot),
-            v if v == RdpErrInfo::CbSessionOnlineVmNoDns as u32 => Ok(RdpErrInfo::CbSessionOnlineVmNoDns),
-            v if v == RdpErrInfo::CbDestinationPoolNotFree as u32 => Ok(RdpErrInfo::CbDestinationPoolNotFree),
-            v if v == RdpErrInfo::CbConnectionCancelled as u32 => Ok(RdpErrInfo::CbConnectionCancelled),
-            v if v == RdpErrInfo::CbConnectionErrorInvalidSettings as u32 => Ok(RdpErrInfo::CbConnectionErrorInvalidSettings),
-            v if v == RdpErrInfo::CbSessionOnlineVmBootTimeout as u32 => Ok(RdpErrInfo::CbSessionOnlineVmBootTimeout),
-            v if v == RdpErrInfo::CbSessionOnlineVmSessmonFailed as u32 => Ok(RdpErrInfo::CbSessionOnlineVmSessmonFailed),
+            v if v == RdpErrInfo::LicenseHwidDoesntMatchLicense as u32 => {
+                Ok(RdpErrInfo::LicenseHwidDoesntMatchLicense)
+            }
+            v if v == RdpErrInfo::LicenseBadClientLicense as u32 => {
+                Ok(RdpErrInfo::LicenseBadClientLicense)
+            }
+            v if v == RdpErrInfo::LicenseCantFinishProtocol as u32 => {
+                Ok(RdpErrInfo::LicenseCantFinishProtocol)
+            }
+            v if v == RdpErrInfo::LicenseClientEndedProtocol as u32 => {
+                Ok(RdpErrInfo::LicenseClientEndedProtocol)
+            }
+            v if v == RdpErrInfo::LicenseBadClientEncryption as u32 => {
+                Ok(RdpErrInfo::LicenseBadClientEncryption)
+            }
+            v if v == RdpErrInfo::LicenseCantUpgradeLicense as u32 => {
+                Ok(RdpErrInfo::LicenseCantUpgradeLicense)
+            }
+            v if v == RdpErrInfo::LicenseNoRemoteConnections as u32 => {
+                Ok(RdpErrInfo::LicenseNoRemoteConnections)
+            }
+            v if v == RdpErrInfo::CbDestinationNotFound as u32 => {
+                Ok(RdpErrInfo::CbDestinationNotFound)
+            }
+            v if v == RdpErrInfo::CbLoadingDestination as u32 => {
+                Ok(RdpErrInfo::CbLoadingDestination)
+            }
+            v if v == RdpErrInfo::CbRedirectingToDestination as u32 => {
+                Ok(RdpErrInfo::CbRedirectingToDestination)
+            }
+            v if v == RdpErrInfo::CbSessionOnlineVmWake as u32 => {
+                Ok(RdpErrInfo::CbSessionOnlineVmWake)
+            }
+            v if v == RdpErrInfo::CbSessionOnlineVmBoot as u32 => {
+                Ok(RdpErrInfo::CbSessionOnlineVmBoot)
+            }
+            v if v == RdpErrInfo::CbSessionOnlineVmNoDns as u32 => {
+                Ok(RdpErrInfo::CbSessionOnlineVmNoDns)
+            }
+            v if v == RdpErrInfo::CbDestinationPoolNotFree as u32 => {
+                Ok(RdpErrInfo::CbDestinationPoolNotFree)
+            }
+            v if v == RdpErrInfo::CbConnectionCancelled as u32 => {
+                Ok(RdpErrInfo::CbConnectionCancelled)
+            }
+            v if v == RdpErrInfo::CbConnectionErrorInvalidSettings as u32 => {
+                Ok(RdpErrInfo::CbConnectionErrorInvalidSettings)
+            }
+            v if v == RdpErrInfo::CbSessionOnlineVmBootTimeout as u32 => {
+                Ok(RdpErrInfo::CbSessionOnlineVmBootTimeout)
+            }
+            v if v == RdpErrInfo::CbSessionOnlineVmSessmonFailed as u32 => {
+                Ok(RdpErrInfo::CbSessionOnlineVmSessmonFailed)
+            }
             v if v == RdpErrInfo::UnknownDataPduType as u32 => Ok(RdpErrInfo::UnknownDataPduType),
             v if v == RdpErrInfo::UnknownPduType as u32 => Ok(RdpErrInfo::UnknownPduType),
             v if v == RdpErrInfo::DataPduSequence as u32 => Ok(RdpErrInfo::DataPduSequence),
             v if v == RdpErrInfo::ControlPduSequence as u32 => Ok(RdpErrInfo::ControlPduSequence),
-            v if v == RdpErrInfo::InvalidControlPduAction as u32 => Ok(RdpErrInfo::InvalidControlPduAction),
+            v if v == RdpErrInfo::InvalidControlPduAction as u32 => {
+                Ok(RdpErrInfo::InvalidControlPduAction)
+            }
             v if v == RdpErrInfo::InvalidInputPduType as u32 => Ok(RdpErrInfo::InvalidInputPduType),
-            v if v == RdpErrInfo::InvalidInputPduMouse as u32 => Ok(RdpErrInfo::InvalidInputPduMouse),
-            v if v == RdpErrInfo::InvalidRefreshRectPdu as u32 => Ok(RdpErrInfo::InvalidRefreshRectPdu),
-            v if v == RdpErrInfo::CreateUserDataFailed as u32 => Ok(RdpErrInfo::CreateUserDataFailed),
+            v if v == RdpErrInfo::InvalidInputPduMouse as u32 => {
+                Ok(RdpErrInfo::InvalidInputPduMouse)
+            }
+            v if v == RdpErrInfo::InvalidRefreshRectPdu as u32 => {
+                Ok(RdpErrInfo::InvalidRefreshRectPdu)
+            }
+            v if v == RdpErrInfo::CreateUserDataFailed as u32 => {
+                Ok(RdpErrInfo::CreateUserDataFailed)
+            }
             v if v == RdpErrInfo::ConnectFailed as u32 => Ok(RdpErrInfo::ConnectFailed),
-            v if v == RdpErrInfo::ConfirmActiveHasWrongShareid as u32 => Ok(RdpErrInfo::ConfirmActiveHasWrongShareid),
-            v if v == RdpErrInfo::ConfirmActiveHasWrongOriginator as u32 => Ok(RdpErrInfo::ConfirmActiveHasWrongOriginator),
-            v if v == RdpErrInfo::PersistentKeyPduBadLength as u32 => Ok(RdpErrInfo::PersistentKeyPduBadLength),
-            v if v == RdpErrInfo::PersistentKeyPduIllegalFirst as u32 => Ok(RdpErrInfo::PersistentKeyPduIllegalFirst),
-            v if v == RdpErrInfo::PersistentKeyPduTooManyTotalKeys as u32 => Ok(RdpErrInfo::PersistentKeyPduTooManyTotalKeys),
-            v if v == RdpErrInfo::PersistentKeyPduTooManyCacheKeys as u32 => Ok(RdpErrInfo::PersistentKeyPduTooManyCacheKeys),
+            v if v == RdpErrInfo::ConfirmActiveHasWrongShareid as u32 => {
+                Ok(RdpErrInfo::ConfirmActiveHasWrongShareid)
+            }
+            v if v == RdpErrInfo::ConfirmActiveHasWrongOriginator as u32 => {
+                Ok(RdpErrInfo::ConfirmActiveHasWrongOriginator)
+            }
+            v if v == RdpErrInfo::PersistentKeyPduBadLength as u32 => {
+                Ok(RdpErrInfo::PersistentKeyPduBadLength)
+            }
+            v if v == RdpErrInfo::PersistentKeyPduIllegalFirst as u32 => {
+                Ok(RdpErrInfo::PersistentKeyPduIllegalFirst)
+            }
+            v if v == RdpErrInfo::PersistentKeyPduTooManyTotalKeys as u32 => {
+                Ok(RdpErrInfo::PersistentKeyPduTooManyTotalKeys)
+            }
+            v if v == RdpErrInfo::PersistentKeyPduTooManyCacheKeys as u32 => {
+                Ok(RdpErrInfo::PersistentKeyPduTooManyCacheKeys)
+            }
             v if v == RdpErrInfo::InputPduBadLength as u32 => Ok(RdpErrInfo::InputPduBadLength),
-            v if v == RdpErrInfo::BitmapCacheErrorPduBadLength as u32 => Ok(RdpErrInfo::BitmapCacheErrorPduBadLength),
-            v if v == RdpErrInfo::SecurityDataTooShort as u32 => Ok(RdpErrInfo::SecurityDataTooShort),
-            v if v == RdpErrInfo::VchannelDataTooShort as u32 => Ok(RdpErrInfo::VchannelDataTooShort),
+            v if v == RdpErrInfo::BitmapCacheErrorPduBadLength as u32 => {
+                Ok(RdpErrInfo::BitmapCacheErrorPduBadLength)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort)
+            }
+            v if v == RdpErrInfo::VchannelDataTooShort as u32 => {
+                Ok(RdpErrInfo::VchannelDataTooShort)
+            }
             v if v == RdpErrInfo::ShareDataTooShort as u32 => Ok(RdpErrInfo::ShareDataTooShort),
-            v if v == RdpErrInfo::BadSuppressOutputPdu as u32 => Ok(RdpErrInfo::BadSuppressOutputPdu),
-            v if v == RdpErrInfo::ConfirmActivePduTooShort as u32 => Ok(RdpErrInfo::ConfirmActivePduTooShort),
-            v if v == RdpErrInfo::CapabilitySetTooSmall as u32 => Ok(RdpErrInfo::CapabilitySetTooSmall),
-            v if v == RdpErrInfo::CapabilitySetTooLarge as u32 => Ok(RdpErrInfo::CapabilitySetTooLarge),
+            v if v == RdpErrInfo::BadSuppressOutputPdu as u32 => {
+                Ok(RdpErrInfo::BadSuppressOutputPdu)
+            }
+            v if v == RdpErrInfo::ConfirmActivePduTooShort as u32 => {
+                Ok(RdpErrInfo::ConfirmActivePduTooShort)
+            }
+            v if v == RdpErrInfo::CapabilitySetTooSmall as u32 => {
+                Ok(RdpErrInfo::CapabilitySetTooSmall)
+            }
+            v if v == RdpErrInfo::CapabilitySetTooLarge as u32 => {
+                Ok(RdpErrInfo::CapabilitySetTooLarge)
+            }
             v if v == RdpErrInfo::NoCursorCache as u32 => Ok(RdpErrInfo::NoCursorCache),
             v if v == RdpErrInfo::BadCapabilities as u32 => Ok(RdpErrInfo::BadCapabilities),
-            v if v == RdpErrInfo::VirtualChannelDecompression as u32 => Ok(RdpErrInfo::VirtualChannelDecompression),
-            v if v == RdpErrInfo::InvalidVcCompressionType as u32 => Ok(RdpErrInfo::InvalidVcCompressionType),
+            v if v == RdpErrInfo::VirtualChannelDecompression as u32 => {
+                Ok(RdpErrInfo::VirtualChannelDecompression)
+            }
+            v if v == RdpErrInfo::InvalidVcCompressionType as u32 => {
+                Ok(RdpErrInfo::InvalidVcCompressionType)
+            }
             v if v == RdpErrInfo::InvalidChannelId as u32 => Ok(RdpErrInfo::InvalidChannelId),
             v if v == RdpErrInfo::VchannelsTooMany as u32 => Ok(RdpErrInfo::VchannelsTooMany),
             v if v == RdpErrInfo::RemoteappNotEnabled as u32 => Ok(RdpErrInfo::RemoteappNotEnabled),
             v if v == RdpErrInfo::CacheCapNotSet as u32 => Ok(RdpErrInfo::CacheCapNotSet),
-            v if v == RdpErrInfo::BitmapCacheErrorPduBadLength2 as u32 => Ok(RdpErrInfo::BitmapCacheErrorPduBadLength2),
-            v if v == RdpErrInfo::OffscreenCacheErrorPduBadLength as u32 => Ok(RdpErrInfo::OffscreenCacheErrorPduBadLength),
-            v if v == RdpErrInfo::DrawninegridCacheErrorPduBadLength as u32 => Ok(RdpErrInfo::DrawninegridCacheErrorPduBadLength),
+            v if v == RdpErrInfo::BitmapCacheErrorPduBadLength2 as u32 => {
+                Ok(RdpErrInfo::BitmapCacheErrorPduBadLength2)
+            }
+            v if v == RdpErrInfo::OffscreenCacheErrorPduBadLength as u32 => {
+                Ok(RdpErrInfo::OffscreenCacheErrorPduBadLength)
+            }
+            v if v == RdpErrInfo::DrawninegridCacheErrorPduBadLength as u32 => {
+                Ok(RdpErrInfo::DrawninegridCacheErrorPduBadLength)
+            }
             v if v == RdpErrInfo::GdiplusPduBadLength as u32 => Ok(RdpErrInfo::GdiplusPduBadLength),
-            v if v == RdpErrInfo::SecurityDataTooShort2 as u32 => Ok(RdpErrInfo::SecurityDataTooShort2),
-            v if v == RdpErrInfo::SecurityDataTooShort3 as u32 => Ok(RdpErrInfo::SecurityDataTooShort3),
-            v if v == RdpErrInfo::SecurityDataTooShort4 as u32 => Ok(RdpErrInfo::SecurityDataTooShort4),
-            v if v == RdpErrInfo::SecurityDataTooShort5 as u32 => Ok(RdpErrInfo::SecurityDataTooShort5),
-            v if v == RdpErrInfo::SecurityDataTooShort6 as u32 => Ok(RdpErrInfo::SecurityDataTooShort6),
-            v if v == RdpErrInfo::SecurityDataTooShort7 as u32 => Ok(RdpErrInfo::SecurityDataTooShort7),
-            v if v == RdpErrInfo::SecurityDataTooShort8 as u32 => Ok(RdpErrInfo::SecurityDataTooShort8),
-            v if v == RdpErrInfo::SecurityDataTooShort9 as u32 => Ok(RdpErrInfo::SecurityDataTooShort9),
-            v if v == RdpErrInfo::SecurityDataTooShort10 as u32 => Ok(RdpErrInfo::SecurityDataTooShort10),
-            v if v == RdpErrInfo::SecurityDataTooShort11 as u32 => Ok(RdpErrInfo::SecurityDataTooShort11),
-            v if v == RdpErrInfo::SecurityDataTooShort12 as u32 => Ok(RdpErrInfo::SecurityDataTooShort12),
-            v if v == RdpErrInfo::SecurityDataTooShort13 as u32 => Ok(RdpErrInfo::SecurityDataTooShort13),
-            v if v == RdpErrInfo::SecurityDataTooShort14 as u32 => Ok(RdpErrInfo::SecurityDataTooShort14),
-            v if v == RdpErrInfo::SecurityDataTooShort15 as u32 => Ok(RdpErrInfo::SecurityDataTooShort15),
-            v if v == RdpErrInfo::SecurityDataTooShort16 as u32 => Ok(RdpErrInfo::SecurityDataTooShort16),
-            v if v == RdpErrInfo::SecurityDataTooShort17 as u32 => Ok(RdpErrInfo::SecurityDataTooShort17),
-            v if v == RdpErrInfo::SecurityDataTooShort18 as u32 => Ok(RdpErrInfo::SecurityDataTooShort18),
-            v if v == RdpErrInfo::SecurityDataTooShort19 as u32 => Ok(RdpErrInfo::SecurityDataTooShort19),
-            v if v == RdpErrInfo::SecurityDataTooShort20 as u32 => Ok(RdpErrInfo::SecurityDataTooShort20),
-            v if v == RdpErrInfo::SecurityDataTooShort21 as u32 => Ok(RdpErrInfo::SecurityDataTooShort21),
-            v if v == RdpErrInfo::SecurityDataTooShort22 as u32 => Ok(RdpErrInfo::SecurityDataTooShort22),
-            v if v == RdpErrInfo::SecurityDataTooShort23 as u32 => Ok(RdpErrInfo::SecurityDataTooShort23),
+            v if v == RdpErrInfo::SecurityDataTooShort2 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort2)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort3 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort3)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort4 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort4)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort5 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort5)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort6 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort6)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort7 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort7)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort8 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort8)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort9 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort9)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort10 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort10)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort11 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort11)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort12 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort12)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort13 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort13)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort14 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort14)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort15 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort15)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort16 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort16)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort17 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort17)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort18 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort18)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort19 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort19)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort20 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort20)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort21 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort21)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort22 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort22)
+            }
+            v if v == RdpErrInfo::SecurityDataTooShort23 as u32 => {
+                Ok(RdpErrInfo::SecurityDataTooShort23)
+            }
             v if v == RdpErrInfo::BadMonitorData as u32 => Ok(RdpErrInfo::BadMonitorData),
-            v if v == RdpErrInfo::VcDecompressedReassembleFailed as u32 => Ok(RdpErrInfo::VcDecompressedReassembleFailed),
+            v if v == RdpErrInfo::VcDecompressedReassembleFailed as u32 => {
+                Ok(RdpErrInfo::VcDecompressedReassembleFailed)
+            }
             v if v == RdpErrInfo::VcDataTooLong as u32 => Ok(RdpErrInfo::VcDataTooLong),
             v if v == RdpErrInfo::BadFrameAckData as u32 => Ok(RdpErrInfo::BadFrameAckData),
-            v if v == RdpErrInfo::GraphicsModeNotSupported as u32 => Ok(RdpErrInfo::GraphicsModeNotSupported),
-            v if v == RdpErrInfo::GraphicsSubsystemResetFailed as u32 => Ok(RdpErrInfo::GraphicsSubsystemResetFailed),
-            v if v == RdpErrInfo::GraphicsSubsystemFailed as u32 => Ok(RdpErrInfo::GraphicsSubsystemFailed),
-            v if v == RdpErrInfo::TimezoneKeyNameLengthTooShort as u32 => Ok(RdpErrInfo::TimezoneKeyNameLengthTooShort),
-            v if v == RdpErrInfo::TimezoneKeyNameLengthTooLong as u32 => Ok(RdpErrInfo::TimezoneKeyNameLengthTooLong),
-            v if v == RdpErrInfo::DynamicDstDisabledFieldMissing as u32 => Ok(RdpErrInfo::DynamicDstDisabledFieldMissing),
+            v if v == RdpErrInfo::GraphicsModeNotSupported as u32 => {
+                Ok(RdpErrInfo::GraphicsModeNotSupported)
+            }
+            v if v == RdpErrInfo::GraphicsSubsystemResetFailed as u32 => {
+                Ok(RdpErrInfo::GraphicsSubsystemResetFailed)
+            }
+            v if v == RdpErrInfo::GraphicsSubsystemFailed as u32 => {
+                Ok(RdpErrInfo::GraphicsSubsystemFailed)
+            }
+            v if v == RdpErrInfo::TimezoneKeyNameLengthTooShort as u32 => {
+                Ok(RdpErrInfo::TimezoneKeyNameLengthTooShort)
+            }
+            v if v == RdpErrInfo::TimezoneKeyNameLengthTooLong as u32 => {
+                Ok(RdpErrInfo::TimezoneKeyNameLengthTooLong)
+            }
+            v if v == RdpErrInfo::DynamicDstDisabledFieldMissing as u32 => {
+                Ok(RdpErrInfo::DynamicDstDisabledFieldMissing)
+            }
             v if v == RdpErrInfo::VcDecodingError as u32 => Ok(RdpErrInfo::VcDecodingError),
-            v if v == RdpErrInfo::Virtualdesktoptoolarge as u32 => Ok(RdpErrInfo::Virtualdesktoptoolarge),
-            v if v == RdpErrInfo::Monitorgeometryvalidationfailed as u32 => Ok(RdpErrInfo::Monitorgeometryvalidationfailed),
+            v if v == RdpErrInfo::Virtualdesktoptoolarge as u32 => {
+                Ok(RdpErrInfo::Virtualdesktoptoolarge)
+            }
+            v if v == RdpErrInfo::Monitorgeometryvalidationfailed as u32 => {
+                Ok(RdpErrInfo::Monitorgeometryvalidationfailed)
+            }
             v if v == RdpErrInfo::Invalidmonitorcount as u32 => Ok(RdpErrInfo::Invalidmonitorcount),
-            v if v == RdpErrInfo::UpdateSessionKeyFailed as u32 => Ok(RdpErrInfo::UpdateSessionKeyFailed),
+            v if v == RdpErrInfo::UpdateSessionKeyFailed as u32 => {
+                Ok(RdpErrInfo::UpdateSessionKeyFailed)
+            }
             v if v == RdpErrInfo::DecryptFailed as u32 => Ok(RdpErrInfo::DecryptFailed),
             v if v == RdpErrInfo::EncryptFailed as u32 => Ok(RdpErrInfo::EncryptFailed),
-            v if v == RdpErrInfo::EncryptionPackageMismatch as u32 => Ok(RdpErrInfo::EncryptionPackageMismatch),
+            v if v == RdpErrInfo::EncryptionPackageMismatch as u32 => {
+                Ok(RdpErrInfo::EncryptionPackageMismatch)
+            }
             v if v == RdpErrInfo::DecryptFailed2 as u32 => Ok(RdpErrInfo::DecryptFailed2),
             v if v == RdpErrInfo::PeerDisconnected as u32 => Ok(RdpErrInfo::PeerDisconnected),
             v if v == RdpErrInfo::Success as u32 => Ok(RdpErrInfo::Success),
@@ -178,31 +344,53 @@ impl TryFrom<u32> for RdpErrConnect {
         match value {
             v if v == RdpErrConnect::PreConnectFailed as u32 => Ok(RdpErrConnect::PreConnectFailed),
             v if v == RdpErrConnect::ConnectUndefined as u32 => Ok(RdpErrConnect::ConnectUndefined),
-            v if v == RdpErrConnect::PostConnectFailed as u32 => Ok(RdpErrConnect::PostConnectFailed),
+            v if v == RdpErrConnect::PostConnectFailed as u32 => {
+                Ok(RdpErrConnect::PostConnectFailed)
+            }
             v if v == RdpErrConnect::DnsError as u32 => Ok(RdpErrConnect::DnsError),
             v if v == RdpErrConnect::DnsNameNotFound as u32 => Ok(RdpErrConnect::DnsNameNotFound),
             v if v == RdpErrConnect::ConnectFailed as u32 => Ok(RdpErrConnect::ConnectFailed),
-            v if v == RdpErrConnect::McsConnectInitialError as u32 => Ok(RdpErrConnect::McsConnectInitialError),
+            v if v == RdpErrConnect::McsConnectInitialError as u32 => {
+                Ok(RdpErrConnect::McsConnectInitialError)
+            }
             v if v == RdpErrConnect::TlsConnectFailed as u32 => Ok(RdpErrConnect::TlsConnectFailed),
-            v if v == RdpErrConnect::AuthenticationFailed as u32 => Ok(RdpErrConnect::AuthenticationFailed),
-            v if v == RdpErrConnect::InsufficientPrivileges as u32 => Ok(RdpErrConnect::InsufficientPrivileges),
+            v if v == RdpErrConnect::AuthenticationFailed as u32 => {
+                Ok(RdpErrConnect::AuthenticationFailed)
+            }
+            v if v == RdpErrConnect::InsufficientPrivileges as u32 => {
+                Ok(RdpErrConnect::InsufficientPrivileges)
+            }
             v if v == RdpErrConnect::ConnectCancelled as u32 => Ok(RdpErrConnect::ConnectCancelled),
-            v if v == RdpErrConnect::SecurityNegoConnectFailed as u32 => Ok(RdpErrConnect::SecurityNegoConnectFailed),
-            v if v == RdpErrConnect::ConnectTransportFailed as u32 => Ok(RdpErrConnect::ConnectTransportFailed),
+            v if v == RdpErrConnect::SecurityNegoConnectFailed as u32 => {
+                Ok(RdpErrConnect::SecurityNegoConnectFailed)
+            }
+            v if v == RdpErrConnect::ConnectTransportFailed as u32 => {
+                Ok(RdpErrConnect::ConnectTransportFailed)
+            }
             v if v == RdpErrConnect::PasswordExpired as u32 => Ok(RdpErrConnect::PasswordExpired),
-            v if v == RdpErrConnect::PasswordCertainlyExpired as u32 => Ok(RdpErrConnect::PasswordCertainlyExpired),
+            v if v == RdpErrConnect::PasswordCertainlyExpired as u32 => {
+                Ok(RdpErrConnect::PasswordCertainlyExpired)
+            }
             v if v == RdpErrConnect::ClientRevoked as u32 => Ok(RdpErrConnect::ClientRevoked),
             v if v == RdpErrConnect::KdcUnreachable as u32 => Ok(RdpErrConnect::KdcUnreachable),
             v if v == RdpErrConnect::AccountDisabled as u32 => Ok(RdpErrConnect::AccountDisabled),
-            v if v == RdpErrConnect::PasswordMustChange as u32 => Ok(RdpErrConnect::PasswordMustChange),
+            v if v == RdpErrConnect::PasswordMustChange as u32 => {
+                Ok(RdpErrConnect::PasswordMustChange)
+            }
             v if v == RdpErrConnect::LogonFailure as u32 => Ok(RdpErrConnect::LogonFailure),
             v if v == RdpErrConnect::WrongPassword as u32 => Ok(RdpErrConnect::WrongPassword),
             v if v == RdpErrConnect::AccessDenied as u32 => Ok(RdpErrConnect::AccessDenied),
-            v if v == RdpErrConnect::AccountRestriction as u32 => Ok(RdpErrConnect::AccountRestriction),
+            v if v == RdpErrConnect::AccountRestriction as u32 => {
+                Ok(RdpErrConnect::AccountRestriction)
+            }
             v if v == RdpErrConnect::AccountLockedOut as u32 => Ok(RdpErrConnect::AccountLockedOut),
             v if v == RdpErrConnect::AccountExpired as u32 => Ok(RdpErrConnect::AccountExpired),
-            v if v == RdpErrConnect::LogonTypeNotGranted as u32 => Ok(RdpErrConnect::LogonTypeNotGranted),
-            v if v == RdpErrConnect::NoOrMissingCredentials as u32 => Ok(RdpErrConnect::NoOrMissingCredentials),
+            v if v == RdpErrConnect::LogonTypeNotGranted as u32 => {
+                Ok(RdpErrConnect::LogonTypeNotGranted)
+            }
+            v if v == RdpErrConnect::NoOrMissingCredentials as u32 => {
+                Ok(RdpErrConnect::NoOrMissingCredentials)
+            }
             v if v == RdpErrConnect::Success as u32 => Ok(RdpErrConnect::Success),
             v if v == RdpErrConnect::None as u32 => Ok(RdpErrConnect::None),
             _ => Err(RdpError::Unsupported),
@@ -388,15 +576,18 @@ impl RdpCode {
     pub fn as_err(&self) -> Option<RdpErr> {
         let type_ = self.0 & 0xffff;
         self.class().and_then(|c| match c {
-            RdpCodeClass::Base => {
-                type_.try_into().ok().and_then(|t| Some(RdpErr::RdpErrBase(t)))
-            },
-            RdpCodeClass::Info => {
-                type_.try_into().ok().and_then(|t| Some(RdpErr::RdpErrInfo(t)))
-            },
-            RdpCodeClass::Connect => {
-                type_.try_into().ok().and_then(|t| Some(RdpErr::RdpErrConnect(t)))
-            }
+            RdpCodeClass::Base => type_
+                .try_into()
+                .ok()
+                .and_then(|t| Some(RdpErr::RdpErrBase(t))),
+            RdpCodeClass::Info => type_
+                .try_into()
+                .ok()
+                .and_then(|t| Some(RdpErr::RdpErrInfo(t))),
+            RdpCodeClass::Connect => type_
+                .try_into()
+                .ok()
+                .and_then(|t| Some(RdpErr::RdpErrConnect(t))),
         })
     }
 }
@@ -445,7 +636,7 @@ impl std::fmt::Display for RdpError {
             RdpError::Failed(ref err) => {
                 write!(f, "{}", err)
             }
-            RdpError::Code(RdpCode(code))=> {
+            RdpError::Code(RdpCode(code)) => {
                 write!(
                     f,
                     "{} ({:#x}): {}",
