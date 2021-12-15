@@ -1,6 +1,6 @@
 use core::slice;
 use std::{
-    ffi::{c_void, CStr, CString},
+    ffi::{CStr, CString},
     mem, ptr,
 };
 
@@ -8,6 +8,7 @@ use sys::CB_CAPSTYPE_GENERAL_LEN;
 
 use crate::{
     channels::cliprdr::{Format, GeneralCapabilities},
+    client::custom::Custom,
     sys, RdpError, Result,
 };
 
@@ -21,17 +22,6 @@ pub struct CliprdrFormat {
 pub struct CliprdrClientContext {
     pub(crate) inner: ptr::NonNull<sys::CliprdrClientContext>,
     owned: bool,
-}
-
-struct Custom {
-    handler: *mut c_void,
-    free: fn(*mut c_void),
-}
-
-impl Drop for Custom {
-    fn drop(&mut self) {
-        (self.free)(self.handler)
-    }
 }
 
 unsafe impl Send for CliprdrClientContext {}
@@ -108,10 +98,7 @@ impl CliprdrClientContext {
         inner.ServerFormatListResponse = Some(rdp_cliprdr_server_format_list_response::<H>);
         inner.ServerFormatDataRequest = Some(rdp_cliprdr_server_format_data_request::<H>);
         inner.ServerFormatDataResponse = Some(rdp_cliprdr_server_format_data_response::<H>);
-        inner.custom = Box::into_raw(Box::new(Custom {
-            handler: Box::into_raw(Box::new(handler)) as *mut _,
-            free: |raw| unsafe { drop(Box::from_raw(raw)) },
-        })) as *mut _;
+        inner.custom = Custom::new(handler);
     }
 
     // should be safe as long as inner.custom is set only once

@@ -4,6 +4,8 @@ pub use cliprdr::*;
 mod context;
 pub use context::*;
 
+mod custom;
+
 mod disp;
 pub use disp::*;
 
