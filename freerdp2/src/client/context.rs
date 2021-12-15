@@ -22,8 +22,9 @@ use crate::{
 };
 
 // this struct is allocated from C/freerdp, to improve
+// #[repr(C)]
 pub(crate) struct RdpContext<H> {
-    context: sys::rdpContext,
+    rdp_context: sys::rdpContext,
     handler: Option<Box<H>>,
 
     default_channel_connected: Option<PubSubHandle>,
@@ -356,7 +357,7 @@ impl<H> Context<H> {
     }
 
     pub fn input(&self) -> Option<Input> {
-        let input = unsafe { self.inner.as_ref() }.context.input;
+        let input = unsafe { self.inner.as_ref() }.rdp_context.input;
         if input.is_null() {
             None
         } else {
@@ -365,7 +366,7 @@ impl<H> Context<H> {
     }
 
     pub fn gdi(&self) -> Option<Gdi> {
-        let gdi = unsafe { self.inner.as_ref() }.context.gdi;
+        let gdi = unsafe { self.inner.as_ref() }.rdp_context.gdi;
         if gdi.is_null() {
             None
         } else {
@@ -374,7 +375,7 @@ impl<H> Context<H> {
     }
 
     pub fn graphics(&self) -> Option<Graphics> {
-        let graphics = unsafe { self.inner.as_ref() }.context.graphics;
+        let graphics = unsafe { self.inner.as_ref() }.rdp_context.graphics;
         if graphics.is_null() {
             None
         } else {
@@ -383,7 +384,7 @@ impl<H> Context<H> {
     }
 
     pub fn update(&self) -> Option<Update> {
-        let update = unsafe { self.inner.as_ref() }.context.update;
+        let update = unsafe { self.inner.as_ref() }.rdp_context.update;
         if update.is_null() {
             None
         } else {
@@ -410,8 +411,8 @@ impl<H> Context<H> {
     fn load_addins(&mut self) -> Result<()> {
         unsafe {
             if sys::freerdp_client_load_addins(
-                self.inner.as_ref().context.channels,
-                self.inner.as_ref().context.settings,
+                self.inner.as_ref().rdp_context.channels,
+                self.inner.as_ref().rdp_context.settings,
             ) != 0
             {
                 Ok(())
@@ -425,8 +426,8 @@ impl<H> Context<H> {
 impl<H: Handler> Context<H> {
     pub(crate) fn from_context(owned: bool, context: ptr::NonNull<RdpContext<H>>) -> Self {
         let ctx = unsafe { context.as_ref() };
-        let settings = Settings::new(false, ctx.context.settings);
-        let instance = FreeRdp::new(ctx.context.instance);
+        let settings = Settings::new(false, ctx.rdp_context.settings);
+        let instance = FreeRdp::new(ctx.rdp_context.instance);
 
         Self {
             inner: context,
@@ -467,7 +468,7 @@ impl<H: Handler> Context<H> {
     }
 
     pub fn pub_sub(&self) -> PubSub<H> {
-        PubSub::new(unsafe { self.inner.as_ref() }.context.pubSub)
+        PubSub::new(unsafe { self.inner.as_ref() }.rdp_context.pubSub)
     }
 }
 
