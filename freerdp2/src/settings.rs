@@ -44,6 +44,10 @@ impl Settings {
         }
     }
 
+    pub fn as_ptr(&self) -> *mut sys::rdpSettings {
+        self.inner.as_ptr()
+    }
+
     pub fn parse_command_line(&mut self, args: &[&str], allow_unknown: bool) -> Result<()> {
         let cargs: Vec<_> = args.iter().map(|a| CString::new(*a).unwrap()).collect();
         let argv: Vec<_> = cargs.iter().map(|a| a.as_ptr()).collect();
