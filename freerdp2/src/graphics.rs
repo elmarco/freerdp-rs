@@ -134,14 +134,16 @@ pub trait PointerHandler {
 }
 
 #[derive(Debug)]
-pub struct Graphics {
+pub struct Graphics<'a> {
     inner: ptr::NonNull<sys::rdpGraphics>,
+    _lifetime: PhantomData<&'a ()>,
 }
 
-impl Graphics {
+impl<'a> Graphics<'a> {
     pub(crate) fn new(graphics: *mut sys::rdpGraphics) -> Self {
         Self {
             inner: ptr::NonNull::new(graphics).unwrap(),
+            _lifetime: PhantomData,
         }
     }
 
