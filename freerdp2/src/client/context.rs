@@ -142,8 +142,9 @@ pub trait Handler {
                         inner.cliprdr = Some(iface);
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {
-                        let mut iface =
-                            unsafe { EncomspClientContext::from_ptr(event.interface as *mut _) };
+                        let mut iface = unsafe {
+                            EncomspClientContext::from_ptr(event.interface as *mut _, true)
+                        };
                         let handler = context.handler_mut().unwrap();
                         handler.encomsp_connected(&mut iface);
                         inner.encomsp = Some(iface);

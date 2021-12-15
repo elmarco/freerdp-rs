@@ -135,8 +135,8 @@ fn main() {
         wait_for_multiple_objects(&handles, false, None).unwrap();
 
         if !ctxt.check_event_handles() {
-            if let Err(e) = ctxt.last_error() {
-                eprintln!("{}", e);
+            if let Some(e) = ctxt.last_error() {
+                eprintln!("{:?}", e);
                 break;
             }
         }
