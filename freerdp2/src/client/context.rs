@@ -18,57 +18,54 @@ use crate::{
     sys,
     update::Update,
     winpr::{self, Handle},
-    ConnectionType, FreeRdp, RdpCode, RdpError, Result, Settings,
+    FreeRdp, RdpCode, RdpError, Result, Settings,
 };
 
 // this struct is allocated from C/freerdp, to improve
-// #[repr(C)]
-pub(crate) struct RdpContext<H> {
+#[repr(C)]
+#[derive(Debug)]
+pub(crate) struct RdpContext<H: Handler> {
     rdp_context: sys::rdpContext,
-    handler: Option<Box<H>>,
-
-    default_channel_connected: Option<PubSubHandle>,
-    default_channel_disconnected: Option<PubSubHandle>,
-
-    rdpei: Option<RdpeiClientContext>,
-    disp: Option<DispClientContext>,
-    cliprdr: Option<CliprdrClientContext>,
-    encomsp: Option<EncomspClientContext>,
+    context: ptr::NonNull<Context<H>>,
 }
 
-unsafe impl<H> Send for RdpContext<H> where H: Send {}
-unsafe impl<H> Sync for RdpContext<H> where H: Sync {}
+unsafe impl<H> Send for RdpContext<H> where H: Handler + Send {}
+unsafe impl<H> Sync for RdpContext<H> where H: Handler + Sync {}
+
+impl<H: Handler> RdpContext<H> {
+    fn from_ptr<'a>(ptr: *mut sys::rdpContext) -> &'a mut Self {
+        let ptr = ptr as *mut Self;
+        unsafe { ptr::NonNull::new(ptr).unwrap().as_mut() }
+    }
+
+    fn context(&mut self) -> &mut Context<H> {
+        unsafe { self.context.as_mut() }
+    }
+}
 
 #[derive(Debug)]
-pub struct Context<H> {
-    // we create aliases on the same underlying pointer... hmm...
-    owned: bool,
-    inner: ptr::NonNull<RdpContext<H>>,
-
+pub struct Context<H: Handler> {
+    pub handler: H,
     pub settings: Settings,
     pub instance: FreeRdp,
+    pub pub_sub: PubSub<H>,
+    pub rdpei: Option<RdpeiClientContext>,
+    pub disp: Option<DispClientContext>,
+    pub cliprdr: Option<CliprdrClientContext>,
+    pub encomsp: Option<EncomspClientContext>,
+
+    rdp_context: ptr::NonNull<RdpContext<H>>,
+    default_channel_connected: Option<PubSubHandle>,
+    default_channel_disconnected: Option<PubSubHandle>,
 }
 
-unsafe impl<H> Send for Context<H> where H: Send {}
-unsafe impl<H> Sync for Context<H> where H: Sync {}
+unsafe impl<H> Send for Context<H> where H: Handler + Send {}
+unsafe impl<H> Sync for Context<H> where H: Handler + Sync {}
 
-impl<H> Drop for Context<H> {
+impl<H: Handler> Drop for Context<H> {
     fn drop(&mut self) {
-        if !self.owned {
-            return;
-        }
-
         unsafe {
-            let inner = self.inner.as_mut();
-            // TOOD: replace with a big Box..
-            inner.handler.take();
-            inner.default_channel_connected.take();
-            inner.default_channel_disconnected.take();
-            inner.rdpei.take();
-            inner.disp.take();
-            inner.encomsp.take();
-            inner.cliprdr.take();
-            sys::freerdp_client_context_free(self.inner.as_ptr().cast());
+            sys::freerdp_client_context_free(self.rdp_context.as_ptr().cast());
         }
     }
 }
@@ -121,12 +118,11 @@ pub trait Handler {
                 event: &Self::Event,
                 _sender: Option<&str>,
             ) {
-                let inner = unsafe { context.inner.as_mut() };
                 match event.name.as_str() {
                     channels::rdpei::DVC_CHANNEL_NAME => {
                         let iface =
                             unsafe { RdpeiClientContext::from_ptr(event.interface as *mut _) };
-                        inner.rdpei = Some(iface);
+                        context.rdpei = Some(iface);
                     }
                     channels::rdpgfx::DVC_CHANNEL_NAME => {
                         let iface =
@@ -138,22 +134,20 @@ pub trait Handler {
                         let mut iface = unsafe {
                             CliprdrClientContext::from_ptr(event.interface as *mut _, true)
                         };
-                        let handler = context.handler_mut().unwrap();
-                        handler.clipboard_connected(&mut iface);
-                        inner.cliprdr = Some(iface);
+                        context.handler.clipboard_connected(&mut iface);
+                        context.cliprdr = Some(iface);
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {
                         let mut iface = unsafe {
                             EncomspClientContext::from_ptr(event.interface as *mut _, true)
                         };
-                        let handler = context.handler_mut().unwrap();
-                        handler.encomsp_connected(&mut iface);
-                        inner.encomsp = Some(iface);
+                        context.handler.encomsp_connected(&mut iface);
+                        context.encomsp = Some(iface);
                     }
                     channels::disp::DVC_CHANNEL_NAME => {
                         let iface =
                             unsafe { DispClientContext::from_ptr(event.interface as *mut _) };
-                        inner.disp = Some(iface);
+                        context.disp = Some(iface);
                     }
                     channels::geometry::DVC_CHANNEL_NAME => {
                         let iface =
@@ -176,18 +170,20 @@ pub trait Handler {
                 }
             }
         }
-        let inner = unsafe { context.inner.as_mut() };
-        inner.default_channel_connected = Some(context.pub_sub().subscribe::<ChannelConnected>());
+        context.default_channel_connected = Some(context.pub_sub.subscribe::<ChannelConnected>());
 
         struct ChannelDisconnected;
         impl<'a> PubSubHandler<'a> for ChannelDisconnected {
             type Event = EventChannelDisconnected;
 
-            fn handle<H>(context: &mut Context<H>, event: &Self::Event, _sender: Option<&str>) {
-                let inner = unsafe { context.inner.as_mut() };
+            fn handle<H: Handler>(
+                context: &mut Context<H>,
+                event: &Self::Event,
+                _sender: Option<&str>,
+            ) {
                 match event.name.as_str() {
                     channels::rdpei::DVC_CHANNEL_NAME => {
-                        inner.rdpei = None;
+                        context.rdpei = None;
                     }
                     channels::rdpgfx::DVC_CHANNEL_NAME => {
                         let iface =
@@ -196,13 +192,13 @@ pub trait Handler {
                     }
                     channels::rail::SVC_CHANNEL_NAME => {}
                     channels::cliprdr::SVC_CHANNEL_NAME => {
-                        inner.cliprdr = None;
+                        context.cliprdr = None;
                     }
                     channels::encomsp::SVC_CHANNEL_NAME => {
-                        inner.encomsp = None;
+                        context.encomsp = None;
                     }
                     channels::disp::DVC_CHANNEL_NAME => {
-                        inner.disp = None;
+                        context.disp = None;
                     }
                     channels::geometry::DVC_CHANNEL_NAME => {
                         let iface =
@@ -225,8 +221,8 @@ pub trait Handler {
                 }
             }
         }
-        inner.default_channel_disconnected =
-            Some(context.pub_sub().subscribe::<ChannelDisconnected>());
+        context.default_channel_disconnected =
+            Some(context.pub_sub.subscribe::<ChannelDisconnected>());
 
         context.load_addins()?;
         Ok(())
@@ -315,13 +311,13 @@ fn cvt_nz(error: u32) -> Result<()> {
     }
 }
 
-impl<H> Context<H> {
+impl<H: Handler> Context<H> {
     pub fn client_start(&mut self) -> Result<()> {
-        cvt_nz(unsafe { sys::freerdp_client_start(self.inner.as_ptr().cast()) } as _)
+        cvt_nz(unsafe { sys::freerdp_client_start(self.rdp_context.as_ptr().cast()) } as _)
     }
 
     pub fn client_stop(&mut self) -> Result<()> {
-        cvt_nz(unsafe { sys::freerdp_client_stop(self.inner.as_ptr().cast()) } as _)
+        cvt_nz(unsafe { sys::freerdp_client_stop(self.rdp_context.as_ptr().cast()) } as _)
     }
 
     pub fn event_handles(&self) -> Result<Vec<Handle>> {
@@ -329,7 +325,7 @@ impl<H> Context<H> {
             [MaybeUninit::uninit(); winpr::MAX_WAIT_OBJECTS];
         let res = unsafe {
             sys::freerdp_get_event_handles(
-                self.inner.as_ptr().cast(),
+                self.rdp_context.as_ptr().cast(),
                 handles.as_mut_ptr() as _,
                 handles.len() as _,
             )
@@ -346,18 +342,19 @@ impl<H> Context<H> {
     }
 
     pub fn check_event_handles(&mut self) -> bool {
-        unsafe { sys::freerdp_check_event_handles(self.inner.as_ptr().cast()) > 0 }
+        unsafe { sys::freerdp_check_event_handles(self.rdp_context.as_ptr().cast()) > 0 }
     }
 
     pub fn last_error(&self) -> Option<crate::RdpErr> {
-        match cvt_nz(unsafe { sys::freerdp_get_last_error(self.inner.as_ptr().cast()) as _ }) {
+        match cvt_nz(unsafe { sys::freerdp_get_last_error(self.rdp_context.as_ptr().cast()) as _ })
+        {
             Err(RdpError::Code(code)) => code.as_err(),
             _ => None,
         }
     }
 
     pub fn input(&self) -> Option<Input> {
-        let input = unsafe { self.inner.as_ref() }.rdp_context.input;
+        let input = unsafe { self.rdp_context.as_ref() }.rdp_context.input;
         if input.is_null() {
             None
         } else {
@@ -366,7 +363,7 @@ impl<H> Context<H> {
     }
 
     pub fn gdi(&self) -> Option<Gdi> {
-        let gdi = unsafe { self.inner.as_ref() }.rdp_context.gdi;
+        let gdi = unsafe { self.rdp_context.as_ref() }.rdp_context.gdi;
         if gdi.is_null() {
             None
         } else {
@@ -375,7 +372,7 @@ impl<H> Context<H> {
     }
 
     pub fn graphics(&self) -> Option<Graphics> {
-        let graphics = unsafe { self.inner.as_ref() }.rdp_context.graphics;
+        let graphics = unsafe { self.rdp_context.as_ref() }.rdp_context.graphics;
         if graphics.is_null() {
             None
         } else {
@@ -384,7 +381,7 @@ impl<H> Context<H> {
     }
 
     pub fn update(&self) -> Option<Update> {
-        let update = unsafe { self.inner.as_ref() }.rdp_context.update;
+        let update = unsafe { self.rdp_context.as_ref() }.rdp_context.update;
         if update.is_null() {
             None
         } else {
@@ -392,27 +389,11 @@ impl<H> Context<H> {
         }
     }
 
-    pub fn rdpei_mut(&mut self) -> Option<&mut RdpeiClientContext> {
-        unsafe { self.inner.as_mut() }.rdpei.as_mut()
-    }
-
-    pub fn disp_mut(&mut self) -> Option<&mut DispClientContext> {
-        unsafe { self.inner.as_mut() }.disp.as_mut()
-    }
-
-    pub fn cliprdr_mut(&mut self) -> Option<&mut CliprdrClientContext> {
-        unsafe { self.inner.as_mut() }.cliprdr.as_mut()
-    }
-
-    pub fn encomsp_mut(&mut self) -> Option<&mut EncomspClientContext> {
-        unsafe { self.inner.as_mut() }.encomsp.as_mut()
-    }
-
     fn load_addins(&mut self) -> Result<()> {
         unsafe {
             if sys::freerdp_client_load_addins(
-                self.inner.as_ref().rdp_context.channels,
-                self.inner.as_ref().rdp_context.settings,
+                self.rdp_context.as_ref().rdp_context.channels,
+                self.rdp_context.as_ref().rdp_context.settings,
             ) != 0
             {
                 Ok(())
@@ -424,20 +405,11 @@ impl<H> Context<H> {
 }
 
 impl<H: Handler> Context<H> {
-    pub(crate) fn from_context(owned: bool, context: ptr::NonNull<RdpContext<H>>) -> Self {
-        let ctx = unsafe { context.as_ref() };
-        let settings = Settings::new(false, ctx.rdp_context.settings);
-        let instance = FreeRdp::new(ctx.rdp_context.instance);
-
-        Self {
-            inner: context,
-            owned,
-            settings,
-            instance,
-        }
+    pub(crate) fn from_ptr<'a>(ptr: *mut sys::rdpContext) -> &'a mut Self {
+        RdpContext::<H>::from_ptr(ptr).context()
     }
 
-    pub fn new(handler: H) -> Self {
+    pub fn new(handler: H) -> Box<Self> {
         let mut entry_points = sys::rdp_client_entry_points_v1 {
             Size: size_of::<sys::rdp_client_entry_points_v1>() as _,
             Version: sys::RDP_CLIENT_INTERFACE_VERSION,
@@ -451,24 +423,28 @@ impl<H: Handler> Context<H> {
             ContextSize: size_of::<RdpContext<H>>() as _,
         };
 
-        let context = unsafe { sys::freerdp_client_context_new(&mut entry_points) };
-        let mut context = ptr::NonNull::new(context as *mut RdpContext<H>).unwrap();
-        unsafe { context.as_mut().handler = Some(Box::new(handler)) };
+        let ptr = unsafe { sys::freerdp_client_context_new(&mut entry_points) };
+        let rdp_context = RdpContext::<H>::from_ptr(ptr).rdp_context;
+        let settings = Settings::new(false, rdp_context.settings);
+        let instance = FreeRdp::new(rdp_context.instance);
+        let pub_sub = PubSub::new(rdp_context.pubSub);
 
-        let mut ctxt = Self::from_context(true, context);
-        ctxt.settings
-            .set_connection_type(ConnectionType::Auto)
-            .unwrap();
-        ctxt
-    }
-
-    pub fn handler_mut(&mut self) -> Option<&mut H> {
-        let inner = unsafe { self.inner.as_mut() };
-        inner.handler.as_mut().map(|h| h.as_mut())
-    }
-
-    pub fn pub_sub(&self) -> PubSub<H> {
-        PubSub::new(unsafe { self.inner.as_ref() }.rdp_context.pubSub)
+        let res = Box::new(Self {
+            settings,
+            instance,
+            handler,
+            pub_sub,
+            rdp_context: ptr::NonNull::new(ptr as *mut _).unwrap(),
+            rdpei: None,
+            disp: None,
+            cliprdr: None,
+            encomsp: None,
+            default_channel_connected: None,
+            default_channel_disconnected: None,
+        });
+        RdpContext::<H>::from_ptr(ptr).context =
+            ptr::NonNull::new(&*res as *const _ as *mut _).unwrap();
+        res
     }
 }
 
@@ -481,27 +457,30 @@ extern "C" fn rdp_global_uninit<H: Handler>() {
 }
 
 extern "C" fn rdp_instance_pre_connect<H: Handler>(instance: *mut sys::freerdp) -> sys::BOOL {
-    let mut ctxt = unsafe { ptr::NonNull::new((*instance).context as *mut RdpContext<H>).unwrap() };
-    let handler = unsafe { ctxt.as_mut() }.handler.as_mut().unwrap();
+    let ptr = unsafe { (*instance).context };
+    // XXX: alias context, ok as long as handler isn't changed...
+    // similar below and elsewhere
+    let ctxt = Context::<H>::from_ptr(ptr);
 
-    handler
-        .pre_connect(&mut Context::from_context(false, ctxt))
+    ctxt.handler
+        .pre_connect(Context::<H>::from_ptr(ptr))
         .is_ok() as _
 }
 
 extern "C" fn rdp_instance_post_connect<H: Handler>(instance: *mut sys::freerdp) -> sys::BOOL {
-    let mut ctxt = unsafe { ptr::NonNull::new((*instance).context as *mut RdpContext<H>).unwrap() };
-    let handler = unsafe { ctxt.as_mut() }.handler.as_mut().unwrap();
+    let ptr = unsafe { (*instance).context };
+    let ctxt = Context::<H>::from_ptr(ptr);
 
-    let res = handler.post_connect(&mut Context::from_context(false, ctxt));
-    res.is_ok() as _
+    ctxt.handler
+        .post_connect(Context::<H>::from_ptr(ptr))
+        .is_ok() as _
 }
 
 extern "C" fn rdp_instance_post_disconnect<H: Handler>(instance: *mut sys::freerdp) {
-    let mut ctxt = unsafe { ptr::NonNull::new((*instance).context as *mut RdpContext<H>).unwrap() };
-    let handler = unsafe { ctxt.as_mut() }.handler.as_mut().unwrap();
+    let ptr = unsafe { (*instance).context };
+    let ctxt = Context::<H>::from_ptr(ptr);
 
-    handler.post_disconnect(&mut Context::from_context(false, ctxt))
+    ctxt.handler.post_disconnect(Context::<H>::from_ptr(ptr))
 }
 
 extern "C" fn rdp_instance_authenticate<H: Handler>(
@@ -510,11 +489,12 @@ extern "C" fn rdp_instance_authenticate<H: Handler>(
     _password: *mut *mut c_char,
     _domain: *mut *mut c_char,
 ) -> sys::BOOL {
-    let mut ctxt = unsafe { ptr::NonNull::new((*instance).context as *mut RdpContext<H>).unwrap() };
-    let handler = unsafe { ctxt.as_mut() }.handler.as_mut().unwrap();
+    let ptr = unsafe { (*instance).context };
+    let ctxt = Context::<H>::from_ptr(ptr);
 
-    let res = handler.authenticate(&mut Context::from_context(false, ctxt));
-    res.is_ok() as _
+    ctxt.handler
+        .authenticate(Context::<H>::from_ptr(ptr))
+        .is_ok() as _
 }
 
 extern "C" fn rdp_instance_verify_certificate<H: Handler>(
@@ -527,14 +507,9 @@ extern "C" fn rdp_instance_verify_certificate<H: Handler>(
     fingerprint: *const ::std::os::raw::c_char,
     flags: sys::DWORD,
 ) -> sys::DWORD {
-    let ctxt = unsafe {
-        ptr::NonNull::new((*instance).context as *mut RdpContext<H>)
-            .unwrap()
-            .as_mut()
-    };
-    let handler = ctxt.handler.as_mut().unwrap();
+    let ctxt = Context::<H>::from_ptr(unsafe { (*instance).context });
 
-    handler
+    ctxt.handler
         .verify_certificate(
             unsafe { CStr::from_ptr(host).to_str().unwrap() },
             port,
@@ -560,14 +535,9 @@ extern "C" fn rdp_instance_verify_changed_certificate<H: Handler>(
     old_fingerprint: *const ::std::os::raw::c_char,
     flags: sys::DWORD,
 ) -> sys::DWORD {
-    let ctxt = unsafe {
-        ptr::NonNull::new((*instance).context as *mut RdpContext<H>)
-            .unwrap()
-            .as_mut()
-    };
-    let handler = ctxt.handler.as_mut().unwrap();
+    let ctxt = Context::<H>::from_ptr(unsafe { (*instance).context });
 
-    handler
+    ctxt.handler
         .verify_certificate_changed(
             unsafe { CStr::from_ptr(host).to_str().unwrap() },
             port,
@@ -591,15 +561,10 @@ extern "C" fn rdp_instance_present_gateway_message<H: Handler>(
     length: sys::size_t,
     message: *const sys::WCHAR,
 ) -> sys::BOOL {
-    let ctxt = unsafe {
-        ptr::NonNull::new((*instance).context as *mut RdpContext<H>)
-            .unwrap()
-            .as_mut()
-    };
-    let handler = ctxt.handler.as_mut().unwrap();
-
+    let ctxt = Context::<H>::from_ptr(unsafe { (*instance).context });
     let msg = String::from_utf16_lossy(unsafe { std::slice::from_raw_parts(message, length as _) });
-    handler
+
+    ctxt.handler
         .present_gateway_message(
             type_,
             is_display_mandatory != 0,
@@ -614,14 +579,9 @@ extern "C" fn rdp_instance_logon_error_info<H: Handler>(
     data: sys::UINT32,
     type_: sys::UINT32,
 ) -> i32 {
-    let ctxt = unsafe {
-        ptr::NonNull::new((*instance).context as *mut RdpContext<H>)
-            .unwrap()
-            .as_mut()
-    };
-    let handler = ctxt.handler.as_mut().unwrap();
+    let ctxt = Context::<H>::from_ptr(unsafe { (*instance).context });
 
-    handler.logon_error_info(data, type_)
+    ctxt.handler.logon_error_info(data, type_)
 }
 
 extern "C" fn rdp_client_new<H: Handler>(
@@ -653,28 +613,18 @@ extern "C" fn rdp_client_free<H: Handler>(
 }
 
 extern "C" fn rdp_client_start<H: Handler>(context: *mut sys::rdpContext) -> c_int {
-    let ctxt = unsafe {
-        ptr::NonNull::new(context as *mut RdpContext<H>)
-            .unwrap()
-            .as_mut()
-    };
-    let handler = ctxt.handler.as_mut().unwrap();
+    let ctxt = Context::<H>::from_ptr(context);
 
-    match handler.client_start() {
+    match ctxt.handler.client_start() {
         Ok(_) => 0,
         Err(e) => e,
     }
 }
 
 extern "C" fn rdp_client_stop<H: Handler>(context: *mut sys::rdpContext) -> c_int {
-    let ctxt = unsafe {
-        ptr::NonNull::new(context as *mut RdpContext<H>)
-            .unwrap()
-            .as_mut()
-    };
-    let handler = ctxt.handler.as_mut().unwrap();
+    let ctxt = Context::<H>::from_ptr(context);
 
-    match handler.client_stop() {
+    match ctxt.handler.client_stop() {
         Ok(_) => 0,
         Err(e) => e,
     }

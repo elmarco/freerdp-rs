@@ -1,7 +1,7 @@
 use std::{fmt::Debug, marker::PhantomData, ptr};
 
 use crate::{
-    client::{Context, Handler, RdpContext},
+    client::{Context, Handler},
     sys, Result,
 };
 
@@ -62,44 +62,39 @@ pub trait UpdateHandler {
 }
 
 extern "C" fn rdp_update_begin_paint<H: UpdateHandler>(context: *mut sys::rdpContext) -> sys::BOOL {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
 
-    H::begin_paint(&mut context).is_ok() as _
+    H::begin_paint(context).is_ok() as _
 }
 
 extern "C" fn rdp_update_end_paint<H: UpdateHandler>(context: *mut sys::rdpContext) -> sys::BOOL {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
 
-    H::end_paint(&mut context).is_ok() as _
+    H::end_paint(context).is_ok() as _
 }
 
 extern "C" fn rdp_update_set_bounds<H: UpdateHandler>(
     context: *mut sys::rdpContext,
     bounds: *const sys::rdpBounds,
 ) -> sys::BOOL {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
-
+    let context = Context::from_ptr(context);
     let bounds = unsafe { bounds.as_ref() }.unwrap();
-    H::set_bounds(&mut context, &bounds.into()).is_ok() as _
+
+    H::set_bounds(context, &bounds.into()).is_ok() as _
 }
 
 extern "C" fn rdp_update_synchronize<H: UpdateHandler>(context: *mut sys::rdpContext) -> sys::BOOL {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
 
-    H::synchronize(&mut context).is_ok() as _
+    H::synchronize(context).is_ok() as _
 }
 
 extern "C" fn rdp_update_desktop_resize<H: UpdateHandler>(
     context: *mut sys::rdpContext,
 ) -> sys::BOOL {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
 
-    H::desktop_resize(&mut context).is_ok() as _
+    H::desktop_resize(context).is_ok() as _
 }
 
 #[derive(Debug, Copy, Clone)]

@@ -6,7 +6,7 @@ use std::{
 };
 
 use crate::{
-    client::{Context, Handler, RdpContext},
+    client::{Context, Handler},
     gdi::GdiPalette,
     sys, RdpError, Result, PIXEL_FORMAT_BGRA32,
 };
@@ -165,13 +165,12 @@ extern "C" fn rdp_pointer_new<H: PointerHandler>(
     context: *mut sys::rdpContext,
     pointer: *mut sys::rdpPointer,
 ) -> sys::BOOL {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
     let mut inner = ptr::NonNull::new(pointer as *mut _ as *mut RdpPointer<H>).unwrap();
 
     unsafe { inner.as_mut() }
         .handler
-        .new(&mut context, &Pointer::new(pointer))
+        .new(context, &Pointer::new(pointer))
         .is_ok() as _
 }
 
@@ -179,41 +178,37 @@ extern "C" fn rdp_pointer_free<H: PointerHandler>(
     context: *mut sys::rdpContext,
     pointer: *mut sys::rdpPointer,
 ) {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
     let mut inner = ptr::NonNull::new(pointer as *mut _ as *mut RdpPointer<H>).unwrap();
 
     unsafe { inner.as_mut() }
         .handler
-        .free(&mut context, &Pointer::new(pointer));
+        .free(context, &Pointer::new(pointer));
 }
 
 extern "C" fn rdp_pointer_set<H: PointerHandler>(
     context: *mut sys::rdpContext,
     pointer: *const sys::rdpPointer,
 ) -> i32 {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
     let mut inner = ptr::NonNull::new(pointer as *mut RdpPointer<H>).unwrap();
 
     unsafe { inner.as_mut() }
         .handler
-        .set(&mut context, &Pointer::new(pointer as *mut _))
+        .set(context, &Pointer::new(pointer as *mut _))
         .is_ok() as _
 }
 
 extern "C" fn rdp_pointer_set_null<H: PointerHandler>(context: *mut sys::rdpContext) -> i32 {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
 
-    H::set_null(&mut context).is_ok() as _
+    H::set_null(context).is_ok() as _
 }
 
 extern "C" fn rdp_pointer_set_default<H: PointerHandler>(context: *mut sys::rdpContext) -> i32 {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
 
-    H::set_default(&mut context).is_ok() as _
+    H::set_default(context).is_ok() as _
 }
 
 extern "C" fn rdp_pointer_set_position<H: PointerHandler>(
@@ -221,8 +216,7 @@ extern "C" fn rdp_pointer_set_position<H: PointerHandler>(
     x: u32,
     y: u32,
 ) -> i32 {
-    let context = ptr::NonNull::new(context as *mut RdpContext<H::ContextHandler>).unwrap();
-    let mut context = Context::from_context(false, context);
+    let context = Context::from_ptr(context);
 
-    H::set_position(&mut context, x, y).is_ok() as _
+    H::set_position(context, x, y).is_ok() as _
 }

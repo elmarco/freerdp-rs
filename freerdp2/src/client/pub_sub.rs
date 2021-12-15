@@ -8,19 +8,18 @@ use std::{
 };
 
 use crate::{
-    client::{Context, Handler, RdpContext},
+    client::{Context, Handler},
     sys,
 };
 
 #[derive(Debug)]
-pub struct PubSub<'a, C: Handler> {
+pub struct PubSub<C: Handler> {
     inner: ptr::NonNull<sys::wPubSub>,
     handler: PhantomData<C>,
-    _lifetime: PhantomData<&'a ()>,
 }
 
-unsafe impl<C> Send for PubSub<'_, C> where C: Handler + Send {}
-unsafe impl<C> Sync for PubSub<'_, C> where C: Handler + Sync {}
+unsafe impl<C> Send for PubSub<C> where C: Handler + Send {}
+unsafe impl<C> Sync for PubSub<C> where C: Handler + Sync {}
 
 pub trait PubSubEvent<'a>: From<&'a sys::wEventArgs> + std::fmt::Debug {
     const NAME: &'static str;
@@ -128,12 +127,11 @@ impl Drop for PubSubHandle {
     }
 }
 
-impl<'a, C: Handler> PubSub<'a, C> {
+impl<C: Handler> PubSub<C> {
     pub(crate) fn new(pubsub: *mut sys::wPubSub) -> Self {
         Self {
             inner: ptr::NonNull::new(pubsub).unwrap(),
             handler: PhantomData,
-            _lifetime: PhantomData,
         }
     }
 
@@ -162,8 +160,8 @@ impl<'a, C: Handler> PubSub<'a, C> {
             let sender_str = csender.map(|s| s.to_string_lossy());
             let sender = sender_str.as_ref().map(|s| s.borrow());
 
-            let ctxt = ptr::NonNull::new(context as *mut RdpContext<C>).unwrap();
-            H::handle(&mut Context::from_context(false, ctxt), &event, sender);
+            let ctxt = Context::<C>::from_ptr(context as _);
+            H::handle(ctxt, &event, sender);
         }
 
         let cname = CString::new(H::Event::NAME).unwrap();

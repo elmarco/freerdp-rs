@@ -18,8 +18,6 @@ impl PointerHandler for MyPointerHandler {
     ) -> Result<()> {
         dbg!(self);
         dbg!(pointer);
-        let h = context.handler_mut();
-        dbg!(h);
         Ok(())
     }
 }
@@ -46,8 +44,7 @@ impl UpdateHandler for MyUpdateHandler {
         }
         let (x, y, w, h) = (invalid.x(), invalid.y(), invalid.w(), invalid.h());
 
-        let handler = context.handler_mut().unwrap();
-        handler.update_buffer(x, y, w, h)
+        context.handler.update_buffer(x, y, w, h)
     }
 
     fn set_bounds(_context: &mut Context<Self::ContextHandler>, bounds: &Bounds) -> Result<()> {
