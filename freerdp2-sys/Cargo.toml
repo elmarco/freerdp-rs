@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 links = "freerdp-client2"
 license = "Apache-2.0"
+description = "FreeRDP FFI bindings"
+homepage = "https://www.freerdp.com/"
+repository = "https://github.com/elmarco/freerdp-rs"
 
 build = "build.rs"
 

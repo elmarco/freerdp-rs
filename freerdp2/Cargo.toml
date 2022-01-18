@@ -1,6 +1,8 @@
 [package]
 name = "freerdp2"
 description = "FreeRDP bindings"
+homepage = "https://www.freerdp.com/"
+repository = "https://github.com/elmarco/freerdp-rs"
 edition = "2021"
 version = "0.1.0"
 license = "Apache-2.0"
