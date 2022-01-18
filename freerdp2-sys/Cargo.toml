@@ -13,4 +13,4 @@ freerdp-client2 = "2.4"
 winpr2 = "2.4"
 
 [build-dependencies]
-system-deps = "2.0"
+system-deps = "6"
