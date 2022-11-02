@@ -1,8 +1,5 @@
 use bitflags::bitflags;
-use std::{
-    io,
-    time::Duration,
-};
+use std::{io, time::Duration};
 
 #[cfg(unix)]
 use std::os::unix::prelude::{IntoRawFd, RawFd};
@@ -112,6 +109,11 @@ pub struct SecurityAttributes(sys::_SECURITY_ATTRIBUTES);
 
 impl Handle {
     pub(crate) fn new(handle: sys::HANDLE, owned: bool) -> Self {
+        Self { handle, owned }
+    }
+
+    #[cfg(windows)]
+    pub fn new_from_raw(handle: std::os::windows::raw::HANDLE, owned: bool) -> Self {
         Self { handle, owned }
     }
 
