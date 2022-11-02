@@ -1,9 +1,11 @@
 use bitflags::bitflags;
 use std::{
     io,
-    os::unix::prelude::{IntoRawFd, RawFd},
     time::Duration,
 };
+
+#[cfg(unix)]
+use std::os::unix::prelude::{IntoRawFd, RawFd};
 
 use crate::{sys, RdpError, Result};
 
@@ -113,6 +115,7 @@ impl Handle {
         Self { handle, owned }
     }
 
+    #[cfg(unix)]
     pub fn new_fd_event(
         event_attributes: &[SecurityAttributes],
         manual_reset: bool,
