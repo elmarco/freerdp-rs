@@ -568,6 +568,26 @@ pub enum RdpErr {
 #[derive(Debug)]
 pub struct RdpCode(pub u32);
 
+impl std::fmt::Display for RdpCode {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(
+            f,
+            "{} ({:#x}): {}",
+            unsafe {
+                CStr::from_ptr(sys::freerdp_get_last_error_name(self.0))
+                    .to_str()
+                    .unwrap()
+            },
+            self.0,
+            unsafe {
+                CStr::from_ptr(sys::freerdp_get_last_error_string(self.0))
+                    .to_str()
+                    .unwrap()
+            },
+        )
+    }
+}
+
 impl RdpCode {
     pub fn class(&self) -> Option<RdpCodeClass> {
         (self.0 >> 16).try_into().ok()
@@ -636,23 +656,7 @@ impl std::fmt::Display for RdpError {
             RdpError::Failed(ref err) => {
                 write!(f, "{}", err)
             }
-            RdpError::Code(RdpCode(code)) => {
-                write!(
-                    f,
-                    "{} ({:#x}): {}",
-                    unsafe {
-                        CStr::from_ptr(sys::freerdp_get_last_error_name(code))
-                            .to_str()
-                            .unwrap()
-                    },
-                    code,
-                    unsafe {
-                        CStr::from_ptr(sys::freerdp_get_last_error_string(code))
-                            .to_str()
-                            .unwrap()
-                    },
-                )
-            }
+            RdpError::Code(ref err) => err.fmt(f),
             RdpError::NulError(ref err) => err.fmt(f),
             RdpError::IOError(ref err) => err.fmt(f),
             RdpError::TryFromIntError(ref err) => err.fmt(f),
