@@ -12,6 +12,7 @@ impl Drop for Custom {
 }
 
 impl Custom {
+    #[allow(clippy::new_ret_no_self)]
     pub(super) fn new<H>(handler: H) -> *mut c_void {
         Box::into_raw(Box::new(Custom {
             handler: Box::into_raw(Box::new(handler)) as *mut _,

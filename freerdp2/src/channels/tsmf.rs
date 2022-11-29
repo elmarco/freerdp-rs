@@ -1,1 +1,1 @@
-pub const DVC_CHANNEL_NAME: &'static str = "TSMF";
+pub const DVC_CHANNEL_NAME: &str = "TSMF";

@@ -1,1 +1,1 @@
-pub const CHANNEL_NAME: &'static str = "urbdrc";
+pub const CHANNEL_NAME: &str = "urbdrc";

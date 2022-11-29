@@ -2,7 +2,7 @@ use bitflags::bitflags;
 
 use crate::sys;
 
-pub const DVC_CHANNEL_NAME: &'static str = "Microsoft::Windows::RDS::DisplayControl";
+pub const DVC_CHANNEL_NAME: &str = "Microsoft::Windows::RDS::DisplayControl";
 
 bitflags! {
     pub struct MonitorFlags: u32 {
@@ -33,6 +33,7 @@ impl From<Orientation> for u32 {
 pub struct MonitorLayout(sys::DISPLAY_CONTROL_MONITOR_LAYOUT);
 
 impl MonitorLayout {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         flags: MonitorFlags,
         left: i32,

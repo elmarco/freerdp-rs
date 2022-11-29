@@ -258,6 +258,7 @@ pub trait Handler {
         context.instance.gdi_uninit();
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn verify_certificate(
         &mut self,
         _host: &str,
@@ -271,6 +272,7 @@ pub trait Handler {
         VerifyCertificateResult::AcceptOnlyThisSession
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn verify_certificate_changed(
         &mut self,
         _host: &str,

@@ -4,7 +4,7 @@ use bitflags::bitflags;
 
 use crate::sys;
 
-pub const SVC_CHANNEL_NAME: &'static str = "encomsp";
+pub const SVC_CHANNEL_NAME: &str = "encomsp";
 
 bitflags! {
     pub struct ParticipantCreatedFlags: u16 {

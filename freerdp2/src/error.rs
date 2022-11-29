@@ -596,18 +596,9 @@ impl RdpCode {
     pub fn as_err(&self) -> Option<RdpErr> {
         let type_ = self.0 & 0xffff;
         self.class().and_then(|c| match c {
-            RdpCodeClass::Base => type_
-                .try_into()
-                .ok()
-                .and_then(|t| Some(RdpErr::RdpErrBase(t))),
-            RdpCodeClass::Info => type_
-                .try_into()
-                .ok()
-                .and_then(|t| Some(RdpErr::RdpErrInfo(t))),
-            RdpCodeClass::Connect => type_
-                .try_into()
-                .ok()
-                .and_then(|t| Some(RdpErr::RdpErrConnect(t))),
+            RdpCodeClass::Base => type_.try_into().ok().map(RdpErr::RdpErrBase),
+            RdpCodeClass::Info => type_.try_into().ok().map(RdpErr::RdpErrInfo),
+            RdpCodeClass::Connect => type_.try_into().ok().map(RdpErr::RdpErrConnect),
         })
     }
 }

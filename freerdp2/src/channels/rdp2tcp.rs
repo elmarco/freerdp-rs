@@ -1,1 +1,1 @@
-pub const DVC_CHANNEL_NAME: &'static str = "rdp2tcp";
+pub const DVC_CHANNEL_NAME: &str = "rdp2tcp";

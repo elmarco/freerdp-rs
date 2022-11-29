@@ -1,1 +1,1 @@
-pub const SVC_CHANNEL_NAME: &'static str = "remdesk";
+pub const SVC_CHANNEL_NAME: &str = "remdesk";

@@ -1,1 +1,1 @@
-pub const DVC_CHANNEL_NAME: &'static str = "Microsoft::Windows::RDS::Input";
+pub const DVC_CHANNEL_NAME: &str = "Microsoft::Windows::RDS::Input";

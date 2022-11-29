@@ -2,10 +2,10 @@ use bitflags::bitflags;
 
 use crate::{sys, RdpError};
 
-pub const SVC_CHANNEL_NAME: &'static str = "cliprdr";
+pub const SVC_CHANNEL_NAME: &str = "cliprdr";
 
 #[non_exhaustive]
-#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd)]
 pub enum Format {
     Raw = sys::CF_RAW as _,
     Text = sys::CF_TEXT as _,
@@ -37,10 +37,7 @@ pub enum Format {
 
 impl Format {
     pub fn is_text(&self) -> bool {
-        match self {
-            Format::Text | Format::UnicodeText | Format::OemText => true,
-            _ => false,
-        }
+        matches!(self, Format::Text | Format::UnicodeText | Format::OemText)
     }
 }
 

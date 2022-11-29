@@ -102,6 +102,8 @@ impl<'a> Pointer<'a> {
 pub trait PointerHandler {
     type ContextHandler: Handler;
 
+    #[allow(clippy::wrong_self_convention)]
+    #[allow(clippy::new_ret_no_self)]
     fn new(
         &mut self,
         _context: &mut Context<Self::ContextHandler>,
