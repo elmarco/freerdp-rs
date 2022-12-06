@@ -8,7 +8,7 @@ use std::{
 use crate::{
     client::{Context, Handler},
     gdi::GdiPalette,
-    sys, RdpError, Result, PIXEL_FORMAT_BGRA32,
+    sys, PixelFormat, RdpError, Result,
 };
 
 struct RdpPointer<H: PointerHandler> {
@@ -68,13 +68,13 @@ impl<'a> Pointer<'a> {
         unsafe { slice::from_raw_parts(p.andMaskData, p.lengthAndMask as _) }
     }
 
-    pub fn bgra_data(&self, palette: &GdiPalette) -> Result<Vec<u8>> {
+    pub fn data(&self, palette: &GdiPalette, format: &PixelFormat) -> Result<Vec<u8>> {
         let len = self.height() * self.width() * 4;
         let mut data = Vec::with_capacity(len as _);
         let res = unsafe {
             sys::freerdp_image_copy_from_pointer_data(
                 data.as_mut_ptr(),
-                PIXEL_FORMAT_BGRA32.into(),
+                format.into(),
                 self.width() * 4,
                 0,
                 0,
