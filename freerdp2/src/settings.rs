@@ -36,6 +36,40 @@ impl Drop for Settings {
     }
 }
 
+macro_rules! str_setting {
+    ($set:ident, $get:ident, $sys:ident, $field:ident) => {
+        pub fn $set(&mut self, val: Option<&str>) -> Result<()> {
+            if unsafe {
+                let val = match val {
+                    Some(s) => Some(CString::new(s)?),
+                    None => None,
+                };
+                sys::freerdp_settings_set_string(
+                    self.inner.as_ptr(),
+                    sys::$sys as _,
+                    val.as_ref().map_or(ptr::null(), |s| s.as_ptr()),
+                )
+            } != 0
+            {
+                Ok(())
+            } else {
+                Err(RdpError::Failed("Failed to set setting".into()))
+            }
+        }
+
+        pub fn $get(&self) -> Option<String> {
+            unsafe {
+                let ptr = self.inner.as_ref().$field;
+                if ptr.is_null() {
+                    None
+                } else {
+                    Some(CStr::from_ptr(ptr).to_string_lossy().into_owned())
+                }
+            }
+        }
+    };
+}
+
 impl Settings {
     pub(crate) fn new(owned: bool, settings: *mut sys::rdpSettings) -> Self {
         Self {
@@ -67,37 +101,12 @@ impl Settings {
         }
     }
 
-    // TODO: write macro(s)
-
-    pub fn set_server_hostname(&mut self, hostname: Option<&str>) -> Result<()> {
-        if unsafe {
-            let hostname = match hostname {
-                Some(hostname) => Some(CString::new(hostname)?),
-                None => None,
-            };
-            sys::freerdp_settings_set_string(
-                self.inner.as_ptr(),
-                sys::FreeRDP_ServerHostname as _,
-                hostname.as_ref().map_or(ptr::null(), |s| s.as_ptr()),
-            )
-        } != 0
-        {
-            Ok(())
-        } else {
-            Err(RdpError::Failed("Failed to set setting".into()))
-        }
-    }
-
-    pub fn server_hostname(&self) -> Option<String> {
-        unsafe {
-            let ptr = self.inner.as_ref().ServerHostname;
-            if ptr.is_null() {
-                None
-            } else {
-                Some(CStr::from_ptr(ptr).to_string_lossy().into_owned())
-            }
-        }
-    }
+    str_setting!(
+        set_server_hostname,
+        server_hostname,
+        FreeRDP_ServerHostname,
+        ServerHostname
+    );
 
     pub fn set_server_port(&mut self, port: u32) {
         unsafe {
@@ -109,65 +118,28 @@ impl Settings {
         unsafe { self.inner.as_ref().ServerPort }
     }
 
-    pub fn set_username(&mut self, username: Option<&str>) -> Result<()> {
-        if unsafe {
-            let username = match username {
-                Some(username) => Some(CString::new(username)?),
-                None => None,
-            };
-            sys::freerdp_settings_set_string(
-                self.inner.as_ptr(),
-                sys::FreeRDP_Username as _,
-                username.as_ref().map_or(ptr::null(), |s| s.as_ptr()),
-            )
-        } != 0
-        {
-            Ok(())
-        } else {
-            Err(RdpError::Failed("Failed to set setting".into()))
-        }
-    }
+    str_setting!(set_username, username, FreeRDP_Username, Username);
+    str_setting!(set_password, password, FreeRDP_Password, Password);
+    str_setting!(set_domain, domain, FreeRDP_Domain, Domain);
 
-    pub fn username(&self) -> Option<String> {
-        unsafe {
-            let ptr = self.inner.as_ref().Username;
-            if ptr.is_null() {
-                None
-            } else {
-                Some(CStr::from_ptr(ptr).to_string_lossy().into_owned())
-            }
-        }
-    }
-
-    pub fn set_password(&mut self, password: Option<&str>) -> Result<()> {
-        if unsafe {
-            let password = match password {
-                Some(password) => Some(CString::new(password)?),
-                None => None,
-            };
-            sys::freerdp_settings_set_string(
-                self.inner.as_ptr(),
-                sys::FreeRDP_Password as _,
-                password.as_ref().map_or(ptr::null(), |s| s.as_ptr()),
-            )
-        } != 0
-        {
-            Ok(())
-        } else {
-            Err(RdpError::Failed("Failed to set setting".into()))
-        }
-    }
-
-    pub fn password(&self) -> Option<String> {
-        unsafe {
-            let ptr = self.inner.as_ref().Password;
-            if ptr.is_null() {
-                None
-            } else {
-                Some(CStr::from_ptr(ptr).to_string_lossy().into_owned())
-            }
-        }
-    }
+    str_setting!(
+        set_gateway_username,
+        gateway_username,
+        FreeRDP_GatewayUsername,
+        GatewayUsername
+    );
+    str_setting!(
+        set_gateway_password,
+        gateway_password,
+        FreeRDP_GatewayPassword,
+        GatewayPassword
+    );
+    str_setting!(
+        set_gateway_domain,
+        gateway_domain,
+        FreeRDP_GatewayDomain,
+        GatewayDomain
+    );
 
     pub fn set_remote_fx_codec(&mut self, remotefx: bool) {
         unsafe {
