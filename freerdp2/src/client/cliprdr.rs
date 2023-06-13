@@ -102,7 +102,7 @@ impl CliprdrClientContext {
     }
 
     // should be safe as long as inner.custom is set only once
-    unsafe fn handler<'a, 'b, H: CliprdrHandler>(&'a mut self) -> &'b mut H {
+    unsafe fn handler<'a, H: CliprdrHandler>(&mut self) -> &'a mut H {
         let custom = (self.inner.as_mut().custom as *mut Custom)
             .as_mut()
             .unwrap();
