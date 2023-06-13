@@ -11,6 +11,10 @@ unsafe impl Send for DispClientContext {}
 unsafe impl Sync for DispClientContext {}
 
 impl DispClientContext {
+    /// # Safety
+    ///
+    /// * The memory pointed to by `ctxt` must contain a valid pointer.
+    /// * `ctxt` must be [valid] for both reads and writes for the whole lifetime `'a` FIXME.
     pub unsafe fn from_ptr(ctxt: *mut sys::DispClientContext) -> Self {
         Self {
             inner: ptr::NonNull::new(ctxt).unwrap(),

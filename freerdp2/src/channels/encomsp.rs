@@ -20,6 +20,10 @@ pub struct ParticipantCreated {
 }
 
 impl ParticipantCreated {
+    /// # Safety
+    ///
+    /// * The memory pointed to by `ptr` must contain a valid pointer.
+    /// * `ptr` must be [valid] for both reads and writes for the whole lifetime `'a` FIXME.
     pub unsafe fn from_ptr(ptr: *mut sys::ENCOMSP_PARTICIPANT_CREATED_PDU) -> Self {
         Self {
             inner: ptr::NonNull::new(ptr).unwrap(),
