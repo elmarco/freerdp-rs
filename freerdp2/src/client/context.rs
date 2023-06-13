@@ -263,7 +263,7 @@ pub trait Handler {
         &mut self,
         _host: &str,
         _port: u16,
-        _common_name: &str,
+        _common_name: Option<&str>,
         _subject: &str,
         _issuer: &str,
         _fingerprint: &str,
@@ -277,7 +277,7 @@ pub trait Handler {
         &mut self,
         _host: &str,
         _port: u16,
-        _common_name: &str,
+        _common_name: Option<&str>,
         _subject: &str,
         _issuer: &str,
         _new_fingerprint: &str,
@@ -510,12 +510,17 @@ extern "C" fn rdp_instance_verify_certificate<H: Handler>(
     flags: sys::DWORD,
 ) -> sys::DWORD {
     let ctxt = Context::<H>::from_ptr(unsafe { (*instance).context });
+    let common_name = if common_name.is_null() {
+        None
+    } else {
+        unsafe { CStr::from_ptr(common_name).to_str().ok() }
+    };
 
     ctxt.handler
         .verify_certificate(
             unsafe { CStr::from_ptr(host).to_str().unwrap() },
             port,
-            unsafe { CStr::from_ptr(common_name).to_str().unwrap() },
+            common_name,
             unsafe { CStr::from_ptr(subject).to_str().unwrap() },
             unsafe { CStr::from_ptr(issuer).to_str().unwrap() },
             unsafe { CStr::from_ptr(fingerprint).to_str().unwrap() },
@@ -538,12 +543,17 @@ extern "C" fn rdp_instance_verify_changed_certificate<H: Handler>(
     flags: sys::DWORD,
 ) -> sys::DWORD {
     let ctxt = Context::<H>::from_ptr(unsafe { (*instance).context });
+    let common_name = if common_name.is_null() {
+        None
+    } else {
+        unsafe { CStr::from_ptr(common_name).to_str().ok() }
+    };
 
     ctxt.handler
         .verify_certificate_changed(
             unsafe { CStr::from_ptr(host).to_str().unwrap() },
             port,
-            unsafe { CStr::from_ptr(common_name).to_str().unwrap() },
+            common_name,
             unsafe { CStr::from_ptr(subject).to_str().unwrap() },
             unsafe { CStr::from_ptr(issuer).to_str().unwrap() },
             unsafe { CStr::from_ptr(new_fingerprint).to_str().unwrap() },
