@@ -570,7 +570,7 @@ extern "C" fn rdp_instance_present_gateway_message<H: Handler>(
     type_: sys::UINT32,
     is_display_mandatory: sys::BOOL,
     is_consent_mandatory: sys::BOOL,
-    length: sys::size_t,
+    length: usize,
     message: *const sys::WCHAR,
 ) -> sys::BOOL {
     let ctxt = Context::<H>::from_ptr(unsafe { (*instance).context });
