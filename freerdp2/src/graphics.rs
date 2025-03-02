@@ -58,18 +58,27 @@ impl<'a> Pointer<'a> {
         unsafe { self.inner.as_ref() }.xorBpp
     }
 
-    pub fn xor_mask(&self) -> &[u8] {
+    pub fn xor_mask(&self) -> Option<&[u8]> {
         let p = unsafe { self.inner.as_ref() };
-        unsafe { slice::from_raw_parts(p.xorMaskData, p.lengthXorMask as _) }
+        if p.xorMaskData.is_null() {
+            None
+        } else {
+            Some(unsafe { slice::from_raw_parts(p.xorMaskData, p.lengthXorMask as _) })
+        }
     }
 
-    pub fn and_mask(&self) -> &[u8] {
+    pub fn and_mask(&self) -> Option<&[u8]> {
         let p = unsafe { self.inner.as_ref() };
-        unsafe { slice::from_raw_parts(p.andMaskData, p.lengthAndMask as _) }
+        if p.andMaskData.is_null() {
+            None
+        } else {
+            Some(unsafe { slice::from_raw_parts(p.andMaskData, p.lengthAndMask as _) })
+        }
     }
 
     pub fn data(&self, palette: &GdiPalette, format: &PixelFormat) -> Result<Vec<u8>> {
         let len = self.height() * self.width() * 4;
+        let p = unsafe { self.inner.as_ref() };
         let mut data = Vec::with_capacity(len as _);
         let res = unsafe {
             sys::freerdp_image_copy_from_pointer_data(
@@ -80,10 +89,10 @@ impl<'a> Pointer<'a> {
                 0,
                 self.width(),
                 self.height(),
-                self.xor_mask().as_ptr(),
-                self.xor_mask().len() as _,
-                self.and_mask().as_ptr(),
-                self.and_mask().len() as _,
+                p.xorMaskData,
+                p.lengthXorMask,
+                p.andMaskData,
+                p.lengthAndMask,
                 self.xor_bpp(),
                 palette.inner.as_ptr(),
             )
