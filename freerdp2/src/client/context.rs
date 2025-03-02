@@ -601,7 +601,7 @@ extern "C" fn rdp_client_new<H: Handler>(
     _context: *mut sys::rdpContext,
 ) -> sys::BOOL {
     unsafe {
-        let mut instance = ptr::NonNull::new(instance).unwrap().as_mut();
+        let instance = ptr::NonNull::new(instance).unwrap().as_mut();
         instance.PreConnect = Some(rdp_instance_pre_connect::<H>);
         instance.PostConnect = Some(rdp_instance_post_connect::<H>);
         instance.PostDisconnect = Some(rdp_instance_post_disconnect::<H>);
