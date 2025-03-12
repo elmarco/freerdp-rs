@@ -5,6 +5,7 @@ use crate::sys;
 pub const DVC_CHANNEL_NAME: &str = "Microsoft::Windows::RDS::DisplayControl";
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct MonitorFlags: u32 {
         const PRIMARY = 0b00000001;
     }

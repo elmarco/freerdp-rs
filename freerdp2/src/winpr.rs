@@ -97,6 +97,7 @@ pub fn wait_for_single_object(handle: &Handle, timeout: Option<&Duration>) -> Re
 }
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct FdMode: u32 {
         const READ = 0b00000001;
         const WRITE = 0b00000010;

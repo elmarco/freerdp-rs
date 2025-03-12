@@ -4,6 +4,7 @@ use std::{marker::PhantomData, ptr};
 use crate::{sys, RdpError, Result};
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SyncFlags: u32 {
         const SCROLL = 0b00000001;
         const NUM = 0b00000010;
@@ -13,6 +14,7 @@ bitflags! {
 }
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct KbdFlags: u16 {
         const EXTENDED = 0x0100;
         const EXTENDED1 = 0x0200;
@@ -22,6 +24,7 @@ bitflags! {
 }
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct PtrFlags: u16 {
         const HWHEEL = 0x0400;
         const WHEEL = 0x0200;
@@ -37,6 +40,7 @@ bitflags! {
 pub const WHEEL_ROTATION_MASK: u16 = 0x01FF;
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct PtrXFlags: u16 {
         const DOWN = 0x8000;
         const BUTTON1 = 0x0001;

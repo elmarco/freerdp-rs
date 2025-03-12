@@ -7,6 +7,7 @@ use crate::sys;
 pub const SVC_CHANNEL_NAME: &str = "encomsp";
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ParticipantCreatedFlags: u16 {
         const MAY_VIEW = 0b00000001;
         const MAY_INTERACT = 0b00000010;

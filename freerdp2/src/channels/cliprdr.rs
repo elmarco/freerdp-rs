@@ -78,6 +78,7 @@ impl TryFrom<u32> for Format {
 }
 
 bitflags! {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct GeneralCapabilities: u32 {
         const USE_LONG_FORMAT_NAMES = 0b00000010;
         const STREAM_FILECLIP_ENABLED = 0b00000100;
